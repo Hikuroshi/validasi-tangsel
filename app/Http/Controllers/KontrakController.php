@@ -68,7 +68,7 @@ class KontrakController extends Controller
     public function show(Kontrak $kontrak)
     {
         $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'perusahaan_id'])
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])
         ->append(['tgl_batas', 'status_kontrak'])->first();
 
         $kontrak->tgl_mulai = Carbon::parse($kontrak->tgl_mulai)->isoFormat('D MMMM YYYY');
