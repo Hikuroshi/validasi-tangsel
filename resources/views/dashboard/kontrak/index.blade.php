@@ -104,7 +104,7 @@
                     kontrak.nama,
                     kontrak.tgl_mulai,
                     kontrak.tgl_batas,
-                    kontrak.tgl_selesai,
+                    kontrak.tgl_selesai_f,
                     kontrak.perusahaan.nama,
                     kontrak.tenaga_ahlis,
                     kontrak.status_kontrak,

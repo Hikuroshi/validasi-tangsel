@@ -19,7 +19,7 @@ class KontrakController extends Controller
         ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'perusahaan_id'])
         ->append(['tgl_batas', 'status_kontrak'])
         ->map(function ($kontrak) {
-            $kontrak->tgl_selesai = $kontrak->tgl_selesai ?? 'Belum Selesai';
+            $kontrak->tgl_selesai_f = $kontrak->tgl_selesai ?? 'Belum Selesai';
             return $kontrak;
         });
 
