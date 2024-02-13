@@ -77,7 +77,7 @@
                     tenaga_ahli.telepon,
                     tenaga_ahli.email,
                     tenaga_ahli.alamat,
-                    tenaga_ahli.status_kontrak_formatted,
+                    tenaga_ahli.status_kontrak_f,
                     tenaga_ahli.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));

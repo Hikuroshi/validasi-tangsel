@@ -13,7 +13,7 @@ class TenagaAhliController extends Controller
      */
     public function index()
     {
-        $tenaga_ahlis = TenagaAhli::latest()->get(['slug', 'nama', 'nik', 'telepon', 'email', 'alamat'])->append('status_kontrak_formatted');
+        $tenaga_ahlis = TenagaAhli::latest()->get(['slug', 'nama', 'nik', 'telepon', 'email', 'alamat', 'status_kontrak'])->append('status_kontrak_f');
 
         return view('dashboard.tenaga-ahli.index', [
             'title' => 'Daftar Tenaga Ahli',

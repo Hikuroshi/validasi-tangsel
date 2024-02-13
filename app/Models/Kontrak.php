@@ -15,7 +15,7 @@ class Kontrak extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-    protected $appends = ['tgl_mulai_f', 'tgl_batas_f', 'status_kontrak'];
+    protected $appends = ['tgl_mulai_f', 'tgl_batas_f', 'tgl_selesai_f', 'status_kontrak'];
 
     protected function tglMulaiF(): Attribute
     {
@@ -38,6 +38,19 @@ class Kontrak extends Model
         );
     }
 
+    protected function tglSelesaiF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                if ($this->tgl_selesai) {
+                    return Carbon::parse($this->tgl_selesai)->isoFormat('D MMMM YYYY');
+                } else {
+                    return 'Belum selesai';
+                }
+            }
+        );
+    }
+
     protected function statusKontrak(): Attribute
     {
         return new Attribute(
@@ -45,17 +58,18 @@ class Kontrak extends Model
                 $tglMulai = Carbon::parse($this->tgl_mulai);
                 $tglBatas = $tglMulai->addDays($this->lama);
 
-                if ($tglMulai > now()) {
-                    $status = 'Direncanakan';
-                } elseif ($tglBatas >= now()) {
-                    $status = 'Proses';
-                } elseif ($this->tgl_selesai) {
+                if ($this->tgl_selesai) {
                     $tglSelesai = Carbon::parse($this->tgl_selesai);
+
                     if ($tglSelesai <= $tglBatas) {
                         $status = 'Selesai';
                     } else {
                         $status = 'Selesai, Melewati batas waktu';
                     }
+                } elseif ($tglMulai > now()) {
+                    $status = 'Direncanakan';
+                } elseif ($tglBatas >= now()) {
+                    $status = 'Proses';
                 } else {
                     $status = 'Tidak Selesai, Melewati batas waktu';
                 }

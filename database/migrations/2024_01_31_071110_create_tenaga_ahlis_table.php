@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('telepon')->unique();
             $table->string('email')->unique();
             $table->text('alamat');
-            $table->boolean('status_kontrak')->default('0');
+            $table->boolean('status_kontrak')->default('1');
             $table->unsignedBigInteger('perusahaan_id');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();

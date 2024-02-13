@@ -14,10 +14,10 @@ class TenagaAhli extends Model
 
     protected $guarded = ['id'];
 
-    protected function statusKontrakFormatted(): Attribute
+    protected function statusKontrakF(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->status_kontrak ? 'Sedang Bekerja' : 'Tersedia',
+            get: fn () => $this->status_kontrak ? 'Tersedia' : 'Sedang Bekerja',
         );
     }
 

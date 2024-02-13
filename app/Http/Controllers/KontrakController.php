@@ -7,20 +7,17 @@ use App\Models\Perusahaan;
 use App\Models\TenagaAhli;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KontrakController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
+    * Display a listing of the resource.
+    */
     public function index()
     {
         $kontraks = Kontrak::latest()->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])
-        ->map(function ($kontrak) {
-            $kontrak->tgl_selesai_f = $kontrak->tgl_selesai ?? 'Belum Selesai';
-            return $kontrak;
-        });
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id']);
 
         return view('dashboard.kontrak.index', [
             'title' => 'Daftar Pekerjaan/Kontrak',
@@ -29,20 +26,23 @@ class KontrakController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
+    * Show the form for creating a new resource.
+    */
     public function create()
     {
+        $perusahaans = Perusahaan::where('jumlah_kontrak', '<', '5')->get(['id', 'nama']);
+        $tenaga_ahlis = TenagaAhli::where('status_kontrak', '1')->get(['id', 'nama']);
+
         return view('dashboard.kontrak.create', [
             'title' => 'Tambah Pekerjaan/Kontrak',
-            'perusahaans' => Perusahaan::get(['id', 'nama']),
-            'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
+            'perusahaans' => $perusahaans,
+            'tenaga_ahlis' => $tenaga_ahlis,
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
+    * Store a newly created resource in storage.
+    */
     public function store(Request $request)
     {
         $validatedData =  $request->validate([
@@ -55,15 +55,20 @@ class KontrakController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $kontrak = Kontrak::create($validatedData);
-        $kontrak->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+        DB::transaction(function () use ($validatedData) {
+            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_kontrak');
+            TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_kontrak' => 0]);
+
+            $kontrak = Kontrak::create($validatedData);
+            $kontrak->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+        });
 
         return redirect()->route('kontrak.index')->with('success', 'Pekerjaan/Kontrak berhasil disimpan');
     }
 
     /**
-     * Display the specified resource.
-     */
+    * Display the specified resource.
+    */
     public function show(Kontrak $kontrak)
     {
         $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
@@ -91,21 +96,24 @@ class KontrakController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
+    * Show the form for editing the specified resource.
+    */
     public function edit(Kontrak $kontrak)
     {
+        $perusahaans = Perusahaan::where('jumlah_kontrak', '<', '5')->get(['id', 'nama'])->merge([$kontrak->perusahaan])->unique();
+        $tenaga_ahlis = TenagaAhli::where('status_kontrak', '1')->get(['id', 'nama'])->merge($kontrak->tenaga_ahlis)->unique();
+
         return view('dashboard.kontrak.edit', [
             'title' => 'Perbarui Pekerjaan/Kontrak',
-            'perusahaans' => Perusahaan::get(['id', 'nama']),
-            'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
+            'perusahaans' => $perusahaans,
+            'tenaga_ahlis' => $tenaga_ahlis,
             'kontrak' => $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])->get(['id', 'slug', 'nama', 'tgl_mulai', 'lama', 'perusahaan_id'])->first(),
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     */
+    * Update the specified resource in storage.
+    */
     public function update(Request $request, Kontrak $kontrak)
     {
         $validatedData =  $request->validate([
@@ -118,17 +126,28 @@ class KontrakController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $kontrak->update($validatedData);
-        $kontrak->tenaga_ahlis()->sync($validatedData['tenaga_ahli_id']);
+        DB::transaction(function () use ($validatedData, $kontrak) {
+            $kontrak->perusahaan->decrement('jumlah_kontrak');
+            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_kontrak');
+
+            TenagaAhli::whereIn('id', $kontrak->tenaga_ahlis->pluck('id'))->update(['status_kontrak' => 1]);
+            TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_kontrak' => 0]);
+
+            $kontrak->update($validatedData);
+            $kontrak->tenaga_ahlis()->sync($validatedData['tenaga_ahli_id']);
+        });
 
         return redirect()->route('kontrak.index')->with('success', 'Pekerjaan/Kontrak berhasil diperbarui!');
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
+    * Remove the specified resource from storage.
+    */
     public function destroy(Kontrak $kontrak)
     {
+        $kontrak->perusahaan->decrement('jumlah_kontrak');
+        $kontrak->tenaga_ahlis->pluck('id')->update(['status_kontrak' => 1]);
+
         $kontrak->tenaga_ahlis()->detach();
         $kontrak->delete();
 
@@ -137,6 +156,9 @@ class KontrakController extends Controller
 
     public function kontrakSelesai(Kontrak $kontrak)
     {
+        $kontrak->perusahaan->decrement('jumlah_kontrak');
+        TenagaAhli::whereIn('id', $kontrak->tenaga_ahlis->pluck('id'))->update(['status_kontrak' => 1]);
+
         $kontrak->update(['tgl_selesai' => now()->toDateString()]);
         return redirect()->route('kontrak.show', $kontrak->slug)->with('success', 'Pekerjaan/Kontrak berhasil ditandai selesai!');
     }
