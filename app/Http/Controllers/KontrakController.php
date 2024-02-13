@@ -16,7 +16,7 @@ class KontrakController extends Controller
     public function index()
     {
         $kontraks = Kontrak::latest()->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'perusahaan_id'])
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])
         ->append(['tgl_batas', 'status_kontrak'])
         ->map(function ($kontrak) {
             $kontrak->tgl_selesai_f = $kontrak->tgl_selesai ?? 'Belum Selesai';
