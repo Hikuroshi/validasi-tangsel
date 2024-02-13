@@ -15,15 +15,25 @@ class Kontrak extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
+    protected $appends = ['tgl_mulai_f', 'tgl_batas_f', 'status_kontrak'];
 
-    protected function tglBatas(): Attribute
+    protected function tglMulaiF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return Carbon::parse($this->tgl_mulai)->isoFormat('D MMMM YYYY');
+            }
+        );
+    }
+
+    protected function tglBatasF(): Attribute
     {
         return new Attribute(
             get: function () {
                 $tglMulai = Carbon::parse($this->tgl_mulai);
                 $tglBatas = $tglMulai->addDays($this->lama);
 
-                return $tglBatas->toDateString();
+                return $tglBatas->isoFormat('D MMMM YYYY');
             }
         );
     }

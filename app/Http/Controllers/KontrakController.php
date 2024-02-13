@@ -17,7 +17,6 @@ class KontrakController extends Controller
     {
         $kontraks = Kontrak::latest()->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
         ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])
-        ->append(['tgl_batas', 'status_kontrak'])
         ->map(function ($kontrak) {
             $kontrak->tgl_selesai_f = $kontrak->tgl_selesai ?? 'Belum Selesai';
             return $kontrak;
@@ -68,11 +67,8 @@ class KontrakController extends Controller
     public function show(Kontrak $kontrak)
     {
         $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])
-        ->append(['tgl_batas', 'status_kontrak'])->first();
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])->first();
 
-        $kontrak->tgl_mulai = Carbon::parse($kontrak->tgl_mulai)->isoFormat('D MMMM YYYY');
-        $kontrak->tgl_batas_f = Carbon::parse($kontrak->tgl_batas)->isoFormat('D MMMM YYYY');
         $kontrak->tgl_selesai = $kontrak->tgl_selesai ? Carbon::parse($kontrak->tgl_selesai) : now();
 
         if ($kontrak->status_kontrak == 'Direncanakan') {

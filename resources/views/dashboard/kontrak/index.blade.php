@@ -102,8 +102,8 @@
                     data: kontraks.map((kontrak, index) => [
                     index + 1,
                     kontrak.nama,
-                    kontrak.tgl_mulai,
-                    kontrak.tgl_batas,
+                    kontrak.tgl_mulai_f,
+                    kontrak.tgl_batas_f,
                     kontrak.tgl_selesai_f,
                     kontrak.perusahaan.nama,
                     kontrak.tenaga_ahlis,

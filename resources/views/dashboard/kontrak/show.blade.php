@@ -16,7 +16,7 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="calendar-check" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $kontrak->tgl_mulai }}</h4>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $kontrak->tgl_mulai_f }}</h4>
                                 <span class="text-sm dark:text-gray-400">Tanggal Mulai</span>
                             </div>
                         </div>
