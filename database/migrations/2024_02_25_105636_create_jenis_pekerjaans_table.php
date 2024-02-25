@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('perusahaans', function (Blueprint $table) {
+        Schema::create('jenis_pekerjaans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->string('npwp')->unique();
-            $table->string('telepon')->unique();
-            $table->string('email')->unique();
-            $table->text('alamat');
-            $table->integer('jumlah_kontrak')->default('0');
+            $table->enum('jenis', ['Jasa Kontruksi', 'Jasa Konsultasi']);
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perusahaans');
+        Schema::dropIfExists('jenis_pekerjaans');
     }
 };

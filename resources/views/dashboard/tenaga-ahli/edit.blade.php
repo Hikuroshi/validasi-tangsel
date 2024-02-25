@@ -66,17 +66,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="perusahaan_id">Perusahaan <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="perusahaan_id" name="perusahaan_id" class="form-select">
-                                <option>Pilih Perusahaan</option>
-                                @foreach ($perusahaans as $perusahaan)
-                                <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id', $tenaga_ahli->perusahaan_id) == $perusahaan->id)>
-                                    {{ $perusahaan->nama }}
+                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
+                                <option>Pilih Badan Usaha</option>
+                                @foreach ($badan_usahas as $badan_usaha)
+                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id', $tenaga_ahli->badan_usaha_id) == $badan_usaha->id)>
+                                    {{ $badan_usaha->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('perusahaan_id')
+                            @error('badan_usaha_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>

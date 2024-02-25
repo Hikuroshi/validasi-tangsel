@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Perusahaan;
+use App\Models\BadanUsaha;
 use App\Models\TenagaAhli;
 use Illuminate\Http\Request;
 
@@ -28,7 +28,7 @@ class TenagaAhliController extends Controller
     {
         return view('dashboard.tenaga-ahli.create', [
             'title' => 'Tambah Tenaga Ahli',
-            'perusahaans' => Perusahaan::get(['id', 'nama']),
+            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
         ]);
     }
 
@@ -43,7 +43,7 @@ class TenagaAhliController extends Controller
             'telepon' => 'required|numeric|max_digits:13|unique:tenaga_ahlis',
             'email' => 'required|string|email|max:255|unique:tenaga_ahlis',
             'alamat' => 'required|string',
-            'perusahaan_id' => 'required',
+            'badan_usaha_id' => 'required',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
@@ -69,8 +69,8 @@ class TenagaAhliController extends Controller
     {
         return view('dashboard.tenaga-ahli.edit', [
             'title' => 'Perbarui Tenaga Ahli',
-            'perusahaans' => Perusahaan::get(['id', 'nama']),
-            'tenaga_ahli' => $tenagaAhli->get(['slug', 'nama', 'alamat', 'nik', 'telepon', 'email', 'perusahaan_id'])->first(),
+            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
+            'tenaga_ahli' => $tenagaAhli->get(['slug', 'nama', 'alamat', 'nik', 'telepon', 'email', 'badan_usaha_id'])->first(),
         ]);
     }
 
@@ -82,7 +82,7 @@ class TenagaAhliController extends Controller
         $rules = [
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'perusahaan_id' => 'required',
+            'badan_usaha_id' => 'required',
         ];
 
         if ($request->nik != $tenagaAhli->nik) {

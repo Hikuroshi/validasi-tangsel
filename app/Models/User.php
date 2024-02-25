@@ -18,14 +18,24 @@ class User extends Authenticatable
         return $this->hasMany(Kontrak::class, 'author_id');
     }
 
-    public function perusahaans(): HasMany
+    public function badan_usahas(): HasMany
     {
-        return $this->hasMany(Perusahaan::class, 'author_id');
+        return $this->hasMany(BadanUsaha::class, 'author_id');
     }
 
     public function tenaga_ahlis(): HasMany
     {
         return $this->hasMany(TenagaAhli::class, 'author_id');
+    }
+
+    public function jenis_pekerjaans(): HasMany
+    {
+        return $this->hasMany(JenisPekerjaan::class, 'author_id');
+    }
+
+    public function sub_pekerjaans(): HasMany
+    {
+        return $this->hasMany(SubPekerjaan::class, 'author_id');
     }
 
     public function getRouteKeyName()

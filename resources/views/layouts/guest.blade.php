@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'Login Validasi Tangsel') }}</title>
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="/assets/images/logo-tangsel.png">
 
     <!-- App css -->
     <link href="/assets/css/app.min.css" rel="stylesheet" type="text/css">

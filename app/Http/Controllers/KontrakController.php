@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kontrak;
-use App\Models\Perusahaan;
+use App\Models\BadanUsaha;
 use App\Models\TenagaAhli;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,8 +16,8 @@ class KontrakController extends Controller
     */
     public function index()
     {
-        $kontraks = Kontrak::latest()->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id']);
+        $kontraks = Kontrak::latest()->with(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama'])
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'badan_usaha_id']);
 
         return view('dashboard.kontrak.index', [
             'title' => 'Daftar Pekerjaan/Kontrak',
@@ -30,12 +30,12 @@ class KontrakController extends Controller
     */
     public function create()
     {
-        $perusahaans = Perusahaan::where('jumlah_kontrak', '<', '5')->get(['id', 'nama']);
+        $badan_usahas = BadanUsaha::where('jumlah_kontrak', '<', '5')->get(['id', 'nama']);
         $tenaga_ahlis = TenagaAhli::where('status_kontrak', '1')->get(['id', 'nama']);
 
         return view('dashboard.kontrak.create', [
             'title' => 'Tambah Pekerjaan/Kontrak',
-            'perusahaans' => $perusahaans,
+            'badan_usahas' => $badan_usahas,
             'tenaga_ahlis' => $tenaga_ahlis,
         ]);
     }
@@ -47,7 +47,7 @@ class KontrakController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'perusahaan_id' => 'required',
+            'badan_usaha_id' => 'required',
             'tenaga_ahli_id' => 'required|array',
             'tgl_mulai' => 'required|date',
             'lama' => 'required|numeric|min:1',
@@ -56,7 +56,7 @@ class KontrakController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         DB::transaction(function () use ($validatedData) {
-            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_kontrak');
+            BadanUsaha::find($validatedData['badan_usaha_id'])->increment('jumlah_kontrak');
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_kontrak' => 0]);
 
             $kontrak = Kontrak::create($validatedData);
@@ -71,8 +71,8 @@ class KontrakController extends Controller
     */
     public function show(Kontrak $kontrak)
     {
-        $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'perusahaan_id'])->first();
+        $kontrak->with(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama'])
+        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'badan_usaha_id'])->first();
 
         $kontrak->tgl_selesai = $kontrak->tgl_selesai ? Carbon::parse($kontrak->tgl_selesai) : now();
 
@@ -100,14 +100,14 @@ class KontrakController extends Controller
     */
     public function edit(Kontrak $kontrak)
     {
-        $perusahaans = Perusahaan::where('jumlah_kontrak', '<', '5')->get(['id', 'nama'])->merge([$kontrak->perusahaan])->unique();
+        $badan_usahas = BadanUsaha::where('jumlah_kontrak', '<', '5')->get(['id', 'nama'])->merge([$kontrak->badan_usaha])->unique();
         $tenaga_ahlis = TenagaAhli::where('status_kontrak', '1')->get(['id', 'nama'])->merge($kontrak->tenaga_ahlis)->unique();
 
         return view('dashboard.kontrak.edit', [
             'title' => 'Perbarui Pekerjaan/Kontrak',
-            'perusahaans' => $perusahaans,
+            'badan_usahas' => $badan_usahas,
             'tenaga_ahlis' => $tenaga_ahlis,
-            'kontrak' => $kontrak->with(['perusahaan:id,nama', 'tenaga_ahlis:id,nama'])->get(['id', 'slug', 'nama', 'tgl_mulai', 'lama', 'perusahaan_id'])->first(),
+            'kontrak' => $kontrak->with(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama'])->get(['id', 'slug', 'nama', 'tgl_mulai', 'lama', 'badan_usaha_id'])->first(),
         ]);
     }
 
@@ -118,7 +118,7 @@ class KontrakController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'perusahaan_id' => 'required',
+            'badan_usaha_id' => 'required',
             'tenaga_ahli_id' => 'required',
             'tgl_mulai' => 'required|date',
             'lama' => 'required|numeric|min:1',
@@ -127,8 +127,8 @@ class KontrakController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         DB::transaction(function () use ($validatedData, $kontrak) {
-            $kontrak->perusahaan->decrement('jumlah_kontrak');
-            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_kontrak');
+            $kontrak->badan_usaha->decrement('jumlah_kontrak');
+            BadanUsaha::find($validatedData['badan_usaha_id'])->increment('jumlah_kontrak');
 
             TenagaAhli::whereIn('id', $kontrak->tenaga_ahlis->pluck('id'))->update(['status_kontrak' => 1]);
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_kontrak' => 0]);
@@ -145,7 +145,7 @@ class KontrakController extends Controller
     */
     public function destroy(Kontrak $kontrak)
     {
-        $kontrak->perusahaan->decrement('jumlah_kontrak');
+        $kontrak->badan_usaha->decrement('jumlah_kontrak');
         $kontrak->tenaga_ahlis->pluck('id')->update(['status_kontrak' => 1]);
 
         $kontrak->tenaga_ahlis()->detach();
@@ -156,7 +156,7 @@ class KontrakController extends Controller
 
     public function kontrakSelesai(Kontrak $kontrak)
     {
-        $kontrak->perusahaan->decrement('jumlah_kontrak');
+        $kontrak->badan_usaha->decrement('jumlah_kontrak');
         TenagaAhli::whereIn('id', $kontrak->tenaga_ahlis->pluck('id'))->update(['status_kontrak' => 1]);
 
         $kontrak->update(['tgl_selesai' => now()->toDateString()]);

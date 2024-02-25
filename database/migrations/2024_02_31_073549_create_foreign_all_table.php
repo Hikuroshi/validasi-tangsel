@@ -11,17 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('perusahaans', function (Blueprint $table) {
+        Schema::table('badan_usahas', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
 
         Schema::table('tenaga_ahlis', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
+            $table->foreign('badan_usaha_id')->references('id')->on('badan_usahas');
         });
 
         Schema::table('kontraks', function (Blueprint $table) {
-            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
+            $table->foreign('badan_usaha_id')->references('id')->on('badan_usahas');
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
+        Schema::table('jenis_pekerjaans', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
+        Schema::table('sub_pekerjaans', function (Blueprint $table) {
+            $table->foreign('jenis_pekerjaan_id')->references('id')->on('jenis_pekerjaans');
             $table->foreign('author_id')->references('id')->on('users');
         });
     }
@@ -31,8 +40,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perusahaans');
+        Schema::dropIfExists('badan_usahas');
         Schema::dropIfExists('tenaga_ahlis');
         Schema::dropIfExists('kontraks');
+        Schema::dropIfExists('jenis_pekerjaans');
+        Schema::dropIfExists('sub_pekerjaans');
     }
 };

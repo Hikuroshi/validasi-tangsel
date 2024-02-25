@@ -3,12 +3,13 @@
         <div class="grid lg:grid-cols-2 gap-5">
             <div class="py-8 lg:px-8 sm:px-20 p-5 text-start">
                 <div class="mx-auto mb-3">
-                    <a href="index.html">
-                        <img src="assets/images/logo-dark.png" alt="" class="h-6 block dark:hidden">
-                        <img src="assets/images/logo-light.png" alt="" class="h-6 hidden dark:block">
+                    <a href="#">
+                        <img src="/assets/images/logo-tangsel.png" alt="" class="h-20 block dark:hidden">
+                        <img src="/assets/images/logo-tangsel.png" alt="" class="h-20 hidden dark:block">
                     </a>
-                    <h4 class="text-base mt-5 dark:text-gray-300">Welcome back!</h4>
-                    <p class="text-gray-500 mt-1 mb-10 dark:text-gray-400">Enter your email address and password to access admin panel.</p>
+                    <h4 class="text-base mt-5 dark:text-gray-300">DASI-PPK</h4>
+                    <p class="text-gray-500 mt-1 dark:text-gray-400">Data Informasi Penyelenggaraan Pekerjaan Kontruksi</p>
+                    <p class="text-gray-500 mt-1 mb-10 dark:text-gray-400">Dinas Sumber Daya Air, Bina Marga Dan Bina Kontruksi</p>
                 </div>
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-5">
@@ -51,23 +52,11 @@
             </div>
 
             <div class="hidden lg:block">
-                <div class="px-20 relative h-full bg-no-repeat  bg-cover bg-[url('../images/auth-bg.jpg')]">
-                    <div class="absolute inset-0 bg-dark/50"></div>
-                    <div class="pt-96 text-center relative">
-                        <p class="text-xl font-semibold text-white mb-1">I simply love it!</p>
-                        <p class="text-white text-base">"It's a elegent templete. I love it very much!"</p>
-                        <p class="text-white text-base mt-3">- Admin User</p>
-                    </div>
+                <div class="px-20 relative h-full bg-no-repeat  bg-cover bg-[url('/assets/images/login.jpg')]" style="background: url('/assets/images/login.jpg')">
+                    {{-- <div class="absolute inset-0 bg-dark/50"></div> --}}
                 </div>
             </div>
         </div>
     </div>
     <!-- end card -->
-
-    <div class="row mt-3">
-        <div class="col-12 text-center">
-            <p class="text-gray-500">Don't have an account? <a href="{{ route('register') }}" class="text-primary font-semibold ms-1">Sign Up</a></p>
-        </div> <!-- end col -->
-    </div>
-    <!-- end row -->
 </x-guest-layout>

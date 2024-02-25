@@ -84,9 +84,9 @@ class Kontrak extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function perusahaan(): BelongsTo
+    public function badan_usaha(): BelongsTo
     {
-        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+        return $this->belongsTo(BadanUsaha::class, 'badan_usaha_id');
     }
 
     public function tenaga_ahlis(): BelongsToMany

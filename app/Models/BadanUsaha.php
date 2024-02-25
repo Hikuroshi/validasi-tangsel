@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Perusahaan extends Model
+class BadanUsaha extends Model
 {
     use HasFactory, Sluggable;
 
@@ -21,7 +21,7 @@ class Perusahaan extends Model
 
     public function tenaga_ahlis(): HasMany
     {
-        return $this->hasMany(TenagaAhli::class, 'perusahaan_id');
+        return $this->hasMany(TenagaAhli::class, 'badan_usaha_id');
     }
 
     public function getRouteKeyName()

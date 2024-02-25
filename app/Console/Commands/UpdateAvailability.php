@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Kontrak;
-use App\Models\Perusahaan;
+use App\Models\BadanUsaha;
 use App\Models\TenagaAhli;
 use Illuminate\Console\Command;
 
@@ -21,7 +21,7 @@ class UpdateAvailability extends Command
      *
      * @var string
      */
-    protected $description = 'Perbarui Ketersediaan Perusahaan dan Tenaga Ahli';
+    protected $description = 'Perbarui Ketersediaan Badan Usaha dan Tenaga Ahli';
 
     /**
      * Execute the console command.
@@ -38,10 +38,10 @@ class UpdateAvailability extends Command
             return $kontrak->status_kontrak == 'Proses';
         });
 
-        $kontrakProses->groupBy('perusahaan_id')->each(function ($groupedKontrak) {
-            $perusahaanId = $groupedKontrak->first()->perusahaan_id;
+        $kontrakProses->groupBy('badan_usaha_id')->each(function ($groupedKontrak) {
+            $badan_usaha_id = $groupedKontrak->first()->badan_usaha_id;
             $jumlahKontrak = $groupedKontrak->count();
-            Perusahaan::where('id', $perusahaanId)->update(['jumlah_kontrak' => $jumlahKontrak]);
+            BadanUsaha::where('id', $badan_usaha_id)->update(['jumlah_kontrak' => $jumlahKontrak]);
         });
 
         $kontrakBebas->flatMap->tenaga_ahlis->pluck('id')->each(function ($id) {

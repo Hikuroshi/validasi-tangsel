@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('perusahaan.create') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('sub-pekerjaan.create') }}" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-plus"></i>
             </a>
         </div>
@@ -34,32 +34,28 @@
 
 <script>
     class GridDatatable {
-        init(perusahaans) {
-            this.basicTableInit(perusahaans);
+        init(sub_pekerjaans) {
+            this.basicTableInit(sub_pekerjaans);
         }
 
-        basicTableInit(perusahaans) {
+        basicTableInit(sub_pekerjaans) {
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Nama",
-                    "NPWP",
-                    "Telepon",
-                    { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
-                    "Alamat",
-                    "Jumlah Pekerjaan/Kontrak",
+                    "Jenis Pekerjaan",
+                    "Sub Pekerjaan",
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/perusahaan/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/sub-pekerjaan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/perusahaan/${cell}" method="post" class="d-inline">
+                                <form action="/dashboard/sub-pekerjaan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
                                         <i class="uil uil-trash-alt"></i>
                                     </button>
                                 </form>
@@ -70,15 +66,11 @@
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
-                    data: perusahaans.map((perusahaan, index) => [
+                    data: sub_pekerjaans.map((sub_pekerjaan, index) => [
                     index + 1,
-                    perusahaan.nama,
-                    perusahaan.npwp,
-                    perusahaan.telepon,
-                    perusahaan.email,
-                    perusahaan.alamat,
-                    perusahaan.jumlah_kontrak,
-                    perusahaan.slug,
+                    sub_pekerjaan.jenis_pekerjaan.nama,
+                    sub_pekerjaan.nama,
+                    sub_pekerjaan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }
@@ -86,8 +78,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
-        const perusahaans = {{ Js::from($perusahaans) }};
-        new GridDatatable().init(perusahaans);
+        const sub_pekerjaans = {{ Js::from($sub_pekerjaans) }};
+        new GridDatatable().init(sub_pekerjaans);
     });
 </script>
 

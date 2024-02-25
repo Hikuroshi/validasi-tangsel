@@ -75,16 +75,16 @@
                             <div class="">
                                 <div class="">
                                     <p class="mb-3 text-sm uppercase font-medium"><i class="uil-envelope-alt text-red-500 text-base"></i> Email</p>
-                                    <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->perusahaan->email }}</h5>
+                                    <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->badan_usaha->email }}</h5>
                                 </div>
                             </div>
                             <div class="">
                                 <p class="mb-3 text-sm uppercase font-medium"><i class="uil-phone text-red-500 text-base"></i> Telepon</p>
-                                <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->perusahaan->telepon }}</h5>
+                                <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->badan_usaha->telepon }}</h5>
                             </div>
                             <div class="">
                                 <p class="mb-3 text-sm uppercase font-medium"><i class="uil-dialpad-alt text-red-500 text-base"></i> NPWP</p>
-                                <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->perusahaan->npwp }}</h5>
+                                <h5 class="text-base text-gray-700 dark:text-gray-300 font-medium">{{ $kontrak->badan_usaha->npwp }}</h5>
                             </div>
 
                             <div class="">

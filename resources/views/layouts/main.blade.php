@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <title>Validasi Tangsel | {{ $title }}</title>
@@ -8,7 +8,7 @@
     <meta content="coderthemes" name="author">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="/assets/images/logo-tangsel.png">
 
     @yield('css')
 
@@ -34,14 +34,14 @@
             <a href="#" class="logo-box">
                 <!-- Light Logo -->
                 <div class="logo-light">
-                    <img src="/assets/images/logo-light.png" class="logo-lg h-6" alt="Light logo">
-                    <img src="/assets/images/logo-sm.png" class="logo-sm h-6" alt="Small logo">
+                    <img src="/assets/images/logo-tangsel.png" class="logo-lg h-10" alt="Light logo">
+                    <img src="/assets/images/logo-tangsel.png" class="logo-sm h-10" alt="Small logo">
                 </div>
 
                 <!-- Dark Logo -->
                 <div class="logo-dark">
-                    <img src="/assets/images/logo-dark.png" class="logo-lg h-6" alt="Dark logo">
-                    <img src="/assets/images/logo-sm.png" class="logo-sm h-6" alt="Small logo">
+                    <img src="/assets/images/logo-tangsel.png" class="logo-lg h-10" alt="Dark logo">
+                    <img src="/assets/images/logo-tangsel.png" class="logo-sm h-10" alt="Small logo">
                 </div>
             </a>
 
@@ -61,49 +61,64 @@
                     <li class="menu-title">Menu</li>
 
                     <li class="menu-item">
-                        <a href="{{ route('perusahaan.index') }}" class="menu-link">
+                        <a href="javascript:void(0)" data-hs-collapse="#menuMaster" class="menu-link">
                             <span class="menu-icon">
-                                <i data-lucide="building-2"></i>
+                                <i data-lucide="align-start-vertical"></i>
                             </span>
-                            <span class="menu-text"> Perusahaan </span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('tenaga-ahli.index') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i data-lucide="contact-2"></i>
-                            </span>
-                            <span class="menu-text"> Tenaga Ahli </span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('kontrak.index') }}" class="menu-link">
-                            <span class="menu-icon">
-                                <i data-lucide="clipboard-list"></i>
-                            </span>
-                            <span class="menu-text"> Pekerjaan/Kontrak </span>
-                        </a>
-                    </li>
-                    {{-- <li class="menu-item">
-                        <a href="javascript:void(0)" data-hs-collapse="#menuEmail" class="menu-link">
-                            <span class="menu-icon">
-                                <i data-lucide="mail"></i>
-                            </span>
-                            <span class="menu-text"> Email </span>
+                            <span class="menu-text"> Master Data </span>
                             <span class="menu-arrow"></span>
                         </a>
 
-                        <ul id="menuEmail" class="sub-menu hidden">
+                        <ul id="menuMaster" class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="#" class="menu-link">
-                                    <span class="menu-text">Inbox</span>
+                                <a href="{{ route('badan-usaha.index') }}" class="menu-link">
+                                    <span class="menu-text"> Badan Usaha </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('tenaga-ahli.index') }}" class="menu-link">
+                                    <span class="menu-text"> Tenaga Ahli </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('jenis-pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Jenis Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('sub-pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Sub Pekerjaan </span>
                                 </a>
                             </li>
                         </ul>
-                    </li> --}}
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0)" data-hs-collapse="#menuTransaksi" class="menu-link">
+                            <span class="menu-icon">
+                                <i data-lucide="shopping-cart"></i>
+                            </span>
+                            <span class="menu-text"> Transaksi </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul id="menuTransaksi" class="sub-menu hidden">
+                            <li class="menu-item">
+                                <a href="{{ route('kontrak.index') }}" class="menu-link">
+                                    <span class="menu-text"> Pekerjaan/Kontrak </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <span class="menu-icon">
+                                <i data-lucide="file-text"></i>
+                            </span>
+                            <span class="menu-text"> Laporan </span>
+                        </a>
+                    </li>
 
                 </ul>
-
             </div>
         </div>
         <!-- Sidenav Menu End  -->

@@ -11,16 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenaga_ahlis', function (Blueprint $table) {
+        Schema::create('badan_usahas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->string('nik')->unique();
-            $table->string('telepon')->unique();
-            $table->string('email')->unique();
+            $table->string('npwp')->unique();
+            $table->string('sertifikat');
+            $table->string('registrasi');
+            $table->string('direktur');
             $table->text('alamat');
-            $table->boolean('status_kontrak')->default('1');
-            $table->unsignedBigInteger('badan_usaha_id');
+            $table->string('email')->unique();
+            $table->string('telepon')->unique();
+            $table->string('no_akta');
+            $table->date('tgl_akta');
+            $table->text('klasifikasi');
+            $table->boolean('status');
+            $table->integer('jumlah_kontrak')->default('0');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -31,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenaga_ahlis');
+        Schema::dropIfExists('badan_usahas');
     }
 };
