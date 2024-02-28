@@ -5,30 +5,26 @@
 <!-- Flatpickr css -->
 <link rel="stylesheet" href="/assets/libs/flatpickr/flatpickr.min.css">
 
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="/assets/css/select2.min.css">
-
 @endsection
 
 @section('container')
 
 <div class="card mb-6">
     <div class="p-6">
-        <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }}</h4>
+        <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }} {{ $tenaga_ahli_nama }}</h4>
         <p class="text-gray-500 mb-6 dark:text-gray-400">
-            Inputkan data kontrak dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
+            Inputkan data riwayat pendidikan dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
         <div class="grid xl:grid-cols-2 gap-6">
             <div>
-                <form method="POST" action="{{ route('kontrak.update', $kontrak->slug) }}">
-                    @method('put')
+                <form method="POST" action="{{ route('riwayat-pendidikan.store') }}">
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="nama">Nama <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="nama">Nama Lembaga <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama', $kontrak->nama) }}" class="form-input" placeholder="Nama">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input" placeholder="Nama Lembaga">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -36,57 +32,56 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="humanfd-datepicker">Tanggal Mulai <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="jurusan">Jurusan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="humanfd-datepicker" name="tgl_mulai" value="{{ old('tgl_mulai', $kontrak->tgl_mulai) }}" class="form-input" placeholder="{{ Carbon\Carbon::parse($kontrak->tgl_mulai)->format('F j, Y') }}">
-                            @error('tgl_mulai')
+                            <input type="text" id="jurusan" name="jurusan" value="{{ old('jurusan') }}" class="form-input" placeholder="Jurusan">
+                            @error('jurusan')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="lama">Lama Hari <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="gelar">Gelar <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="lama" name="lama" value="{{ old('lama', $kontrak->lama) }}" class="form-input" placeholder="Lama hari">
-                            @error('lama')
+                            <input type="text" id="gelar" name="gelar" value="{{ old('gelar') }}" class="form-input" placeholder="Gelar">
+                            @error('gelar')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="humanfd-datepicker">Tahun Masuk <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
-                                <option>Pilih Badan Usaha</option>
-                                @foreach ($badan_usahas as $badan_usaha)
-                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id', $kontrak->badan_usaha_id) == $badan_usaha->id)>
-                                    {{ $badan_usaha->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('badan_usaha_id')
+                            <input type="text" id="humanfd-datepicker" name="thn_masuk" value="{{ old('thn_masuk') }}" class="form-input" placeholder="Tahun Masuk">
+                            @error('thn_masuk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="tenaga_ahli_id">Tenaga Ahli <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="humanfd-datepicker">Tahun Lulus <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="tenaga_ahli_id" name="tenaga_ahli_id[]" class="form-select select2" multiple="multiple">
-                                @foreach ($tenaga_ahlis as $tenaga_ahli)
-                                <option value="{{ $tenaga_ahli->id }}">
-                                    {{ $tenaga_ahli->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('tenaga_ahli_id')
+                            <input type="text" id="humanfd-datepicker" name="thn_lulus" value="{{ old('thn_lulus') }}" class="form-input" placeholder="Tahun Lulus">
+                            @error('thn_lulus')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
                     </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="ijazah">Ijazah <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="ijazah" name="ijazah" value="{{ old('ijazah') }}" class="form-input" placeholder="Ijazah">
+                            @error('ijazah')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="tenaga_ahli_id" value="{{ $tenaga_ahli_id }}">
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <div></div>
@@ -108,21 +103,11 @@
 <!-- Flatpickr Plugin Js -->
 <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
 
-<!-- Select2 js -->
-<script src="/assets/js/select2.min.js"></script>
-
 <script>
     flatpickr("#humanfd-datepicker", {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d"
-    });
-
-    $(document).ready(function() {
-        $('.select2').select2();
-
-        let selectedOptions = {{ Js::from(old('tenaga_ahli_id', $kontrak->tenaga_ahlis->pluck('id'))) }};
-        $('.select2').val(selectedOptions).trigger('change');
     });
 </script>
 

@@ -71,8 +71,7 @@ class KontrakController extends Controller
     */
     public function show(Kontrak $kontrak)
     {
-        $kontrak->with(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama'])
-        ->get(['id', 'slug', 'nama', 'tgl_mulai', 'tgl_selesai', 'lama', 'badan_usaha_id'])->first();
+        $kontrak->load(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama']);
 
         $kontrak->tgl_selesai = $kontrak->tgl_selesai ? Carbon::parse($kontrak->tgl_selesai) : now();
 
@@ -107,7 +106,7 @@ class KontrakController extends Controller
             'title' => 'Perbarui Pekerjaan/Kontrak',
             'badan_usahas' => $badan_usahas,
             'tenaga_ahlis' => $tenaga_ahlis,
-            'kontrak' => $kontrak->with(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama'])->get(['id', 'slug', 'nama', 'tgl_mulai', 'lama', 'badan_usaha_id'])->first(),
+            'kontrak' => $kontrak->load(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama']),
         ]);
     }
 

@@ -12,7 +12,7 @@ class BadanUsahaController extends Controller
      */
     public function index()
     {
-        $badan_usahas = BadanUsaha::latest()->get(['slug', 'nama', 'npwp', 'telepon', 'email', 'alamat', 'jumlah_kontrak']);
+        $badan_usahas = BadanUsaha::latest()->get(['slug', 'nama', 'sertifikat', 'direktur', 'email', 'telepon', 'status']);
 
         return view('dashboard.badan-usaha.index', [
             'title' => 'Daftar Badan Usaha',
@@ -62,7 +62,8 @@ class BadanUsahaController extends Controller
     public function show(BadanUsaha $badanUsaha)
     {
         return view('dashboard.badan-usaha.show', [
-            'title' => 'Detail Badan Usaha'
+            'title' => 'Detail Badan Usaha',
+            'badan_usaha' => $badanUsaha,
         ]);
     }
 
@@ -73,7 +74,7 @@ class BadanUsahaController extends Controller
     {
         return view('dashboard.badan-usaha.edit', [
             'title' => 'Perbarui Badan Usaha',
-            'badan_usaha' => $badanUsaha->get(['slug', 'nama', 'alamat', 'npwp', 'telepon', 'email'])->first(),
+            'badan_usaha' => $badanUsaha,
         ]);
     }
 

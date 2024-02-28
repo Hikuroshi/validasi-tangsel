@@ -2,25 +2,33 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BadanUsaha extends Model
+class RiwayatPendidikan extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-    protected $appends = ['status_f'];
 
-    protected function statusF(): Attribute
+    protected function thnMasukF(): Attribute
     {
         return new Attribute(
             get: function () {
-                return $this->status ? 'Aktif' : 'Tidak Aktif';
+                return Carbon::parse($this->tgl_masuk)->isoFormat('D MMMM YYYY');
+            }
+        );
+    }
+
+    protected function thnLulusF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return Carbon::parse($this->tgl_lulus)->isoFormat('D MMMM YYYY');
             }
         );
     }
@@ -30,9 +38,9 @@ class BadanUsaha extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function tenaga_ahlis(): HasMany
+    public function tenaga_ahli(): BelongsTo
     {
-        return $this->hasMany(TenagaAhli::class, 'badan_usaha_id');
+        return $this->belongsTo(TenagaAhli::class, 'tenaga_ahli_id');
     }
 
     public function getRouteKeyName()

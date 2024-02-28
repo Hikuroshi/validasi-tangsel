@@ -66,7 +66,7 @@ class JenisPekerjaanController extends Controller
 
         return view('dashboard.jenis-pekerjaan.edit', [
             'title' => 'Perbarui Jenis Pekerjaan',
-            'jenis_pekerjaan' => $jenisPekerjaan->get(['slug', 'nama', 'jenis'])->first(),
+            'jenis_pekerjaan' => $jenisPekerjaan,
             'jeniss' => $jenis,
         ]);
     }

@@ -63,7 +63,7 @@ class SubPekerjaanController extends Controller
     {
         return view('dashboard.sub-pekerjaan.edit', [
             'title' => 'Perbarui Sub Pekerjaan',
-            'sub_pekerjaan' => $subPekerjaan->with(['jenis_pekerjaan:id,nama'])->get(['slug', 'nama', 'jenis_pekerjaan_id'])->first(),
+            'sub_pekerjaan' => $subPekerjaan->load(['jenis_pekerjaan:id,nama']),
             'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
         ]);
     }

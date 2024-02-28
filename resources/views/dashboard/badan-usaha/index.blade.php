@@ -44,15 +44,29 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama",
-                    "NPWP",
-                    "Telepon",
+                    "SBU",
+                    "Direktur",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
-                    "Alamat",
-                    "Jumlah Pekerjaan/Kontrak",
+                    "Telepon",
+                    {
+                        name: "Status",
+                        formatter: function (e) {
+                            let status;
+                            if (e == 'Aktif') {
+                                status = 'bg-success/10 text-success'
+                            } else {
+                                status = 'bg-danger/10 text-danger'
+                            }
+                            return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + status + '">' + e + '</span>')
+                        }
+                    },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/badan-usaha/${cell}">
+                                    <i class="uil uil-eye"></i>
+                                </a>
                                 <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/badan-usaha/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
@@ -73,11 +87,11 @@
                     data: badan_usahas.map((badan_usaha, index) => [
                     index + 1,
                     badan_usaha.nama,
-                    badan_usaha.npwp,
-                    badan_usaha.telepon,
+                    badan_usaha.sertifikat,
+                    badan_usaha.direktur,
                     badan_usaha.email,
-                    badan_usaha.alamat,
-                    badan_usaha.jumlah_kontrak,
+                    badan_usaha.telepon,
+                    badan_usaha.status_f,
                     badan_usaha.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));

@@ -13,7 +13,10 @@ class TenagaAhliController extends Controller
      */
     public function index()
     {
-        $tenaga_ahlis = TenagaAhli::latest()->get(['slug', 'nama', 'nik', 'telepon', 'email', 'alamat', 'status_kontrak'])->append('status_kontrak_f');
+        $tenaga_ahlis = TenagaAhli::latest()
+                                    ->with(['badan_usaha:id,nama'])
+                                    ->get(['slug', 'nama', 'jabatan', 'email', 'telepon', 'status', 'badan_usaha_id'])
+                                    ->append(['status_f', 'kelamin_f']);
 
         return view('dashboard.tenaga-ahli.index', [
             'title' => 'Daftar Tenaga Ahli',
@@ -40,10 +43,17 @@ class TenagaAhliController extends Controller
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
             'nik' => 'required|numeric|max_digits:16|unique:tenaga_ahlis',
-            'telepon' => 'required|numeric|max_digits:13|unique:tenaga_ahlis',
-            'email' => 'required|string|email|max:255|unique:tenaga_ahlis',
-            'alamat' => 'required|string',
+            'npwp' => 'required|numeric|max_digits:16|unique:tenaga_ahlis',
             'badan_usaha_id' => 'required',
+            'jabatan' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'kelamin' => 'required|boolean',
+            'email' => 'required|string|email|max:255|unique:tenaga_ahlis',
+            'telepon' => 'required|numeric|max_digits:13|unique:tenaga_ahlis',
+            'keahlian' => 'required|string',
+            'status' => 'required|boolean',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
@@ -57,8 +67,14 @@ class TenagaAhliController extends Controller
      */
     public function show(TenagaAhli $tenagaAhli)
     {
+        $tenaga_ahli = $tenagaAhli->load(['badan_usaha:id,nama']);
+
+        $riwayat_pendidikan = $tenagaAhli->riwayat_pendidikans()->get(['slug', 'nama', 'jurusan', 'gelar', 'thn_masuk', 'thn_lulus', 'ijazah'])->append(['thn_masuk_f', 'thn_lulus_f']);
+
         return view('dashboard.tenaga-ahli.show', [
             'title' => 'Detail Tenaga Ahli',
+            'tenaga_ahli' => $tenaga_ahli,
+            'riwayat_pendidikans' => $riwayat_pendidikan,
         ]);
     }
 
@@ -67,10 +83,12 @@ class TenagaAhliController extends Controller
      */
     public function edit(TenagaAhli $tenagaAhli)
     {
+        $tenaga_ahli = $tenagaAhli->load(['badan_usaha:id,nama']);
+
         return view('dashboard.tenaga-ahli.edit', [
             'title' => 'Perbarui Tenaga Ahli',
             'badan_usahas' => BadanUsaha::get(['id', 'nama']),
-            'tenaga_ahli' => $tenagaAhli->get(['slug', 'nama', 'alamat', 'nik', 'telepon', 'email', 'badan_usaha_id'])->first(),
+            'tenaga_ahli' => $tenaga_ahli,
         ]);
     }
 
@@ -81,12 +99,21 @@ class TenagaAhliController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
             'badan_usaha_id' => 'required',
+            'jabatan' => 'required|string|max:255',
+            'tempat_lahir' => 'required|string|max:255',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'kelamin' => 'required|boolean',
+            'keahlian' => 'required|string',
+            'status' => 'required|boolean',
         ];
 
         if ($request->nik != $tenagaAhli->nik) {
             $rules['nik'] = 'required|numeric|max_digits:16|unique:tenaga_ahlis';
+        }
+        if ($request->npwp != $tenagaAhli->npwp) {
+            $rules['npwp'] = 'required|numeric|max_digits:16|unique:tenaga_ahlis,badan_ahlis';
         }
         if ($request->telepon != $tenagaAhli->telepon) {
             $rules['telepon'] = 'required|numeric|max_digits:13|unique:tenaga_ahlis';

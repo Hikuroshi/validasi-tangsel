@@ -24,7 +24,6 @@
     </div>
 </div>
 
-
 @endsection
 
 @section('js')
@@ -44,15 +43,30 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama",
-                    "NIK",
-                    "Telepon",
+                    "Badan Usaha",
+                    "Jabatan",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
-                    "Alamat",
-                    { name: "Status Pekerjaan/Kontrak", formatter: function (e) { return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + (e == 'Tersedia' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger') + '">' + e + '</span>') } },
+                    "No Telp",
+                    "Jenis Kelamin",
+                    {
+                        name: "Status",
+                        formatter: function (e) {
+                            let status;
+                            if (e == 'Aktif') {
+                                status = 'bg-success/10 text-success'
+                            } else {
+                                status = 'bg-danger/10 text-danger'
+                            }
+                            return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + status + '">' + e + '</span>')
+                        }
+                    },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/tenaga-ahli/${cell}">
+                                    <i class="uil uil-eye"></i>
+                                </a>
                                 <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/tenaga-ahli/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
@@ -73,11 +87,12 @@
                     data: tenaga_ahlis.map((tenaga_ahli, index) => [
                     index + 1,
                     tenaga_ahli.nama,
-                    tenaga_ahli.nik,
-                    tenaga_ahli.telepon,
+                    tenaga_ahli.badan_usaha.nama,
+                    tenaga_ahli.jabatan,
                     tenaga_ahli.email,
-                    tenaga_ahli.alamat,
-                    tenaga_ahli.status_kontrak_f,
+                    tenaga_ahli.telepon,
+                    tenaga_ahli.kelamin_f,
+                    tenaga_ahli.status_f,
                     tenaga_ahli.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
