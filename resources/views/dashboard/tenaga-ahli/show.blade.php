@@ -104,7 +104,22 @@
     </div>
 
     <div class="p-6">
-        <div id="table-gridjs"></div>
+        <div id="table-riwayat-pendidikan"></div>
+    </div>
+</div>
+
+<div class="card mt-6">
+    <div class="card-header">
+        <div class="flex justify-between items-center">
+            <h4 class="card-title">Keahlian {{ $tenaga_ahli->nama }}</h4>
+            <a href="{{ route('keahlian.create', ['tenaga_ahli_id' => $tenaga_ahli->id, 'tenaga_ahli_nama' => $tenaga_ahli->nama]) }}" class="btn bg-primary text-white rounded-full">
+                <i class="uil uil-plus"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="p-6">
+        <div id="table-keahlian"></div>
     </div>
 </div>
 
@@ -117,12 +132,12 @@
 
 <script>
     class GridDatatable {
-        init(riwayat_pendidikans) {
-            this.basicTableInit(riwayat_pendidikans);
+        init(riwayat_pendidikans, keahlians) {
+            this.basicTableInit(riwayat_pendidikans, keahlians);
         }
 
-        basicTableInit(riwayat_pendidikans) {
-            if (document.getElementById("table-gridjs")) {
+        basicTableInit(riwayat_pendidikans, keahlians) {
+            if (document.getElementById("table-riwayat-pendidikan")) {
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
@@ -163,14 +178,63 @@
                     riwayat_pendidikan.ijazah,
                     riwayat_pendidikan.slug,
                     ]),
-                }).render(document.getElementById("table-gridjs"));
+                }).render(document.getElementById("table-riwayat-pendidikan"));
+            }
+            if (document.getElementById("table-keahlian")) {
+                new gridjs.Grid({
+                    columns: [
+                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    "Keahlian",
+                    "No Sertifikat",
+                    "Tahun Sertifikat",
+                    {
+                        name: "Sertifikat",
+                        formatter: function (e) {
+                            return gridjs.html(`<a href="/dashboard/keahlian/view-sertifikat/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
+                                <i class="uil uil-search px-1"></i>
+                                Lihat Sertifikat
+                            </a>`);
+                        }
+                    },
+                    {
+                        name: "Aksi",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/keahlian/${cell}/edit">
+                                    <i class="uil uil-pen"></i>
+                                </a>
+                                <form action="/dashboard/keahlian/${cell}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>`);
+                        }
+                    }
+                    ],
+                    pagination: { limit: 5 },
+                    sort: true,
+                    search: true,
+                    data: keahlians.map((keahlian, index) => [
+                    index + 1,
+                    keahlian.nama,
+                    keahlian.no_sertifikat,
+                    keahlian.thn_sertifikat_f,
+                    keahlian.slug,
+                    keahlian.slug,
+                    ]),
+                }).render(document.getElementById("table-keahlian"));
             }
         }
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
         const riwayat_pendidikans = {{ Js::from($riwayat_pendidikans) }};
-        new GridDatatable().init(riwayat_pendidikans);
+        const keahlians = {{ Js::from($keahlians) }};
+
+        new GridDatatable().init(riwayat_pendidikans, keahlians);
     });
 </script>
 
@@ -201,24 +265,24 @@
 @endif
 
 <script>
-	$(document).on('click', '#deleteData', function() {
-		let title = $(this).data('title');
+    $(document).on('click', '#deleteData', function() {
+        let title = $(this).data('title');
 
-		Swal.fire({
-			title: 'Hapus ' + title + '?',
-			html: "Apakah kamu yakin ingin menghapus <b>" + title + "</b>? Data yang sudah dihapus tidak bisa dikembalikan!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Ya, Hapus',
-			cancelButtonText: 'Batal'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				$(this).closest('form').submit();
-			}
-		});
-	});
+        Swal.fire({
+            title: 'Hapus ' + title + '?',
+            html: "Apakah kamu yakin ingin menghapus <b>" + title + "</b>? Data yang sudah dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $(this).closest('form').submit();
+            }
+        });
+    });
 </script>
 
 @endsection

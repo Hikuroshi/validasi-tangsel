@@ -25,6 +25,11 @@ return new class extends Migration
             $table->foreign('author_id')->references('id')->on('users');
         });
 
+        Schema::table('keahlians', function (Blueprint $table) {
+            $table->foreign('tenaga_ahli_id')->references('id')->on('tenaga_ahlis');
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
         Schema::table('kontraks', function (Blueprint $table) {
             $table->foreign('badan_usaha_id')->references('id')->on('badan_usahas');
             $table->foreign('author_id')->references('id')->on('users');
@@ -48,6 +53,7 @@ return new class extends Migration
         Schema::dropIfExists('badan_usahas');
         Schema::dropIfExists('tenaga_ahlis');
         Schema::dropIfExists('riwayat_pendidikans');
+        Schema::dropIfExists('keahlians');
         Schema::dropIfExists('kontraks');
         Schema::dropIfExists('jenis_pekerjaans');
         Schema::dropIfExists('sub_pekerjaans');

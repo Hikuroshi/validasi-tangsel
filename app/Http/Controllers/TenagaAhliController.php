@@ -44,7 +44,7 @@ class TenagaAhliController extends Controller
             'nama' => 'required|string|max:255',
             'nik' => 'required|numeric|max_digits:16|unique:tenaga_ahlis',
             'npwp' => 'required|numeric|max_digits:16|unique:tenaga_ahlis',
-            'badan_usaha_id' => 'required',
+            'badan_usaha_id' => 'required|exists:badan_usahas,id',
             'jabatan' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
@@ -70,11 +70,13 @@ class TenagaAhliController extends Controller
         $tenaga_ahli = $tenagaAhli->load(['badan_usaha:id,nama']);
 
         $riwayat_pendidikan = $tenagaAhli->riwayat_pendidikans()->get(['slug', 'nama', 'jurusan', 'gelar', 'thn_masuk', 'thn_lulus', 'ijazah'])->append(['thn_masuk_f', 'thn_lulus_f']);
+        $keahlian = $tenagaAhli->keahlians()->get(['slug', 'nama', 'no_sertifikat', 'thn_sertifikat'])->append(['thn_sertifikat_f']);
 
         return view('dashboard.tenaga-ahli.show', [
             'title' => 'Detail Tenaga Ahli',
             'tenaga_ahli' => $tenaga_ahli,
             'riwayat_pendidikans' => $riwayat_pendidikan,
+            'keahlians' => $keahlian,
         ]);
     }
 
@@ -99,7 +101,7 @@ class TenagaAhliController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'badan_usaha_id' => 'required',
+            'badan_usaha_id' => 'required|exists:badan_usahas,id',
             'jabatan' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',

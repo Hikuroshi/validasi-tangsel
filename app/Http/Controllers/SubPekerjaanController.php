@@ -39,7 +39,7 @@ class SubPekerjaanController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'jenis_pekerjaan_id' => 'required',
+            'jenis_pekerjaan_id' => 'required|exists:jenis_pekerjaans,id',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
@@ -75,7 +75,7 @@ class SubPekerjaanController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'jenis_pekerjaan_id' => 'required',
+            'jenis_pekerjaan_id' => 'required|exists:jenis_pekerjaans,id',
         ];
 
         $validatedData =  $request->validate($rules);

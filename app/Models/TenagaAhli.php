@@ -14,7 +14,6 @@ class TenagaAhli extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-    // protected $appends = ['status_f', 'kelamin_f'];
 
     protected function statusKontrakF(): Attribute
     {
@@ -54,6 +53,11 @@ class TenagaAhli extends Model
     public function riwayat_pendidikans(): HasMany
     {
         return $this->hasMany(RiwayatPendidikan::class, 'tenaga_ahli_id');
+    }
+
+    public function keahlians(): HasMany
+    {
+        return $this->hasMany(Keahlian::class, 'tenaga_ahli_id');
     }
 
     public function kontraks()

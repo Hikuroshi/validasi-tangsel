@@ -47,8 +47,8 @@ class KontrakController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'badan_usaha_id' => 'required',
-            'tenaga_ahli_id' => 'required|array',
+            'badan_usaha_id' => 'required|exists:badan_usahas,id',
+            'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
             'tgl_mulai' => 'required|date',
             'lama' => 'required|numeric|min:1',
         ]);
@@ -117,8 +117,8 @@ class KontrakController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'badan_usaha_id' => 'required',
-            'tenaga_ahli_id' => 'required',
+            'badan_usaha_id' => 'required|exists:badan_usahas,id',
+            'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
             'tgl_mulai' => 'required|date',
             'lama' => 'required|numeric|min:1',
         ]);
