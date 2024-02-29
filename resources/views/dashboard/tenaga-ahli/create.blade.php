@@ -11,7 +11,7 @@
 
 <div class="card mb-6">
     <div class="p-6">
-        <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }}</h4>
+        <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }} {{ session('flash_badan_usaha_nama') }}</h4>
         <p class="text-gray-500 mb-6 dark:text-gray-400">
             Inputkan data tenaga ahli dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
@@ -54,10 +54,10 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
+                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select" {{ session('flash_badan_usaha_id') ? 'disabled' : '' }}>
                                 <option>Pilih Badan Usaha</option>
                                 @foreach ($badan_usahas as $badan_usaha)
-                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id') == $badan_usaha->id)>
+                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id', session('flash_badan_usaha_id')) == $badan_usaha->id)>
                                     {{ $badan_usaha->nama }}
                                 </option>
                                 @endforeach

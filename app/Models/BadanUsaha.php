@@ -14,7 +14,6 @@ class BadanUsaha extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-    protected $appends = ['status_f'];
 
     protected function statusF(): Attribute
     {

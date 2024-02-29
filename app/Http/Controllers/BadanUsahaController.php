@@ -12,7 +12,7 @@ class BadanUsahaController extends Controller
      */
     public function index()
     {
-        $badan_usahas = BadanUsaha::latest()->get(['slug', 'nama', 'sertifikat', 'direktur', 'email', 'telepon', 'status']);
+        $badan_usahas = BadanUsaha::latest()->get(['slug', 'nama', 'sertifikat', 'direktur', 'email', 'telepon', 'status'])->append(['status_f']);
 
         return view('dashboard.badan-usaha.index', [
             'title' => 'Daftar Badan Usaha',
@@ -61,9 +61,15 @@ class BadanUsahaController extends Controller
      */
     public function show(BadanUsaha $badanUsaha)
     {
+        $tenaga_ahlis = $badanUsaha->tenaga_ahlis()->get(['slug', 'nama', 'jabatan', 'email', 'telepon', 'kelamin', 'status'])->append(['kelamin_f', 'status_f']);
+
+        session()->flash('flash_badan_usaha_id', $badanUsaha->id);
+        session()->flash('flash_badan_usaha_nama', $badanUsaha->nama);
+
         return view('dashboard.badan-usaha.show', [
             'title' => 'Detail Badan Usaha',
             'badan_usaha' => $badanUsaha,
+            'tenaga_ahlis' => $tenaga_ahlis,
         ]);
     }
 

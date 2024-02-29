@@ -29,6 +29,9 @@ class TenagaAhliController extends Controller
      */
     public function create()
     {
+        session()->reflash();
+        session()->keep(['flash_badan_usaha_id', 'flash_badan_usaha_nama']);
+
         return view('dashboard.tenaga-ahli.create', [
             'title' => 'Tambah Tenaga Ahli',
             'badan_usahas' => BadanUsaha::get(['id', 'nama']),
