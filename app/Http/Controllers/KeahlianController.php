@@ -37,7 +37,7 @@ class KeahlianController extends Controller
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
             'no_sertifikat' => 'required|string|max:255',
-            'thn_sertifikat' => 'required|date',
+            'thn_sertifikat' => 'required|integer|between:1901,' . date('Y'),
             'file_sertifikat' => 'required|mimes:pdf|file|max:5000',
             'tenaga_ahli_id' => 'required|exists:tenaga_ahlis,id',
         ]);

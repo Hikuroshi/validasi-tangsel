@@ -15,15 +15,6 @@ class Keahlian extends Model
 
     protected $guarded = ['id'];
 
-    protected function thnSertifikatF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                return Carbon::parse($this->thn_sertifikat)->isoFormat('D MMMM YYYY');
-            }
-        );
-    }
-
     protected function fileSertifikatF(): Attribute
     {
         return new Attribute(

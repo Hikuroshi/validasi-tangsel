@@ -72,8 +72,8 @@ class TenagaAhliController extends Controller
     {
         $tenaga_ahli = $tenagaAhli->load(['badan_usaha:id,nama']);
 
-        $riwayat_pendidikan = $tenagaAhli->riwayat_pendidikans()->get(['slug', 'nama', 'jurusan', 'gelar', 'thn_masuk', 'thn_lulus', 'ijazah'])->append(['thn_masuk_f', 'thn_lulus_f']);
-        $keahlian = $tenagaAhli->keahlians()->get(['slug', 'nama', 'no_sertifikat', 'thn_sertifikat'])->append(['thn_sertifikat_f']);
+        $riwayat_pendidikan = $tenagaAhli->riwayat_pendidikans()->get(['slug', 'nama', 'jurusan', 'gelar', 'thn_masuk', 'thn_lulus', 'ijazah']);
+        $keahlian = $tenagaAhli->keahlians()->get(['slug', 'nama', 'no_sertifikat', 'thn_sertifikat']);
 
         return view('dashboard.tenaga-ahli.show', [
             'title' => 'Detail Tenaga Ahli',

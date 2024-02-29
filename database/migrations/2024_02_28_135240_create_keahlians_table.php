@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
             $table->string('no_sertifikat');
-            $table->date('thn_sertifikat');
+            $table->year('thn_sertifikat');
             $table->string('file_sertifikat');
             $table->unsignedBigInteger('tenaga_ahli_id');
             $table->unsignedBigInteger('author_id');

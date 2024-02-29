@@ -15,24 +15,6 @@ class RiwayatPendidikan extends Model
 
     protected $guarded = ['id'];
 
-    protected function thnMasukF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                return Carbon::parse($this->tgl_masuk)->isoFormat('D MMMM YYYY');
-            }
-        );
-    }
-
-    protected function thnLulusF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                return Carbon::parse($this->tgl_lulus)->isoFormat('D MMMM YYYY');
-            }
-        );
-    }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');

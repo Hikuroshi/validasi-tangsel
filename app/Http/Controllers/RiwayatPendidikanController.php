@@ -37,8 +37,8 @@ class RiwayatPendidikanController extends Controller
             'nama' => 'required|string|max:255',
             'jurusan' => 'required|string|max:255',
             'gelar' => 'required|string|max:255',
-            'thn_masuk' => 'required|date',
-            'thn_lulus' => 'required|date',
+            'thn_masuk' => 'required|integer|between:1901,' . date('Y'),
+            'thn_lulus' => 'required|integer|between:1901,' . date('Y'),
             'ijazah' => 'required|string|max:255',
             'tenaga_ahli_id' => 'required',
         ]);
@@ -80,8 +80,8 @@ class RiwayatPendidikanController extends Controller
             'nama' => 'required|string|max:255',
             'jurusan' => 'required|string|max:255',
             'gelar' => 'required|string|max:255',
-            'thn_masuk' => 'required|date',
-            'thn_lulus' => 'required|date',
+            'thn_masuk' => 'required|integer|between:1901,' . date('Y'),
+            'thn_lulus' => 'required|integer|between:1901,' . date('Y'),
             'ijazah' => 'required|string|max:255',
         ];
 

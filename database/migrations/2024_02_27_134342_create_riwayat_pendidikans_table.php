@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('jurusan');
             $table->string('gelar');
-            $table->date('thn_masuk');
-            $table->date('thn_lulus');
+            $table->year('thn_masuk');
+            $table->year('thn_lulus');
             $table->string('ijazah');
             $table->unsignedBigInteger('tenaga_ahli_id');
             $table->unsignedBigInteger('author_id');
