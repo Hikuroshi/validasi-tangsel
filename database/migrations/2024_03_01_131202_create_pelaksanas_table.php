@@ -11,11 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_pekerjaans', function (Blueprint $table) {
+        Schema::create('pelaksanas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('jenis_jasa_id');
+            $table->unsignedBigInteger('badan_usaha_id');
+            $table->unsignedBigInteger('pekerjaan_id');
+            $table->string('no_kontrak');
+            $table->date('tgl_kontrak');
+            $table->date('tgl_mulai')->nullable();
+            $table->date('tgl_selesai')->nullable();
+            $table->string('ppk');
+            $table->string('pptk');
+            $table->string('pho');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -26,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_pekerjaans');
+        Schema::dropIfExists('pelaksanas');
     }
 };

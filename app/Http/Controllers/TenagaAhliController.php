@@ -140,7 +140,7 @@ class TenagaAhliController extends Controller
      */
     public function destroy(TenagaAhli $tenagaAhli)
     {
-        $tenagaAhli->kontraks()->detach();
+        $tenagaAhli->pekerjaans()->detach();
         $tenagaAhli->delete();
         return redirect()->route('tenaga-ahli.index')->with('success', 'Tenaga Ahli berhasil dihapus!');
     }

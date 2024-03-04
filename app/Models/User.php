@@ -13,19 +13,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function kontraks(): HasMany
-    {
-        return $this->hasMany(Kontrak::class, 'author_id');
-    }
-
     public function badan_usahas(): HasMany
     {
         return $this->hasMany(BadanUsaha::class, 'author_id');
-    }
-
-    public function tenaga_ahlis(): HasMany
-    {
-        return $this->hasMany(TenagaAhli::class, 'author_id');
     }
 
     public function jenis_pekerjaans(): HasMany
@@ -33,9 +23,34 @@ class User extends Authenticatable
         return $this->hasMany(JenisPekerjaan::class, 'author_id');
     }
 
+    public function keahlians(): HasMany
+    {
+        return $this->hasMany(Keahlian::class, 'author_id');
+    }
+
+    public function kecamatans(): HasMany
+    {
+        return $this->hasMany(Kecamatan::class, 'author_id');
+    }
+
+    public function pekerjaans(): HasMany
+    {
+        return $this->hasMany(Pekerjaan::class, 'author_id');
+    }
+
+    public function riwayat_pendidikans(): HasMany
+    {
+        return $this->hasMany(RiwayatPendidikan::class, 'author_id');
+    }
+
     public function sub_pekerjaans(): HasMany
     {
         return $this->hasMany(SubPekerjaan::class, 'author_id');
+    }
+
+    public function tenaga_ahlis(): HasMany
+    {
+        return $this->hasMany(TenagaAhli::class, 'author_id');
     }
 
     public function getRouteKeyName()

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Kontrak;
 use App\Models\BadanUsaha;
+use App\Models\Pekerjaan;
 use App\Models\TenagaAhli;
 use Illuminate\Console\Command;
 
@@ -28,28 +29,28 @@ class UpdateAvailability extends Command
      */
     public function handle()
     {
-        $kontrak = Kontrak::all();
+        $pekerjaan = Pekerjaan::all();
 
-        $kontrakBebas = $kontrak->filter(function ($kontrak) {
-            return in_array($kontrak->status_kontrak, ['Direncanakan', 'Selesai', 'Selesai, Melewati batas waktu', 'Tidak Selesai, Melewati batas waktu']);
+        $pekerjaanBebas = $pekerjaan->filter(function ($pekerjaan) {
+            return in_array($pekerjaan->status_pekerjaan, ['Direncanakan', 'Selesai', 'Selesai, Melewati batas waktu', 'Tidak Selesai, Melewati batas waktu']);
         });
 
-        $kontrakProses = $kontrak->filter(function ($kontrak) {
-            return $kontrak->status_kontrak == 'Proses';
+        $pekerjaanProses = $pekerjaan->filter(function ($pekerjaan) {
+            return $pekerjaan->status_pekerjaan == 'Proses';
         });
 
-        $kontrakProses->groupBy('badan_usaha_id')->each(function ($groupedKontrak) {
+        $pekerjaanProses->groupBy('badan_usaha_id')->each(function ($groupedKontrak) {
             $badan_usaha_id = $groupedKontrak->first()->badan_usaha_id;
             $jumlahKontrak = $groupedKontrak->count();
-            BadanUsaha::where('id', $badan_usaha_id)->update(['jumlah_kontrak' => $jumlahKontrak]);
+            BadanUsaha::where('id', $badan_usaha_id)->update(['jumlah_pekerjaan' => $jumlahKontrak]);
         });
 
-        $kontrakBebas->flatMap->tenaga_ahlis->pluck('id')->each(function ($id) {
-            TenagaAhli::where('id', $id)->update(['status_kontrak' => 1]);
+        $pekerjaanBebas->flatMap->tenaga_ahlis->pluck('id')->each(function ($id) {
+            TenagaAhli::where('id', $id)->update(['status_pekerjaan' => 1]);
         });
 
-        $kontrakProses->flatMap->tenaga_ahlis->pluck('id')->each(function ($id) {
-            TenagaAhli::where('id', $id)->update(['status_kontrak' => 0]);
+        $pekerjaanProses->flatMap->tenaga_ahlis->pluck('id')->each(function ($id) {
+            TenagaAhli::where('id', $id)->update(['status_pekerjaan' => 0]);
         });
     }
 }

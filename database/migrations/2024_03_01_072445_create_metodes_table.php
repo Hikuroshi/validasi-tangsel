@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kontraks', function (Blueprint $table) {
+        Schema::create('metodes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('badan_usaha_id');
-            $table->date('tgl_mulai');
-            $table->date('tgl_selesai')->nullable();
-            $table->integer('lama');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kontraks');
+        Schema::dropIfExists('metodes');
     }
 };

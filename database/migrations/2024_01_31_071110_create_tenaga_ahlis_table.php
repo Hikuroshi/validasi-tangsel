@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('telepon')->unique();
             $table->text('keahlian');
             $table->boolean('status');
-            $table->boolean('status_kontrak')->default('1');
+            $table->boolean('status_pekerjaan')->default('1');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });

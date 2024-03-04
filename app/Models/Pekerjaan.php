@@ -9,17 +9,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BadanUsaha extends Model
+class Pekerjaan extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
 
-    protected function statusF(): Attribute
+    protected function nilaiPaguF(): Attribute
     {
         return new Attribute(
             get: function () {
-                return $this->status ? 'Aktif' : 'Tidak Aktif';
+                return "Rp." . number_format($this->nilai_pagu, 0, '.', '.');
+            }
+        );
+    }
+
+    protected function nilaiKontrakF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return "Rp." . number_format($this->nilai_kontrak, 0, '.', '.');
             }
         );
     }
@@ -29,14 +38,24 @@ class BadanUsaha extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function tenaga_ahlis(): HasMany
+    public function sub_pekerjaan(): BelongsTo
     {
-        return $this->hasMany(TenagaAhli::class, 'badan_usaha_id');
+        return $this->belongsTo(SubPekerjaan::class, 'sub_pekerjaan_id');
+    }
+
+    public function kecamatan(): BelongsTo
+    {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+    }
+
+    public function metode(): BelongsTo
+    {
+        return $this->belongsTo(Metode::class, 'metode_id');
     }
 
     public function pelaksanas(): HasMany
     {
-        return $this->hasMany(Pelaksana::class, 'badan_usaha_id');
+        return $this->hasMany(Pelaksana::class, 'pekerjaan_id');
     }
 
     public function getRouteKeyName()

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('tgl_akta');
             $table->text('klasifikasi');
             $table->boolean('status');
-            $table->integer('jumlah_kontrak')->default('0');
+            $table->integer('jumlah_pekerjaan')->default('0');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });

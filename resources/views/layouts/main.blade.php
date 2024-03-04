@@ -81,6 +81,11 @@
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="{{ route('jenis-jasa.index') }}" class="menu-link">
+                                    <span class="menu-text"> Jenis Jasa </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{ route('jenis-pekerjaan.index') }}" class="menu-link">
                                     <span class="menu-text"> Jenis Pekerjaan </span>
                                 </a>
@@ -88,6 +93,16 @@
                             <li class="menu-item">
                                 <a href="{{ route('sub-pekerjaan.index') }}" class="menu-link">
                                     <span class="menu-text"> Sub Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('kecamatan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Kecamatan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('metode.index') }}" class="menu-link">
+                                    <span class="menu-text"> Metode </span>
                                 </a>
                             </li>
                         </ul>
@@ -103,8 +118,13 @@
 
                         <ul id="menuTransaksi" class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="{{ route('kontrak.index') }}" class="menu-link">
-                                    <span class="menu-text"> Pekerjaan/Kontrak </span>
+                                <a href="{{ route('pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('pelaksana.index') }}" class="menu-link">
+                                    <span class="menu-text"> Pelaksana </span>
                                 </a>
                             </li>
                         </ul>

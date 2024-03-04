@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisJasa;
 use App\Models\JenisPekerjaan;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class JenisPekerjaanController extends Controller
      */
     public function index()
     {
-        $jenis_pekerjaans = JenisPekerjaan::latest()->get(['slug', 'nama', 'jenis']);
+        $jenis_pekerjaans = JenisPekerjaan::latest()->with(['jenis_jasa:id,nama'])->get(['slug', 'nama', 'jenis_jasa_id']);
 
         return view('dashboard.jenis-pekerjaan.index', [
             'title' => 'Daftar Jenis Pekerjaan',
@@ -25,11 +26,9 @@ class JenisPekerjaanController extends Controller
      */
     public function create()
     {
-        $jenis = ['Jasa Kontruksi', 'Jasa Konsultasi'];
-
         return view('dashboard.jenis-pekerjaan.create', [
             'title' => 'Tambah Jenis Pekerjaan',
-            'jeniss' => $jenis,
+            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
         ]);
     }
 
@@ -40,7 +39,7 @@ class JenisPekerjaanController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
+            'jenis_jasa_id' => 'required|exists:jenis_jasas,id',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
@@ -62,12 +61,10 @@ class JenisPekerjaanController extends Controller
      */
     public function edit(JenisPekerjaan $jenisPekerjaan)
     {
-        $jenis = ['Jasa Kontruksi', 'Jasa Konsultasi'];
-
         return view('dashboard.jenis-pekerjaan.edit', [
             'title' => 'Perbarui Jenis Pekerjaan',
             'jenis_pekerjaan' => $jenisPekerjaan,
-            'jeniss' => $jenis,
+            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
         ]);
     }
 
@@ -78,7 +75,7 @@ class JenisPekerjaanController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
+            'jenis_jasa_id' => 'required|exists:jenis_jasas,id',
         ];
 
         $validatedData =  $request->validate($rules);

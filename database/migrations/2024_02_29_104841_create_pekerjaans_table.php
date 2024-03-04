@@ -11,11 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_pekerjaans', function (Blueprint $table) {
+        Schema::create('pekerjaans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('jenis_jasa_id');
+            $table->unsignedBigInteger('sub_pekerjaan_id');
+            $table->text('deskripsi');
+            $table->string('nilai_pagu');
+            $table->string('nilai_kontrak');
+            $table->unsignedBigInteger('kecamatan_id');
+            $table->text('lokasi');
+            $table->string('sumber_dana');
+            $table->year('thn_anggaran');
+            $table->unsignedBigInteger('metode_id');
+            $table->string('jenis_kontruksi');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -26,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_pekerjaans');
+        Schema::dropIfExists('pekerjaans');
     }
 };

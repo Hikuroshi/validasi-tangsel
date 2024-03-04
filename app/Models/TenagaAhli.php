@@ -18,7 +18,7 @@ class TenagaAhli extends Model
     protected function statusKontrakF(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->status_kontrak ? 'Tersedia' : 'Sedang Bekerja',
+            get: fn () => $this->status_pekerjaan ? 'Tersedia' : 'Sedang Bekerja',
         );
     }
 
@@ -60,9 +60,9 @@ class TenagaAhli extends Model
         return $this->hasMany(Keahlian::class, 'tenaga_ahli_id');
     }
 
-    public function kontraks()
+    public function pelaksanas()
     {
-        return $this->belongsToMany(Kontrak::class, 'kontrak_tenaga_ahli', 'tenaga_ahli_id', 'kontrak_id');
+        return $this->belongsToMany(Pelaksana::class, 'pelaksana_tenaga_ahli', 'tenaga_ahli_id', 'pelaksana_id');
     }
 
     public function getRouteKeyName()

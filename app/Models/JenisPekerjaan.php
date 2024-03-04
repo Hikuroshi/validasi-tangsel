@@ -19,6 +19,11 @@ class JenisPekerjaan extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function jenis_jasa(): BelongsTo
+    {
+        return $this->belongsTo(JenisJasa::class, 'jenis_jasa_id');
+    }
+
     public function sub_pekerjaans(): HasMany
     {
         return $this->hasMany(SubPekerjaan::class, 'jenis_pekerjaan_id');

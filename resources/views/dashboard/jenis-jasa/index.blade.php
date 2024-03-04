@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('jenis-pekerjaan.create') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('jenis-jasa.create') }}" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-plus"></i>
             </a>
         </div>
@@ -34,28 +34,27 @@
 
 <script>
     class GridDatatable {
-        init(jenis_pekerjaans) {
-            this.basicTableInit(jenis_pekerjaans);
+        init(jenis_jasas) {
+            this.basicTableInit(jenis_jasas);
         }
 
-        basicTableInit(jenis_pekerjaans) {
+        basicTableInit(jenis_jasas) {
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Jenis Jasa",
-                    "Jenis Pekerjaan",
+                    "Nama",
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/jenis-pekerjaan/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/jenis-jasa/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/jenis-pekerjaan/${cell}" method="post" class="d-inline">
+                                <form action="/dashboard/jenis-jasa/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
                                         <i class="uil uil-trash-alt"></i>
                                     </button>
                                 </form>
@@ -66,11 +65,10 @@
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
-                    data: jenis_pekerjaans.map((jenis_pekerjaan, index) => [
+                    data: jenis_jasas.map((jenis_jasa, index) => [
                     index + 1,
-                    jenis_pekerjaan.jenis_jasa.nama,
-                    jenis_pekerjaan.nama,
-                    jenis_pekerjaan.slug,
+                    jenis_jasa.nama,
+                    jenis_jasa.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }
@@ -78,8 +76,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
-        const jenis_pekerjaans = {{ Js::from($jenis_pekerjaans) }};
-        new GridDatatable().init(jenis_pekerjaans);
+        const jenis_jasas = {{ Js::from($jenis_jasas) }};
+        new GridDatatable().init(jenis_jasas);
     });
 </script>
 

@@ -3,40 +3,25 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BadanUsaha extends Model
+class Kecamatan extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-
-    protected function statusF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                return $this->status ? 'Aktif' : 'Tidak Aktif';
-            }
-        );
-    }
 
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function tenaga_ahlis(): HasMany
+    public function pekerjaans(): HasMany
     {
-        return $this->hasMany(TenagaAhli::class, 'badan_usaha_id');
-    }
-
-    public function pelaksanas(): HasMany
-    {
-        return $this->hasMany(Pelaksana::class, 'badan_usaha_id');
+        return $this->hasMany(Pekerjaan::class, 'kecamatan_id');
     }
 
     public function getRouteKeyName()

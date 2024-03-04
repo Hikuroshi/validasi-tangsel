@@ -15,17 +15,17 @@
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="jenis">Jenis Jasa <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="jenis_jasa_id">Jenis Jasa <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="jenis" name="jenis" class="form-select">
+                            <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
                                 <option>Pilih Jenis Jasa</option>
-                                @foreach ($jeniss as $jenis)
-                                <option value="{{ $jenis }}" @selected(old('jenis') == $jenis)>
-                                    {{ $jenis }}
+                                @foreach ($jenis_jasas as $jenis_jasa)
+                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id') == $jenis_jasa->id)>
+                                    {{ $jenis_jasa->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('jenis')
+                            @error('jenis_jasa_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
