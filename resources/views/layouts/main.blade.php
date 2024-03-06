@@ -161,14 +161,14 @@
                 <a href="#" class="logo-box">
                     <!-- Light Logo -->
                     <div class="logo-light">
-                        <img src="/assets/images/logo-light.png" class="logo-lg h-6" alt="Light logo">
-                        <img src="/assets/images/logo-sm.png" class="logo-sm h-6" alt="Small logo">
+                        <img src="/assets/images/logo-tangsel.png" class="logo-lg h-10" alt="Light logo">
+                        <img src="/assets/images/logo-tangsel.png" class="logo-sm h-10" alt="Small logo">
                     </div>
 
                     <!-- Dark Logo -->
                     <div class="logo-dark">
-                        <img src="/assets/images/logo-dark.png" class="logo-lg h-6" alt="Dark logo">
-                        <img src="/assets/images/logo-sm.png" class="logo-sm h-6" alt="Small logo">
+                        <img src="/assets/images/logo-tangsel.png" class="logo-lg h-10" alt="Dark logo">
+                        <img src="/assets/images/logo-tangsel.png" class="logo-sm h-10" alt="Small logo">
                     </div>
                 </a>
 
