@@ -12,6 +12,7 @@
         <div class="grid xl:grid-cols-2 gap-6">
             <div>
                 <form method="POST" action="{{ route('badan-usaha.update', $badan_usaha->slug) }}">
+                    @method('put')
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
