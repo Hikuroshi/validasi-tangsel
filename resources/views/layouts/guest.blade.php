@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Login Validasi Tangsel') }}</title>
+    <title>Login Validasi Tangsel</title>
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="/assets/images/logo-tangsel.png">
