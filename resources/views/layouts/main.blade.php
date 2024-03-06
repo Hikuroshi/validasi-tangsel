@@ -105,6 +105,11 @@
                                     <span class="menu-text"> Metode </span>
                                 </a>
                             </li>
+                            <li class="menu-item">
+                                <a href="{{ route('user.index') }}" class="menu-link">
+                                    <span class="menu-text"> User </span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -130,7 +135,7 @@
                         </ul>
                     </li>
                     <li class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{ route('laporan.index') }}" class="menu-link">
                             <span class="menu-icon">
                                 <i data-lucide="file-text"></i>
                             </span>
