@@ -195,7 +195,7 @@ class PelaksanaController extends Controller
     public function destroy(Pelaksana $pelaksana)
     {
         $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
-        $pelaksana->tenaga_ahlis->pluck('id')->update(['status_pekerjaan' => 1]);
+        TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
         $pelaksana->tenaga_ahlis()->detach();
         $pelaksana->delete();
