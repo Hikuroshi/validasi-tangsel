@@ -71,6 +71,11 @@
 
                         <ul id="menuMaster" class="sub-menu hidden">
                             <li class="menu-item">
+                                <a href="{{ route('pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{ route('badan-usaha.index') }}" class="menu-link">
                                     <span class="menu-text"> Badan Usaha </span>
                                 </a>
@@ -122,11 +127,6 @@
                         </a>
 
                         <ul id="menuTransaksi" class="sub-menu hidden">
-                            <li class="menu-item">
-                                <a href="{{ route('pekerjaan.index') }}" class="menu-link">
-                                    <span class="menu-text"> Pekerjaan </span>
-                                </a>
-                            </li>
                             <li class="menu-item">
                                 <a href="{{ route('pelaksana.index') }}" class="menu-link">
                                     <span class="menu-text"> Pelaksana </span>

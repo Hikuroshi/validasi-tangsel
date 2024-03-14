@@ -37,7 +37,7 @@ class BadanUsahaController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
-            'npwp' => 'required|numeric|max_digits:16|unique:badan_usahas',
+            'npwp' => 'required|max:21|unique:badan_usahas',
             'sertifikat' => 'required|numeric|max_digits:21',
             'registrasi' => 'required|numeric|max_digits:13',
             'direktur' => 'required|string|max:255',

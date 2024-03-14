@@ -9,8 +9,8 @@
             Inputkan data tenaga ahli dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
-        <div class="grid xl:grid-cols-3 gap-6">
-            <div class="col-span-2">
+        <div class="grid gap-6">
+            <div>
                 <form method="POST" action="{{ route('pekerjaan.store') }}">
                     @csrf
 
@@ -78,7 +78,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nilai_pagu">Nilai Pagu <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="nilai_pagu" name="nilai_pagu" value="{{ old('nilai_pagu') }}" class="form-input" placeholder="Nilai Pagu">
+                            <input type="text" id="nilai_pagu" name="nilai_pagu" value="{{ old('nilai_pagu') }}" class="form-input currency-input" placeholder="Nilai Pagu">
                             @error('nilai_pagu')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -88,7 +88,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nilai_kontrak">Nilai Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="nilai_kontrak" name="nilai_kontrak" value="{{ old('nilai_kontrak') }}" class="form-input" placeholder="Nilai Kontrak">
+                            <input type="text" id="nilai_kontrak" name="nilai_kontrak" value="{{ old('nilai_kontrak') }}" class="form-input currency-input" placeholder="Nilai Kontrak">
                             @error('nilai_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -231,6 +231,29 @@
                     $('#sub_pekerjaan_id').empty();
                     $('#sub_pekerjaan_id').append('<option value="">Pilih Sub Pekerjaan</option>');
                 }
+            });
+
+            $('.currency-input').on('input', function() {
+                formatCurrencyInputs()
+            });
+
+            formatCurrencyInputs()
+
+            function formatCurrencyInputs() {
+                $('.currency-input').each(function() {
+                    let input = $(this).val();
+                    let sanitized = input.replace(/[^0-9]/g, '');
+                    let formatted = sanitized.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                    $(this).val(formatted);
+                });
+            }
+
+            $('form').submit(function() {
+                $('.currency-input').each(function() {
+                    let input = $(this).val();
+                    let sanitized = input.replace(/[^0-9]/g, '');
+                    $(this).val(sanitized);
+                });
             });
         });
     </script>

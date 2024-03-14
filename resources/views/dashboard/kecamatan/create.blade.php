@@ -9,7 +9,7 @@
             Inputkan data kecamatan dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
-        <div class="grid xl:grid-cols-2 gap-6">
+        <div class="grid gap-6">
             <div>
                 <form method="POST" action="{{ route('kecamatan.store') }}">
                     @csrf

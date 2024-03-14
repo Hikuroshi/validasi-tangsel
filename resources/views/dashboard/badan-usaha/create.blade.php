@@ -16,7 +16,7 @@
             Inputkan data badan usaha dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
-        <div class="grid xl:grid-cols-2 gap-6">
+        <div class="grid gap-6">
             <div>
                 <form method="POST" action="{{ route('badan-usaha.store') }}">
                     @csrf
@@ -170,6 +170,58 @@
         altFormat: "F j, Y",
         dateFormat: "Y-m-d"
     });
+
+    $(document).ready(function() {
+        $("#npwp").on("input", function(e) {
+            let cursorPos = e.target.selectionStart;
+            let currentValue = e.target.value;
+            let cleanValue = currentValue.replace(/\D/g, "");
+            let formatInput = patternMatch({
+                input: cleanValue,
+                template: "00.000.000.0-000.000"
+            });
+
+            $(this).val(formatInput);
+
+            let isBackspace = (e?.data == null) ? true : false;
+            let nextCusPos = nextDigit(formatInput, cursorPos, isBackspace);
+
+            $(this).prop("selectionStart", nextCusPos);
+            $(this).prop("selectionEnd", nextCusPos);
+        });
+    });
+
+    function patternMatch({ input, template }) {
+        try {
+            let j = 0;
+            let plaintext = "";
+            let countj = 0;
+            while (j < template.length) {
+                if (countj > input.length - 1) {
+                    template = template.substring(0, j);
+                    break;
+                }
+
+                if (template[j] == input[j]) {
+                    j++;
+                    countj++;
+                    continue;
+                }
+
+                if (template[j] == "0") {
+                    template =
+                    template.substring(0, j) + input[countj] + template.substring(j + 1);
+                    plaintext = plaintext + input[countj];
+                    countj++;
+                }
+                j++;
+            }
+
+            return template;
+        } catch {
+            return "";
+        }
+    }
 </script>
 
 <!-- Init js -->

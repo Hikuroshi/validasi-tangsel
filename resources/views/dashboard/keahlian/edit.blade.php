@@ -9,7 +9,7 @@
             Inputkan data riwayat pendidikan dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
-        <div class="grid xl:grid-cols-2 gap-6">
+        <div class="grid gap-6">
             <div>
                 <form method="POST" action="{{ route('keahlian.update', $keahlian->slug) }}" enctype="multipart/form-data">
                     @method('put')

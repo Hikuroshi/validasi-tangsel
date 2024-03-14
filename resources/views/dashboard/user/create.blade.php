@@ -9,8 +9,8 @@
             Inputkan data user dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
-        <div class="grid xl:grid-cols-3 gap-6">
-            <div class="col-span-2">
+        <div class="grid gap-6">
+            <div>
                 <form method="POST" action="{{ route('user.store') }}">
                     @csrf
 
