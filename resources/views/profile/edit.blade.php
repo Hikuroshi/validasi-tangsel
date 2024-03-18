@@ -143,11 +143,11 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- End Modal Content -->
+                </div>
             </div>
         </div>
     </div>
-</div> <!-- end card -->
+</div>
 
 @endsection
 

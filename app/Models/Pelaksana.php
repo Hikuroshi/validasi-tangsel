@@ -43,6 +43,61 @@ class Pelaksana extends Model
         );
     }
 
+    protected function progressPelaksana(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                $color = '';
+                $percent = '';
+                $desc = '';
+
+                $status = $this->status_pelaksana_f['slug'];
+                $start_date = $this->tgl_kontrak;
+                $end_date = $this->tgl_selesai;
+
+                if ($status === 'done') {
+                    $color = 'success';
+                    $percent = '100';
+                    $desc = 'Pekerjaan telah selesai dengan baik. Terima kasih atas dedikasi dan kerja keras Anda dalam menyelesaikan tugas ini.';
+                } else {
+                    $today = now();
+                    $start = Carbon::parse($start_date);
+                    $end = Carbon::parse($end_date);
+
+                    if ($today > $end) {
+                        $color = 'secondary';
+                        $percent = '100';
+                        $desc = 'Waktu pengerjaan telah habis, namun jangan menyerah! Teruskan usaha dan semangat Anda untuk menyelesaikan tugas ini.';
+                    } else {
+                        $days_passed = $start->diff($today)->days;
+                        $total_days = $start->diff($end)->days;
+                        $percent = $days_passed > 0 ? round(($days_passed / $total_days) * 100) : 0;
+
+                        if ($percent <= 25) {
+                            $color = 'primary';
+                            $desc = 'Sedang dalam tahap awal pengerjaan. Tetap semangat dan konsisten dalam menyelesaikan tugas ini.';
+                        } elseif ($percent <= 50) {
+                            $color = 'info';
+                            $desc = 'Progres pengerjaan sudah mencapai setengahnya. Lanjutkan usaha Anda untuk menyelesaikan tugas dengan baik.';
+                        } elseif ($percent <= 75) {
+                            $color = 'warning';
+                            $desc = 'Hampir selesai! Tetap fokus dan pastikan tugas ini diselesaikan dengan baik.';
+                        } else {
+                            $color = 'danger';
+                            $desc = 'Waktu yang tersisa untuk menyelesaikan tugas semakin sedikit. Percepat progres pengerjaan agar tugas dapat diselesaikan tepat waktu.';
+                        }
+                    }
+                }
+
+                return [
+                    'color' => $color,
+                    'percent' => $percent,
+                    'desc' => $desc,
+                ];
+            }
+        );
+    }
+
     protected function statusPelaksanaF(): Attribute
     {
         return new Attribute(

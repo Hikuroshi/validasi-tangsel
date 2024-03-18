@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('pekerjaan_id');
             $table->string('no_kontrak');
             $table->date('tgl_kontrak');
-            $table->date('tgl_mulai')->nullable();
-            $table->date('tgl_selesai')->nullable();
+            $table->date('tgl_mulai');
+            $table->date('tgl_selesai');
             $table->string('ppk');
             $table->string('pptk');
             $table->string('pho');

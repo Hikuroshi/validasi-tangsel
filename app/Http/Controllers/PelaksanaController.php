@@ -42,14 +42,11 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
-        $badan_usahas = BadanUsaha::where('jumlah_pekerjaan', '<', '5')->get(['id', 'nama']);
-        $tenaga_ahlis = TenagaAhli::where('status_pekerjaan', '1')->get(['id', 'nama']);
-
         return view('dashboard.pelaksana.create', [
             'title' => 'Tambah Pelaksana',
             'pekerjaans' => Pekerjaan::get(['id', 'nama']),
-            'badan_usahas' => $badan_usahas,
-            'tenaga_ahlis' => $tenaga_ahlis,
+            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
+            'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
             'status_pelaksanas' => $status,
         ]);
     }
@@ -74,6 +71,16 @@ class PelaksanaController extends Controller
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
+
+        $badan_usaha = BadanUsaha::where('id', $request->badan_usaha_id)->where('jumlah_pekerjaan', '>', '5')->first(['nama']);
+        $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
+
+        if ($badan_usaha) {
+            return redirect()->back()->withInput()->with('badan_usaha_full', $badan_usaha->nama . ' sudah mencapai batas maksimal pekerjaan.');
+        }
+        if ($tenaga_ahlis) {
+            return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
+        }
 
         DB::transaction(function () use ($request, $validatedData) {
             BadanUsaha::find($validatedData['badan_usaha_id'])->increment('jumlah_pekerjaan');
@@ -106,7 +113,7 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
-        $pelaksana->load(['badan_usaha:id,nama', 'pekerjaan', 'status_pelaksanas'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pelaksana_f']);
+        $pelaksana->load(['badan_usaha:id,nama', 'pekerjaan', 'status_pelaksanas', 'status_pelaksanas.author'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pelaksana_f', 'progress_pelaksana']);
 
         return view('dashboard.pelaksana.show', [
             'title' => 'Detail Pelaksana',
@@ -131,16 +138,13 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
-        $badan_usahas = BadanUsaha::where('jumlah_pekerjaan', '<', '5')->get(['id', 'nama'])->merge([$pelaksana->badan_usaha])->unique();
-        $tenaga_ahlis = TenagaAhli::where('status_pekerjaan', '1')->get(['id', 'nama'])->merge($pelaksana->tenaga_ahlis)->unique();
-
         $selected_tenaga_ahlis = $pelaksana->tenaga_ahlis->pluck('id');
 
         return view('dashboard.pelaksana.edit', [
             'title' => 'Perbarui Pelaksana',
             'pelaksana' => $pelaksana->load(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama', 'pekerjaan:id,nama']),
-            'badan_usahas' => $badan_usahas,
-            'tenaga_ahlis' => $tenaga_ahlis,
+            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
+            'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
             'selected_tenaga_ahlis' => $selected_tenaga_ahlis,
             'status_pelaksanas' => $status,
             'pekerjaans' => Pekerjaan::get(['id', 'nama']),
@@ -167,6 +171,24 @@ class PelaksanaController extends Controller
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
+
+        $badan_usaha = BadanUsaha::where('id', $request->badan_usaha_id)
+            ->where('jumlah_pekerjaan', '>', 5)
+            ->whereNotIn('id', [$pelaksana->badan_usaha_id])
+            ->first(['nama']);
+
+        $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
+            ->where('status_pekerjaan', 0)
+            ->whereNotIn('id', $pelaksana->tenaga_ahlis->pluck('id')->toArray())
+            ->pluck('nama')
+            ->toArray();
+
+        if ($badan_usaha) {
+            return redirect()->back()->withInput()->with('badan_usaha_full', $badan_usaha->nama . ' sudah mencapai batas maksimal pekerjaan.');
+        }
+        if ($tenaga_ahlis) {
+            return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
+        }
 
         DB::transaction(function () use ($request, $validatedData, $pelaksana) {
             $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
@@ -209,22 +231,32 @@ class PelaksanaController extends Controller
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
         ]);
 
+        $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
+            ->where('status_pekerjaan', 0)
+            ->pluck('nama')
+            ->toArray();
+
+        if ($tenaga_ahlis) {
+            return redirect()->back()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
+        }
+
         $pelaksana->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
         return redirect()->back()->with('success', 'Tenaga ahli berhasil ditambahkan ke pelaksana pekerjaan!');
     }
 
     public function deleteTenagaAhli(Pelaksana $pelaksana, TenagaAhli $tenagaAhli)
     {
+        TenagaAhli::where('id', $tenagaAhli->id)->update(['status_pekerjaan' => 1]);
         $pelaksana->tenaga_ahlis()->detach($tenagaAhli->id);
         return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pelaksana pekerjaan!');
     }
 
-    public function pekerjaanSelesai(Pelaksana $pelaksana)
-    {
-        $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
-        TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+    // public function pekerjaanSelesai(Pelaksana $pelaksana)
+    // {
+    //     $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
+    //     TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
-        $pelaksana->update(['tgl_selesai' => now()->toDateString()]);
-        return redirect()->route('pelaksana.show', $pelaksana->slug)->with('success', 'Pelaksana berhasil ditandai selesai!');
-    }
+    //     $pelaksana->update(['tgl_selesai' => now()->toDateString()]);
+    //     return redirect()->route('pelaksana.show', $pelaksana->slug)->with('success', 'Pelaksana berhasil ditandai selesai!');
+    // }
 }

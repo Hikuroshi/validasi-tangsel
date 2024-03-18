@@ -94,9 +94,6 @@
                 <button type="button" data-hs-overlay="#deleteData" class="btn bg-danger text-white hover:bg-danger">
                     Hapus Akun
                 </button>
-                @error('password', 'userDeletion')
-                <small class="text-danger ps-3">{{ $message }}</small>
-                @enderror
 
                 <div id="deleteData" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
                     <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -115,10 +112,6 @@
                                     Ketika akun telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data akun.
                                 </p>
                                 <div class="text-center">
-                                    <h3 class="text-gray-800 dark:text-white font-bold mb-3">
-                                        Masukan Password untuk melanjutkan
-                                    </h3>
-
                                     <form method="post" action="{{ route('user.destroy', $user->username) }}">
                                         @csrf
                                         @method('delete')
@@ -131,11 +124,11 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- End Modal Content -->
+                </div>
             </div>
         </div>
     </div>
-</div> <!-- end card -->
+</div>
 
 @endsection
 

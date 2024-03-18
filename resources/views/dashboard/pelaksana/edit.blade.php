@@ -12,6 +12,27 @@
 
 @section('container')
 
+@if(session()->has('badan_usaha_full'))
+    <div id="dismiss-secondary" class="bg-danger/10 text-danger border border-danger/20 text-sm rounded py-3 px-5 flex justify-between items-center mb-6">
+        <p>
+            <span class="font-bold">{{ session('badan_usaha_full') }}</span>
+        </p>
+        <button class="text-xl/[0]" data-hs-remove-element="#dismiss-secondary" type="button">
+            <i class="uil uil-multiply text-xl"></i>
+        </button>
+    </div>
+@endif
+@if(session()->has('tenaga_ahli_full'))
+    <div id="dismiss-secondary" class="bg-danger/10 text-danger border border-danger/20 text-sm rounded py-3 px-5 flex justify-between items-center mb-6">
+        <p>
+            <span class="font-bold">{{ session('tenaga_ahli_full') }}</span>
+        </p>
+        <button class="text-xl/[0]" data-hs-remove-element="#dismiss-secondary" type="button">
+            <i class="uil uil-multiply text-xl"></i>
+        </button>
+    </div>
+@endif
+
 <div class="card mb-6">
     <div class="p-6">
         <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }}</h4>

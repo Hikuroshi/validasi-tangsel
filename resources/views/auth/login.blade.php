@@ -7,7 +7,7 @@
                         <img src="/assets/images/logo-tangsel.png" alt="" class="h-20 block dark:hidden">
                         <img src="/assets/images/logo-tangsel.png" alt="" class="h-20 hidden dark:block">
                     </a>
-                    <h4 class="text-base mt-5 dark:text-gray-300">DASI-PPK</h4>
+                    <h4 class="text-base mt-5 dark:text-gray-300">DATIN-PPK</h4>
                     <p class="text-gray-500 mt-1 dark:text-gray-400">Data Informasi Penyelenggaraan Pekerjaan Kontruksi</p>
                     <p class="text-gray-500 mt-1 mb-10 dark:text-gray-400">Dinas Sumber Daya Air, Bina Marga Dan Bina Kontruksi</p>
                 </div>
@@ -52,8 +52,8 @@
             </div>
 
             <div class="hidden lg:block">
-                <div class="px-20 relative h-full bg-no-repeat  bg-cover bg-[url('/assets/images/login.jpg')]" style="background: url('/assets/images/login.jpg')">
-                    {{-- <div class="absolute inset-0 bg-dark/50"></div> --}}
+                <div class="h-full">
+                    <img src="/assets/images/login.jpg" alt="Logo" class="object-cover h-full">
                 </div>
             </div>
         </div>

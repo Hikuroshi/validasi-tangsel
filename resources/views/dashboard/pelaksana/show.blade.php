@@ -12,94 +12,155 @@
 
 @section('container')
 
-<div class="card">
-    <div class="border-b p-4 dark:border-gray-600">
-        <h6 class="uppercase dark:text-gray-300">Ulasan Pekerjaan/Kontrak</h6>
-    </div>
+<div class="flex flex-auto flex-col">
+    <div class="grid xl:grid-cols-3 gap-6">
+        <div class="xl:col-span-2 space-y-5">
 
-    <div class="p-6">
-        <div class="grid xl:grid-cols-4 md:grid-cols-2 gap-6">
-            <div class="flex items-center gap-5">
-                <i data-lucide="calendar-check" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
-                <div>
-                    <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tgl_mulai_f }}</h4>
-                    <span class="text-sm dark:text-gray-400">Tanggal Mulai</span>
+            <div class="card">
+                <div class="border-b p-4 dark:border-gray-600">
+                    <h6 class="uppercase dark:text-gray-300">Ulasan Pekerjaan/Kontrak</h6>
                 </div>
-            </div>
 
-            <div class="flex items-center gap-5">
-                <i data-lucide="users" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
-                <div>
-                    <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tenaga_ahlis->count() }}</h4>
-                    <span class="text-sm dark:text-gray-400">Tenaga Ahli</span>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-5">
-                <i data-lucide="clock-5" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
-                <div>
-                    <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans($pelaksana->tgl_mulai) }}</h4>
-                    <span class="text-sm dark:text-gray-400">Waktu</span>
-                </div>
-            </div>
-
-            <div class="flex flex-col items-center gap-1">
-                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">Status</h4>
-
-                <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pelaksana->status_pelaksana_f['color'] }}/20 btn bg-{{ $pelaksana->status_pelaksana_f['color'] }}/20 text-{{ $pelaksana->status_pelaksana_f['color'] }} hover:bg-{{ $pelaksana->status_pelaksana_f['color'] }} hover:text-white py-2 px-3 rounded">
-                    <i class="uil uil-{{ $pelaksana->status_pelaksana_f['icon'] }} me-1"></i>
-                    {{ $pelaksana->status_pelaksana_f['name'] }}
-                </button>
-                <div id="update-status" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
-                    <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
-                        <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                            <div class="flex justify-between items-center pt-3 px-4">
-                                <h3 class="font-bold text-gray-800 dark:text-white">
-                                    Status Pelaksana
-                                </h3>
-                                <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#update-status">
-                                    <span class="sr-only">Tutup</span>
-                                    <i class="uil uil-times text-2xl"></i>
-                                </button>
+                <div class="p-6">
+                    <div class="grid xl:grid-cols-4 md:grid-cols-2 gap-6">
+                        <div class="flex items-center gap-5">
+                            <i data-lucide="calendar-check" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                            <div>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tgl_kontrak_f }}</h4>
+                                <span class="text-sm dark:text-gray-400">Tanggal Kontrak</span>
                             </div>
-                            <div class="p-4 overflow-y-auto">
-                                <form method="POST" action="{{ route('status-pelaksana.store', $pelaksana->slug) }}">
-                                    @method('put')
-                                    @csrf
+                        </div>
 
-                                    <div class="mb-3">
-                                        <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
+                        <div class="flex items-center gap-5">
+                            <i data-lucide="calendar-x" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                            <div>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tgl_selesai_f }}</h4>
+                                <span class="text-sm dark:text-gray-400">Tanggal Berakhir</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-5">
+                            <i data-lucide="users" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                            <div>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tenaga_ahlis->count() }}</h4>
+                                <span class="text-sm dark:text-gray-400">Tenaga Ahli</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-5">
+                            <i data-lucide="clock-5" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                            <div>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans($pelaksana->tgl_mulai) }}</h4>
+                                <span class="text-sm dark:text-gray-400">Waktu</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="p-5 pb-0">
+                    <h4 class="uppercase dark:text-gray-300">Persentase Proses Pekerjaan</h4>
+                </div>
+
+                <div class="p-6">
+                    <p class="mb-2 dark:text-gray-400">{{ $pelaksana->progress_pelaksana['desc'] }}</p>
+                    <div class="flex w-full h-6 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700 mb-5">
+                        <div class="flex flex-col justify-center overflow-hidden bg-{{ $pelaksana->progress_pelaksana['color'] }} text-xs text-white text-center" role="progressbar" style="width: {{ $pelaksana->progress_pelaksana['percent'] }}%" aria-valuenow="{{ $pelaksana->progress_pelaksana['percent'] }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ $pelaksana->progress_pelaksana['color'] == 'secondary' ? 'Gagal menyelesaikan pekerjaan dengan tepat waktu' : $pelaksana->progress_pelaksana['percent'] . '%' }}
+                        </div>
+                    </div>
+
+                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pelaksana->status_pelaksana_f['color'] }}/20 btn bg-{{ $pelaksana->status_pelaksana_f['color'] }}/20 text-{{ $pelaksana->status_pelaksana_f['color'] }} hover:bg-{{ $pelaksana->status_pelaksana_f['color'] }} hover:text-white py-2 px-3 rounded">
+                        <i class="uil uil-{{ $pelaksana->status_pelaksana_f['icon'] }} me-1"></i>
+                        {{ $pelaksana->status_pelaksana_f['name'] }}
+                    </button>
+                    <div id="update-status" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
+                        <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                            <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                                <div class="flex justify-between items-center pt-3 px-4">
+                                    <h3 class="font-bold text-gray-800 dark:text-white">
+                                        Status Pelaksana
+                                    </h3>
+                                    <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#update-status">
+                                        <span class="sr-only">Tutup</span>
+                                        <i class="uil uil-times text-2xl"></i>
+                                    </button>
+                                </div>
+                                <div class="p-4 overflow-y-auto">
+                                    <form method="POST" action="{{ route('status-pelaksana.store', $pelaksana->slug) }}">
+                                        @method('put')
+                                        @csrf
+
                                         <div class="mb-3">
-                                            <select id="status_pelaksana" name="status_pelaksana" class="form-select" required>
-                                                <option>Pilih Status</option>
-                                                @foreach ($status_pelaksanas as $key => $value)
+                                            <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
+                                            <div class="mb-3">
+                                                <select id="status_pelaksana" name="status_pelaksana" class="form-select" required>
+                                                    <option>Pilih Status</option>
+                                                    @foreach ($status_pelaksanas as $key => $value)
                                                     <option value="{{ $key }}" @selected(old('status_pelaksana', $pelaksana->status_pelaksana_f['slug']) == $key)>
                                                         {{ $value }}
                                                     </option>
-                                                @endforeach
-                                            </select>
-                                            @error('status_pelaksana')
+                                                    @endforeach
+                                                </select>
+                                                @error('status_pelaksana')
                                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                                            @enderror
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="mb-3">
-                                        <label class="mb-2" for="keterangan">Keterangan <span class="text-danger">*</span></label>
                                         <div class="mb-3">
-                                            <textarea id="keterangan" name="keterangan" class="form-input" rows="5" placeholder="Keterangan" required>{{ old('keterangan', $pelaksana->status_pelaksana_f['keterangan']) }}</textarea>
-                                            @error('keterangan')
-                                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                                            @enderror
+                                            <label class="mb-2" for="keterangan">Keterangan <span class="text-danger">*</span></label>
+                                            <div class="mb-3">
+                                                <textarea id="keterangan" name="keterangan" class="form-input" rows="5" placeholder="Keterangan" required>{{ old('keterangan', $pelaksana->status_pelaksana_f['keterangan']) }}</textarea>
+                                                @error('keterangan')
+                                                <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <button type="submit" class="btn bg-primary text-white hover:bg-primary mt-5">
-                                        Simpan
-                                    </button>
-                                </form>
+                                        <button type="submit" class="btn bg-primary text-white hover:bg-primary mt-5">
+                                            Simpan
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1">
+            <div class="card">
+                <div class="p-5 pb-3">
+                    <h6 class="uppercase dark:text-gray-300">Aktifitas Status Pekerjaan</h6>
+                </div>
+
+                <div class="p-6 pt-0 pb-3">
+                    <div id="data-container" class="divide-y divide-gray-100 dark:divide-gray-600">
+                        @foreach ($pelaksana->status_pelaksanas as $status_pelaksana)
+                        <div>
+                            <div class="flex items-start gap-5 py-3">
+                                <div class="text-center">
+                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-primary bg-primary/20">{{ $status_pelaksana->created_at->format('d') }}</h2>
+                                    <small>{{ $status_pelaksana->created_at->format('M') }}</small>
+                                </div>
+                                <div>
+                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $status_pelaksana->active }}</p>
+                                    <p class="text-gray-400">{{ $status_pelaksana->author->name }} telah memperbarui status</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <div class="text-center">
+                        <button id="muat-lagi" class="btn border border-gray-200 hover:bg-light mb-3 transition-all duration-500 dark:border-gray-600 dark:hover:bg-gray-600/20">
+                            <i data-lucide="loader" class="w-4 h-4 me-2"></i>
+                            Muat lagi
+                        </button>
                     </div>
                 </div>
             </div>
@@ -318,6 +379,60 @@
     </div>
 </div>
 
+<div class="card mt-6">
+    <div class="p-6">
+        <h4 class="uppercase dark:text-gray-300 mb-3">Zona Tindakan</h4>
+        <p class="mb-3">
+            Perbarui Data memungkinkan pengguna untuk memperbarui informasi terkait pekerjaan yang sedang dilakukan atau sudah selesai dilakukan. Dengan menggunakan fitur ini, pengguna dapat mengubah atau memperbaiki detail-detail tertentu seperti status progres, tanggal mulai dan selesai, deskripsi pekerjaan, dan informasi lainnya yang terkait dengan pekerjaan tersebut. Fitur ini memberikan fleksibilitas bagi pengguna untuk memastikan bahwa informasi yang tercatat tetap akurat dan terkini sepanjang perjalanan proyek atau tugas yang sedang dikerjakan.
+        </p>
+        <p class="mb-3">
+            Hapus Data memungkinkan pengguna untuk menghapus seluruh informasi atau data terkait pekerjaan yang sudah selesai atau tidak diperlukan lagi. Saat menggunakan fitur ini, penting untuk diingat bahwa semua data yang terkait dengan pekerjaan tersebut akan dihapus secara permanen dari sistem. Sebelum menghapus data pekerjaan, sangat disarankan untuk mencadangkan semua informasi yang dianggap penting atau perlu disimpan sebagai referensi di masa depan. Proses penghapusan data pekerjaan harus dilakukan dengan hati-hati dan pertimbangkan untuk memastikan tidak ada informasi penting yang hilang atau terhapus tanpa disengaja.
+        </p>
+
+        <div class="grid xl:grid-cols-2 gap-6">
+            <div>
+                <a href="{{ route('pelaksana.edit', $pelaksana->slug) }}" class="btn bg-primary text-white hover:bg-primary me-2">
+                    Perbarui Data
+                </a>
+                <button type="button" data-hs-overlay="#deleteDataPelaksana" class="btn bg-danger text-white hover:bg-danger">
+                    Hapus Data
+                </button>
+
+                <div id="deleteDataPelaksana" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
+                    <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                        <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                            <div class="flex justify-between items-center pt-3 px-4">
+                                <h3 class="font-bold text-gray-800 dark:text-white">
+                                    Apakah kamu yakin ingin menghapus data?
+                                </h3>
+                                <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#deleteDataPelaksana">
+                                    <span class="sr-only">Tutup</span>
+                                    <i class="uil uil-times text-2xl"></i>
+                                </button>
+                            </div>
+                            <div class="p-4 overflow-y-auto">
+                                <p class="dark:text-gray-400 mb-3">
+                                    Ketika data <b>Pelaksana dengan Pekerjaan {{ $pelaksana->pekerjaan->nama }} Badan Usaha {{ $pelaksana->badan_usaha->nama }}</b> telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data data.
+                                </p>
+                                <div class="text-center">
+                                    <form method="post" action="{{ route('pelaksana.destroy', $pelaksana->slug) }}">
+                                        @csrf
+                                        @method('delete')
+
+                                        <button type="submit" class="btn bg-danger text-white hover:bg-danger">
+                                            Hapus data
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('js')
@@ -392,6 +507,35 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        const dataContainer = $('#data-container');
+        const loadDataButton = $('#muat-lagi');
+        const initialItemCount = 3;
+        let itemCount = initialItemCount;
+
+        hideExcessData();
+
+        loadDataButton.on('click', function() {
+            itemCount = dataContainer.children().length;
+            showAllData();
+            hideLoadButton();
+        });
+
+        function hideExcessData() {
+            dataContainer.children().slice(initialItemCount).hide();
+        }
+
+        function showAllData() {
+            dataContainer.children().show();
+        }
+
+        function hideLoadButton() {
+            loadDataButton.hide();
+        }
+    });
+</script>
+
 <!-- Select2 js -->
 <script src="/assets/js/select2.min.js"></script>
 
@@ -429,6 +573,29 @@
     });
 </script>
 @endif
+
+@if(session()->has('tenaga_ahli_full'))
+<script>
+    $(document).ready(function() {
+        let Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        Toast.fire({
+            icon: 'error',
+            text: 'Gagal Menambahkan, {{ session('tenaga_ahli_full') }}'
+        });
+    });
+</script>
+@enderror
 
 <script>
     $(document).on('click', '#deleteData', function() {
