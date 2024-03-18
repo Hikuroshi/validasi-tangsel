@@ -38,13 +38,13 @@ class BadanUsahaController extends Controller
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
             'npwp' => 'required|max:21|unique:badan_usahas',
-            'sertifikat' => 'required|numeric|max_digits:21',
-            'registrasi' => 'required|numeric|max_digits:13',
+            'sertifikat' => 'required|max:21',
+            'registrasi' => 'required|max:24',
             'direktur' => 'required|string|max:255',
             'alamat' => 'required|string',
             'email' => 'required|string|email|max:255|unique:badan_usahas',
-            'telepon' => 'required|numeric|max_digits:13|unique:badan_usahas',
-            'no_akta' => 'required|numeric|max_digits:13',
+            'telepon' => 'required|max:15|unique:badan_usahas',
+            'no_akta' => 'required|max:24',
             'tgl_akta' => 'required|date',
             'klasifikasi' => 'required|string',
             'status' => 'required|boolean',
@@ -91,21 +91,21 @@ class BadanUsahaController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'sertifikat' => 'required|numeric|max_digits:21',
-            'registrasi' => 'required|numeric|max_digits:13',
+            'sertifikat' => 'required|max:21',
+            'registrasi' => 'required|max:24',
             'direktur' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'no_akta' => 'required|numeric|max_digits:13',
+            'no_akta' => 'required|max:24',
             'tgl_akta' => 'required|date',
             'klasifikasi' => 'required|string',
             'status' => 'required|boolean',
         ];
 
         if ($request->npwp != $badanUsaha->npwp) {
-            $rules['npwp'] = 'required|numeric|max_digits:16|unique:badan_usahas';
+            $rules['npwp'] = 'required|max:16|unique:badan_usahas';
         }
         if ($request->telepon != $badanUsaha->telepon) {
-            $rules['telepon'] = 'required|numeric|max_digits:13|unique:badan_usahas';
+            $rules['telepon'] = 'required|max:15|unique:badan_usahas';
         }
         if ($request->email != $badanUsaha->email) {
             $rules['email'] = 'required|string|email|max:255|unique:badan_usahas';
