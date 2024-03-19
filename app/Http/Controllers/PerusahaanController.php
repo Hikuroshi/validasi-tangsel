@@ -59,16 +59,16 @@ class PerusahaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Perusahaan $badanUsaha)
+    public function show(Perusahaan $perusahaan)
     {
-        $tenaga_ahlis = $badanUsaha->tenaga_ahlis()->get(['slug', 'nama', 'jabatan', 'email', 'telepon', 'kelamin', 'status'])->append(['kelamin_f', 'status_f']);
+        $tenaga_ahlis = $perusahaan->tenaga_ahlis()->get(['slug', 'nama', 'jabatan', 'email', 'telepon', 'kelamin', 'status'])->append(['kelamin_f', 'status_f']);
 
-        session()->flash('flash_perusahaan_id', $badanUsaha->id);
-        session()->flash('flash_perusahaan_nama', $badanUsaha->nama);
+        session()->flash('flash_perusahaan_id', $perusahaan->id);
+        session()->flash('flash_perusahaan_nama', $perusahaan->nama);
 
         return view('dashboard.perusahaan.show', [
             'title' => 'Detail Perusahaan',
-            'perusahaan' => $badanUsaha,
+            'perusahaan' => $perusahaan,
             'tenaga_ahlis' => $tenaga_ahlis,
         ]);
     }
@@ -76,18 +76,18 @@ class PerusahaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Perusahaan $badanUsaha)
+    public function edit(Perusahaan $perusahaan)
     {
         return view('dashboard.perusahaan.edit', [
             'title' => 'Perbarui Perusahaan',
-            'perusahaan' => $badanUsaha,
+            'perusahaan' => $perusahaan,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Perusahaan $badanUsaha)
+    public function update(Request $request, Perusahaan $perusahaan)
     {
         $rules = [
             'nama' => 'required|string|max:255',
@@ -101,13 +101,13 @@ class PerusahaanController extends Controller
             'status' => 'required|boolean',
         ];
 
-        if ($request->npwp != $badanUsaha->npwp) {
+        if ($request->npwp != $perusahaan->npwp) {
             $rules['npwp'] = 'required|max:16|unique:perusahaans';
         }
-        if ($request->telepon != $badanUsaha->telepon) {
+        if ($request->telepon != $perusahaan->telepon) {
             $rules['telepon'] = 'required|max:15|unique:perusahaans';
         }
-        if ($request->email != $badanUsaha->email) {
+        if ($request->email != $perusahaan->email) {
             $rules['email'] = 'required|string|email|max:255|unique:perusahaans';
         }
 
@@ -115,16 +115,16 @@ class PerusahaanController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $badanUsaha->update($validatedData);
+        $perusahaan->update($validatedData);
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Perusahaan $badanUsaha)
+    public function destroy(Perusahaan $perusahaan)
     {
-        $badanUsaha->delete();
+        $perusahaan->delete();
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil dihapus!');
     }
 }
