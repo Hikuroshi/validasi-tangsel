@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('badan-usaha.create') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('perusahaan.create') }}" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-plus"></i>
             </a>
         </div>
@@ -66,13 +66,13 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/badan-usaha/${cell}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/perusahaan/${cell}">
                                     <i class="uil uil-eye"></i>
                                 </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/badan-usaha/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/perusahaan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/badan-usaha/${cell}" method="post" class="d-inline">
+                                <form action="/perusahaan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">

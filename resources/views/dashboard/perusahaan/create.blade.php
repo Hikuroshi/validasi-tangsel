@@ -18,7 +18,7 @@
 
         <div class="grid gap-6">
             <div>
-                <form method="POST" action="{{ route('badan-usaha.store') }}">
+                <form method="POST" action="{{ route('perusahaan.store') }}">
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">

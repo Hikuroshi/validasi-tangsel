@@ -18,7 +18,7 @@
 
         <div class="grid gap-6">
             <div>
-                <form method="POST" action="{{ route('badan-usaha.update', $perusahaan->slug) }}">
+                <form method="POST" action="{{ route('perusahaan.update', $perusahaan->slug) }}">
                     @method('put')
                     @csrf
 

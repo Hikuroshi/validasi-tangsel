@@ -71,7 +71,7 @@
 
                         <ul id="menuMaster" class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="{{ route('badan-usaha.index') }}" class="menu-link">
+                                <a href="{{ route('perusahaan.index') }}" class="menu-link">
                                     <span class="menu-text"> Perusahaan </span>
                                 </a>
                             </li>

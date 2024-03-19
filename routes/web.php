@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/user-password', [UserController::class, 'passwordUpdate'])->name('user-password.update');
 
     Route::resource('/tenaga-ahli', TenagaAhliController::class);
-    Route::resource('/badan-usaha', PerusahaanController::class);
+    Route::resource('/perusahaan', PerusahaanController::class);
     Route::resource('/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
     Route::resource('/sub-pekerjaan', SubPekerjaanController::class)->except('show');
     Route::resource('/jenis-jasa', JenisJasaController::class)->except('show');

@@ -14,7 +14,7 @@ class PerusahaanController extends Controller
     {
         $perusahaans = Perusahaan::latest()->get(['slug', 'nama', 'sertifikat', 'direktur', 'email', 'telepon', 'status'])->append(['status_f']);
 
-        return view('dashboard.badan-usaha.index', [
+        return view('dashboard.perusahaan.index', [
             'title' => 'Daftar Perusahaan',
             'perusahaans' => $perusahaans,
         ]);
@@ -25,7 +25,7 @@ class PerusahaanController extends Controller
      */
     public function create()
     {
-        return view('dashboard.badan-usaha.create', [
+        return view('dashboard.perusahaan.create', [
             'title' => 'Tambah Perusahaan'
         ]);
     }
@@ -53,7 +53,7 @@ class PerusahaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         Perusahaan::create($validatedData);
-        return redirect()->route('badan-usaha.index')->with('success', 'Perusahaan berhasil disimpan');
+        return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil disimpan');
     }
 
     /**
@@ -66,7 +66,7 @@ class PerusahaanController extends Controller
         session()->flash('flash_perusahaan_id', $badanUsaha->id);
         session()->flash('flash_perusahaan_nama', $badanUsaha->nama);
 
-        return view('dashboard.badan-usaha.show', [
+        return view('dashboard.perusahaan.show', [
             'title' => 'Detail Perusahaan',
             'perusahaan' => $badanUsaha,
             'tenaga_ahlis' => $tenaga_ahlis,
@@ -78,7 +78,7 @@ class PerusahaanController extends Controller
      */
     public function edit(Perusahaan $badanUsaha)
     {
-        return view('dashboard.badan-usaha.edit', [
+        return view('dashboard.perusahaan.edit', [
             'title' => 'Perbarui Perusahaan',
             'perusahaan' => $badanUsaha,
         ]);
@@ -116,7 +116,7 @@ class PerusahaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         $badanUsaha->update($validatedData);
-        return redirect()->route('badan-usaha.index')->with('success', 'Perusahaan berhasil diperbarui!');
+        return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil diperbarui!');
     }
 
     /**
@@ -125,6 +125,6 @@ class PerusahaanController extends Controller
     public function destroy(Perusahaan $badanUsaha)
     {
         $badanUsaha->delete();
-        return redirect()->route('badan-usaha.index')->with('success', 'Perusahaan berhasil dihapus!');
+        return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil dihapus!');
     }
 }
