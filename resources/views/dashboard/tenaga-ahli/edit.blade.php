@@ -1,5 +1,12 @@
 @extends('layouts.main')
 
+@section('css')
+
+<!-- Flatpickr css -->
+<link rel="stylesheet" href="/assets/libs/flatpickr/flatpickr.min.css">
+
+@endsection
+
 @section('container')
 
 <div class="card mb-6">
@@ -18,7 +25,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nik">No KTP <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nik" name="nik" value="{{ old('nik', $tenaga_ahli->nik) }}" class="form-input" placeholder="No KTP">
+                            <input type="text" id="nik" name="nik" value="{{ old('nik', $tenaga_ahli->nik) }}" class="form-input">
                             @error('nik')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -28,7 +35,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="npwp">NPWP <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="npwp" name="npwp" value="{{ old('npwp', $tenaga_ahli->npwp) }}" class="form-input" placeholder="NPWP">
+                            <input type="text" id="npwp" name="npwp" value="{{ old('npwp', $tenaga_ahli->npwp) }}" class="form-input">
                             @error('npwp')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -38,7 +45,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama', $tenaga_ahli->nama) }}" class="form-input" placeholder="Nama">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama', $tenaga_ahli->nama) }}" class="form-input">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -46,17 +53,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="perusahaan_id">Perusahaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
-                                <option>Pilih Badan Usaha</option>
-                                @foreach ($badan_usahas as $badan_usaha)
-                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id', $tenaga_ahli->badan_usaha_id) == $badan_usaha->id)>
-                                    {{ $badan_usaha->nama }}
+                            <select id="perusahaan_id" name="perusahaan_id" class="form-select">
+                                <option></option>
+                                @foreach ($perusahaans as $perusahaan)
+                                <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id', $tenaga_ahli->perusahaan_id) == $perusahaan->id)>
+                                    {{ $perusahaan->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('badan_usaha_id')
+                            @error('perusahaan_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -65,7 +72,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="jabatan">Jabatan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="jabatan" name="jabatan" value="{{ old('jabatan', $tenaga_ahli->jabatan) }}" class="form-input" placeholder="Jabatan">
+                            <input type="text" id="jabatan" name="jabatan" value="{{ old('jabatan', $tenaga_ahli->jabatan) }}" class="form-input">
                             @error('jabatan')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -75,7 +82,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tempat_lahir">Tempat Lahir <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $tenaga_ahli->tempat_lahir) }}" class="form-input" placeholder="Tempat Lahir">
+                            <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ old('tempat_lahir', $tenaga_ahli->tempat_lahir) }}" class="form-input">
                             @error('tempat_lahir')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -85,7 +92,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="humanfd-datepicker">Tanggal Lahir <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="humanfd-datepicker" name="tgl_lahir" value="{{ old('tgl_lahir', $tenaga_ahli->tgl_lahir) }}" class="form-input" placeholder="{{ now()->format('F j, Y') }}">
+                            <input type="text" id="humanfd-datepicker" name="tgl_lahir" value="{{ old('tgl_lahir', $tenaga_ahli->tgl_lahir) }}" class="form-input">
                             @error('tgl_lahir')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -95,7 +102,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <label class="mb-2" for="alamat">Alamat <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <textarea id="alamat" name="alamat" class="form-input" rows="5" placeholder="Alamat">{{ old('alamat', $tenaga_ahli->alamat) }}</textarea>
+                            <textarea id="alamat" name="alamat" class="form-input" rows="5">{{ old('alamat', $tenaga_ahli->alamat) }}</textarea>
                             @error('alamat')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -106,7 +113,7 @@
                         <label class="mb-2" for="kelamin">Jenis Kelamin <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <select id="kelamin" name="kelamin" class="form-select">
-                                <option value="">Pilih Kelamin</option>
+                                <option value=""></option>
                                 <option value="1" @selected(old('kelamin', $tenaga_ahli->kelamin) == '1')>Laki-laki</option>
                                 <option value="0" @selected(old('kelamin', $tenaga_ahli->kelamin) == '0')>Perempuan</option>
                             </select>
@@ -119,7 +126,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="email">Email <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="email" id="email" name="email" value="{{ old('email', $tenaga_ahli->email) }}" class="form-input" placeholder="Email">
+                            <input type="email" id="email" name="email" value="{{ old('email', $tenaga_ahli->email) }}" class="form-input">
                             @error('email')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -129,7 +136,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="telepon">No Telp <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="telepon" name="telepon" value="{{ old('telepon', $tenaga_ahli->telepon) }}" class="form-input" placeholder="No Telp">
+                            <input type="text" id="telepon" name="telepon" value="{{ old('telepon', $tenaga_ahli->telepon) }}" class="form-input">
                             @error('telepon')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -139,7 +146,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <label class="mb-2" for="keahlian">Keahlian <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <textarea id="keahlian" name="keahlian" class="form-input" rows="5" placeholder="Keahlian">{{ old('keahlian', $tenaga_ahli->keahlian) }}</textarea>
+                            <textarea id="keahlian" name="keahlian" class="form-input" rows="5">{{ old('keahlian', $tenaga_ahli->keahlian) }}</textarea>
                             @error('keahlian')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -171,5 +178,113 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('js')
+
+<!-- Flatpickr Plugin Js -->
+<script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="/assets/libs/flatpickr/id.js"></script>
+
+<script>
+    flatpickr("#humanfd-datepicker", {
+        locale: "id",
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d"
+    });
+
+    $(document).ready(function() {
+        $("#nik").on("input", function(e) {
+            formatInput(e, "0000 0000 0000 0000");
+        });
+
+        $("#npwp").on("input", function(e) {
+            // formatInput(e, "00.000.000.0-000.000");
+            formatInput(e, "0000 0000 0000 0000");
+        });
+
+        $("#telepon").on("input", function(e) {
+            formatTelepon(e, "0800 0000 00000");
+        });
+    });
+
+    function formatInput(e, template) {
+        let cursorPos = e.target.selectionStart;
+        let currentValue = e.target.value;
+        let cleanValue = currentValue.replace(/\D/g, "");
+        let formatInput = patternMatch({
+            input: cleanValue,
+            template: template
+        });
+
+        $(e.target).val(formatInput);
+
+        let isBackspace = (e?.data == null) ? true : false;
+        let nextCusPos = nextDigit(formatInput, cursorPos, isBackspace);
+
+        $(e.target).prop("selectionStart", nextCusPos);
+        $(e.target).prop("selectionEnd", nextCusPos);
+    }
+
+    function formatTelepon(e, template) {
+        let cursorPos = e.target.selectionStart;
+        let currentValue = e.target.value;
+        let cleanValue = currentValue.replace(/\D/g, "");
+
+        if (cleanValue.length >= 2 && cleanValue.substring(0, 2) !== "08") {
+            cleanValue = "08" + cleanValue;
+        }
+
+        let formatInput = patternMatch({
+            input: cleanValue,
+            template: template
+        });
+
+        $(e.target).val(formatInput);
+
+        let isBackspace = (e?.data == null) ? true : false;
+        let nextCusPos = nextDigit(formatInput, cursorPos, isBackspace);
+
+        $(e.target).prop("selectionStart", nextCusPos);
+        $(e.target).prop("selectionEnd", nextCusPos);
+    }
+
+    function patternMatch({ input, template }) {
+        try {
+            let j = 0;
+            let plaintext = "";
+            let countj = 0;
+            while (j < template.length) {
+                if (countj > input.length - 1) {
+                    template = template.substring(0, j);
+                    break;
+                }
+
+                if (template[j] == input[j]) {
+                    j++;
+                    countj++;
+                    continue;
+                }
+
+                if (template[j] == "0") {
+                    template =
+                    template.substring(0, j) + input[countj] + template.substring(j + 1);
+                    plaintext = plaintext + input[countj];
+                    countj++;
+                }
+                j++;
+            }
+
+            return template;
+        } catch {
+            return "";
+        }
+    }
+</script>
+
+<!-- Init js -->
+<script src="/assets/js/pages/form-advanced.init.js"></script>
 
 @endsection

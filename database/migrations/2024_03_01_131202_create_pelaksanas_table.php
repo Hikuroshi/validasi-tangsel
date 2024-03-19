@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pelaksanas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('badan_usaha_id');
-            $table->unsignedBigInteger('pekerjaan_id');
+            $table->unsignedBigInteger('perusahaan_id');
             $table->string('no_kontrak');
             $table->date('tgl_kontrak');
             $table->date('tgl_mulai');
@@ -23,6 +23,15 @@ return new class extends Migration
             $table->string('ppk');
             $table->string('pptk');
             $table->string('pho');
+            $table->unsignedBigInteger('sub_pekerjaan_id');
+            $table->text('deskripsi');
+            $table->string('nilai_pagu');
+            $table->string('nilai_kontrak');
+            $table->text('lokasi');
+            $table->string('sumber_dana');
+            $table->year('thn_anggaran');
+            $table->string('metode');
+            $table->string('jenis_kontruksi');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });

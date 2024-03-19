@@ -43,6 +43,24 @@ class Pelaksana extends Model
         );
     }
 
+    protected function nilaiPaguF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return "Rp." . number_format($this->nilai_pagu, 0, '.', '.');
+            }
+        );
+    }
+
+    protected function nilaiKontrakF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return "Rp." . number_format($this->nilai_kontrak, 0, '.', '.');
+            }
+        );
+    }
+
     protected function progressPelaksana(): Attribute
     {
         return new Attribute(
@@ -169,49 +187,24 @@ class Pelaksana extends Model
         );
     }
 
-    // protected function tglBatasF(): Attribute
-    // {
-    //     return new Attribute(
-    //         get: function () {
-    //             $tglMulai = Carbon::parse($this->tgl_mulai);
-    //             $tglBatas = $tglMulai->addDays($this->lama);
-
-    //             return $tglBatas->isoFormat('D MMMM YYYY');
-    //         }
-    //     );
-    // }
-
-    // protected function tglSelesaiF(): Attribute
-    // {
-    //     return new Attribute(
-    //         get: function () {
-    //             if ($this->tgl_selesai) {
-    //                 return Carbon::parse($this->tgl_selesai)->isoFormat('D MMMM YYYY');
-    //             } else {
-    //                 return 'Belum selesai';
-    //             }
-    //         }
-    //     );
-    // }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function badan_usaha(): BelongsTo
+    public function perusahaan(): BelongsTo
     {
-        return $this->belongsTo(BadanUsaha::class, 'badan_usaha_id');
-    }
-
-    public function pekerjaan(): BelongsTo
-    {
-        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
     public function status_pelaksanas(): HasMany
     {
         return $this->hasMany(StatusPelaksana::class, 'pelaksana_id');
+    }
+
+    public function sub_pekerjaan(): BelongsTo
+    {
+        return $this->belongsTo(SubPekerjaan::class, 'sub_pekerjaan_id');
     }
 
     public function tenaga_ahlis()
@@ -228,7 +221,7 @@ class Pelaksana extends Model
     {
         return [
             'slug' => [
-                'source' => ['badan_usaha.nama', 'pekerjaan.nama'],
+                'source' => 'nama',
                 'includeTrashed' => true,
             ]
         ];

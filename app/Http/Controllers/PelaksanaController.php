@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BadanUsaha;
-use App\Models\Pekerjaan;
+use App\Models\Perusahaan;
+use App\Models\JenisJasa;
+use App\Models\JenisPekerjaan;
 use App\Models\Pelaksana;
 use App\Models\StatusPelaksana;
+use App\Models\SubPekerjaan;
 use App\Models\TenagaAhli;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,8 +19,8 @@ class PelaksanaController extends Controller
      */
     public function index()
     {
-        $pelaksanas = Pelaksana::latest()->with(['badan_usaha:id,nama', 'pekerjaan:id,nama', 'status_pelaksanas'])
-                                    ->get(['id', 'slug', 'badan_usaha_id', 'pekerjaan_id', 'no_kontrak', 'tgl_kontrak'])
+        $pelaksanas = Pelaksana::latest()->with(['perusahaan:id,nama', 'status_pelaksanas'])
+                                    ->get(['id', 'slug', 'nama', 'perusahaan_id', 'no_kontrak', 'tgl_kontrak'])
                                     ->append(['status_pelaksana_f']);
 
         return view('dashboard.pelaksana.index', [
@@ -42,12 +43,17 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
+        $metode = ['Tender', 'Penunjukan Langsung'];
+        $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
+
         return view('dashboard.pelaksana.create', [
             'title' => 'Tambah Pelaksana',
-            'pekerjaans' => Pekerjaan::get(['id', 'nama']),
-            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
+            'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
+            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
             'status_pelaksanas' => $status,
+            'metodes' => $metode,
+            'sumber_danas' => $sumber_dana,
         ]);
     }
 
@@ -57,9 +63,9 @@ class PelaksanaController extends Controller
     public function store(Request $request)
     {
         $validatedData =  $request->validate([
-            'badan_usaha_id' => 'required|exists:badan_usahas,id',
+            'nama' => 'required|string|max:255',
+            'perusahaan_id' => 'required|exists:perusahaans,id',
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
-            'pekerjaan_id' => 'required|exists:pekerjaans,id',
             'no_kontrak' => 'required|max:255',
             'tgl_kontrak' => 'required|date',
             'tgl_mulai' => 'required|date',
@@ -68,22 +74,31 @@ class PelaksanaController extends Controller
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
             'status_pelaksana' => 'required',
+            'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
+            'deskripsi' => 'required|string',
+            'nilai_pagu' => 'required|string|max:255',
+            'nilai_kontrak' => 'required|string|max:255',
+            'lokasi' => 'required|string',
+            'sumber_dana' => 'required|string|max:255',
+            'thn_anggaran' => 'required|integer|between:1901,' . date('Y'),
+            'metode' => 'required|string|max:255',
+            'jenis_kontruksi' => 'required|string|max:255',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $badan_usaha = BadanUsaha::where('id', $request->badan_usaha_id)->where('jumlah_pekerjaan', '>', '5')->first(['nama']);
+        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->where('jumlah_pekerjaan', '>', '5')->first(['nama']);
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
 
-        if ($badan_usaha) {
-            return redirect()->back()->withInput()->with('badan_usaha_full', $badan_usaha->nama . ' sudah mencapai batas maksimal pekerjaan.');
+        if ($perusahaan) {
+            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal pekerjaan.');
         }
         if ($tenaga_ahlis) {
             return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
         }
 
         DB::transaction(function () use ($request, $validatedData) {
-            BadanUsaha::find($validatedData['badan_usaha_id'])->increment('jumlah_pekerjaan');
+            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
 
             $pelaksana = Pelaksana::create($validatedData);
@@ -113,7 +128,7 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
-        $pelaksana->load(['badan_usaha:id,nama', 'pekerjaan', 'status_pelaksanas', 'status_pelaksanas.author'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pelaksana_f', 'progress_pelaksana']);
+        $pelaksana->load(['perusahaan:id,nama', 'pekerjaan', 'status_pelaksanas', 'status_pelaksanas.author'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pelaksana_f', 'progress_pelaksana']);
 
         return view('dashboard.pelaksana.show', [
             'title' => 'Detail Pelaksana',
@@ -138,16 +153,26 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
+        $metode = ['Tender', 'Penunjukan Langsung'];
+        $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
+
         $selected_tenaga_ahlis = $pelaksana->tenaga_ahlis->pluck('id');
+
+        $jenis_pekerjaans = JenisPekerjaan::where('jenis_jasa_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id)->get(['id', 'nama']);
+        $sub_pekerjaans = SubPekerjaan::where('jenis_pekerjaan_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan_id)->get(['id', 'nama']);
 
         return view('dashboard.pelaksana.edit', [
             'title' => 'Perbarui Pelaksana',
-            'pelaksana' => $pelaksana->load(['badan_usaha:id,nama', 'tenaga_ahlis:id,nama', 'pekerjaan:id,nama']),
-            'badan_usahas' => BadanUsaha::get(['id', 'nama']),
+            'pelaksana' => $pelaksana->load(['perusahaan:id,nama', 'tenaga_ahlis:id,nama']),
+            'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
+            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
             'selected_tenaga_ahlis' => $selected_tenaga_ahlis,
             'status_pelaksanas' => $status,
-            'pekerjaans' => Pekerjaan::get(['id', 'nama']),
+            'metodes' => $metode,
+            'sumber_danas' => $sumber_dana,
+            'jenis_pekerjaans' => $jenis_pekerjaans,
+            'sub_pekerjaans' => $sub_pekerjaans,
         ]);
     }
 
@@ -157,9 +182,9 @@ class PelaksanaController extends Controller
     public function update(Request $request, Pelaksana $pelaksana)
     {
         $validatedData =  $request->validate([
-            'badan_usaha_id' => 'required|exists:badan_usahas,id',
+            'nama' => 'required|string|max:255',
+            'perusahaan_id' => 'required|exists:perusahaans,id',
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
-            'pekerjaan_id' => 'required|exists:pekerjaans,id',
             'no_kontrak' => 'required|max:255',
             'tgl_kontrak' => 'required|date',
             'tgl_mulai' => 'required|date',
@@ -168,13 +193,22 @@ class PelaksanaController extends Controller
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
             'status_pelaksana' => 'required',
+            'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
+            'deskripsi' => 'required|string',
+            'nilai_pagu' => 'required|string|max:255',
+            'nilai_kontrak' => 'required|string|max:255',
+            'lokasi' => 'required|string',
+            'sumber_dana' => 'required|string|max:255',
+            'thn_anggaran' => 'required|integer|between:1901,' . date('Y'),
+            'metode' => 'required|string|max:255',
+            'jenis_kontruksi' => 'required|string|max:255',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $badan_usaha = BadanUsaha::where('id', $request->badan_usaha_id)
+        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)
             ->where('jumlah_pekerjaan', '>', 5)
-            ->whereNotIn('id', [$pelaksana->badan_usaha_id])
+            ->whereNotIn('id', [$pelaksana->perusahaan_id])
             ->first(['nama']);
 
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
@@ -183,16 +217,16 @@ class PelaksanaController extends Controller
             ->pluck('nama')
             ->toArray();
 
-        if ($badan_usaha) {
-            return redirect()->back()->withInput()->with('badan_usaha_full', $badan_usaha->nama . ' sudah mencapai batas maksimal pekerjaan.');
+        if ($perusahaan) {
+            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal pekerjaan.');
         }
         if ($tenaga_ahlis) {
             return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
         }
 
         DB::transaction(function () use ($request, $validatedData, $pelaksana) {
-            $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
-            BadanUsaha::find($validatedData['badan_usaha_id'])->increment('jumlah_pekerjaan');
+            $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
+            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
 
             TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
@@ -216,7 +250,7 @@ class PelaksanaController extends Controller
      */
     public function destroy(Pelaksana $pelaksana)
     {
-        $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
+        $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
         TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
         $pelaksana->tenaga_ahlis()->detach();
@@ -251,12 +285,15 @@ class PelaksanaController extends Controller
         return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pelaksana pekerjaan!');
     }
 
-    // public function pekerjaanSelesai(Pelaksana $pelaksana)
-    // {
-    //     $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
-    //     TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+    public function getJenisPekerjaan($id)
+    {
+        $jenisPekerjaans = JenisJasa::where('id', $id)->with(['jenis_pekerjaans:id,nama,jenis_jasa_id'])->first()->jenis_pekerjaans;
+        return response()->json($jenisPekerjaans);
+    }
 
-    //     $pelaksana->update(['tgl_selesai' => now()->toDateString()]);
-    //     return redirect()->route('pelaksana.show', $pelaksana->slug)->with('success', 'Pelaksana berhasil ditandai selesai!');
-    // }
+    public function getSubPekerjaan($id)
+    {
+        $subPekerjaans = JenisPekerjaan::where('id', $id)->with(['sub_pekerjaans:id,nama,jenis_pekerjaan_id'])->first()->sub_pekerjaans;
+        return response()->json($subPekerjaans);
+    }
 }

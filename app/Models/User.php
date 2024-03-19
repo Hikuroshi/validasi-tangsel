@@ -13,9 +13,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function badan_usahas(): HasMany
+    public function perusahaans(): HasMany
     {
-        return $this->hasMany(BadanUsaha::class, 'author_id');
+        return $this->hasMany(Perusahaan::class, 'author_id');
     }
 
     public function jenis_pekerjaans(): HasMany
@@ -26,16 +26,6 @@ class User extends Authenticatable
     public function keahlians(): HasMany
     {
         return $this->hasMany(Keahlian::class, 'author_id');
-    }
-
-    public function kecamatans(): HasMany
-    {
-        return $this->hasMany(Kecamatan::class, 'author_id');
-    }
-
-    public function pekerjaans(): HasMany
-    {
-        return $this->hasMany(Pekerjaan::class, 'author_id');
     }
 
     public function riwayat_pendidikans(): HasMany

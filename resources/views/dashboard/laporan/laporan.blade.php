@@ -27,7 +27,7 @@
             <h4>Seksi Pembangunan Jalan Dan Jembatan Kota</h4>
             <h5>Bidang Bina Marga</h5>
             <h5>Dinas Sumber Daya Air, Bina Marga dan Bina Kontruksi KotaTangerang Selatan</h5>
-            <h5>Tahun Anggaran {{ $laporan->pekerjaan->thn_anggaran }}</h5>
+            <h5>Tahun Anggaran {{ $laporan->thn_anggaran }}</h5>
         </div>
 
         <table style="border: 1px solid black; border-collapse: collapse; width: 100%;">
@@ -44,19 +44,19 @@
                 <th>Jenis Kontruksi</th>
             </tr>
             <tr style="background-color: rgba(0, 0, 0, 0.2)">
-                <td colspan="10" style="font-weight: bold;">{{ $laporan->pekerjaan->sub_pekerjaan->nama }}</td>
+                <td colspan="10" style="font-weight: bold;">{{ $laporan->sub_pekerjaan->nama }}</td>
             </tr>
             <tr>
                 <td>1.</td>
-                <td>{{ $laporan->pekerjaan->nama }}</td>
-                <td>{{ $laporan->pekerjaan->nilai_pagu_f }}</td>
-                <td>{{ $laporan->pekerjaan->nilai_kontrak_f }}</td>
-                <td>{{ $laporan->pekerjaan->metode->nama }}</td>
-                <td>{{ $laporan->badan_usaha->nama }}</td>
+                <td>{{ $laporan->nama }}</td>
+                <td>{{ $laporan->nilai_pagu_f }}</td>
+                <td>{{ $laporan->nilai_kontrak_f }}</td>
+                <td>{{ $laporan->metode }}</td>
+                <td>{{ $laporan->perusahaan->nama }}</td>
                 <td>{{ $laporan->no_kontrak }}</td>
                 <td>{{ $laporan->tgl_kontrak_f }}</td>
                 <td>{{ $laporan->tgl_mulai_f }}</td>
-                <td>{{ $laporan->pekerjaan->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
+                <td>{{ $laporan->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
             </tr>
         </table>
     </div>

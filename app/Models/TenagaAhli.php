@@ -45,9 +45,9 @@ class TenagaAhli extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function badan_usaha(): BelongsTo
+    public function perusahaan(): BelongsTo
     {
-        return $this->belongsTo(BadanUsaha::class, 'badan_usaha_id');
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
     public function riwayat_pendidikans(): HasMany

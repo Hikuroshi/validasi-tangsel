@@ -29,16 +29,18 @@
 
 @section('js')
 
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
+
 <!-- Gridjs Plugin js -->
 <script src="/assets/libs/gridjs/gridjs.umd.js"></script>
 
 <script>
     class GridDatatable {
-        init(badan_usahas) {
-            this.basicTableInit(badan_usahas);
+        init(perusahaans) {
+            this.basicTableInit(perusahaans);
         }
 
-        basicTableInit(badan_usahas) {
+        basicTableInit(perusahaans) {
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
@@ -64,13 +66,13 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/badan-usaha/${cell}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/badan-usaha/${cell}">
                                     <i class="uil uil-eye"></i>
                                 </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/badan-usaha/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/badan-usaha/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/badan-usaha/${cell}" method="post" class="d-inline">
+                                <form action="/badan-usaha/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
@@ -84,15 +86,15 @@
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
-                    data: badan_usahas.map((badan_usaha, index) => [
+                    data: perusahaans.map((perusahaan, index) => [
                     index + 1,
-                    badan_usaha.nama,
-                    badan_usaha.sertifikat,
-                    badan_usaha.direktur,
-                    badan_usaha.email,
-                    badan_usaha.telepon,
-                    badan_usaha.status_f,
-                    badan_usaha.slug,
+                    perusahaan.nama,
+                    perusahaan.sertifikat,
+                    perusahaan.direktur,
+                    perusahaan.email,
+                    perusahaan.telepon,
+                    perusahaan.status_f,
+                    perusahaan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }
@@ -100,8 +102,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
-        const badan_usahas = {{ Js::from($badan_usahas) }};
-        new GridDatatable().init(badan_usahas);
+        const perusahaans = {{ Js::from($perusahaans) }};
+        new GridDatatable().init(perusahaans);
     });
 </script>
 

@@ -68,7 +68,7 @@
                     <p class="mb-2 dark:text-gray-400">{{ $pelaksana->progress_pelaksana['desc'] }}</p>
                     <div class="flex w-full h-6 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700 mb-5">
                         <div class="flex flex-col justify-center overflow-hidden bg-{{ $pelaksana->progress_pelaksana['color'] }} text-xs text-white text-center" role="progressbar" style="width: {{ $pelaksana->progress_pelaksana['percent'] }}%" aria-valuenow="{{ $pelaksana->progress_pelaksana['percent'] }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ $pelaksana->progress_pelaksana['color'] == 'secondary' ? 'Gagal menyelesaikan pekerjaan dengan tepat waktu' : $pelaksana->progress_pelaksana['percent'] . '%' }}
+                            {{ $pelaksana->progress_pelaksana['color'] == 'secondary' ? 'Gagal menyelesaika dengan tepat waktu' : $pelaksana->progress_pelaksana['percent'] . '%' }}
                         </div>
                     </div>
 
@@ -179,14 +179,19 @@
         <div class="grid md:grid-cols-2 gap-6">
             <table class="min-w-full">
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Badan Usaha</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nama Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->badan_usaha->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nama }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Perusahaan</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->perusahaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">No Kontrak</td>
@@ -207,6 +212,31 @@
                             {{ $pelaksana->status_pelaksana_f['name'] }}
                         </span>
                     </td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Jasa</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->jenis_pekerjaan->jenis_jasa->nama }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Pekerjaan</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sub Pekerjaan</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->nama }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Pagu</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nilai_pagu_f }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Kontrak</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nilai_kontrak_f }}</td>
                 </tr>
             </table>
             <table class="min-w-full">
@@ -235,87 +265,35 @@
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pho }}</td>
                 </tr>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card mt-6">
-    <div class="card-header">
-        <div class="flex justify-between items-center">
-            <h4 class="card-title">Detail Pekerjaan</h4>
-        </div>
-    </div>
-
-    <div class="p-3">
-        <div class="grid md:grid-cols-2 gap-6">
-            <table class="min-w-full">
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Jasa</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa->nama }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Pekerjaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sub Pekerjaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->sub_pekerjaan->nama }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nama Pekerjaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->nama }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Deskripsi</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->deskripsi }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Pagu</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->nilai_pagu_f }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Kontrak</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->nilai_kontrak_f }}</td>
-                </tr>
-            </table>
-            <table class="min-w-full">
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Kecamatan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->kecamatan->nama }}</td>
-                </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Lokasi</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->lokasi }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->lokasi }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sumber Dana</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->sumber_dana }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sumber_dana }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tahun Anggaran</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->thn_anggaran }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->thn_anggaran }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Metode Pengadaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->metode->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->metode }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Kontruksi</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pekerjaan->jenis_kontruksi }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->jenis_kontruksi }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Deskripsi</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->deskripsi }}</td>
                 </tr>
             </table>
         </div>
@@ -383,10 +361,10 @@
     <div class="p-6">
         <h4 class="uppercase dark:text-gray-300 mb-3">Zona Tindakan</h4>
         <p class="mb-3">
-            Perbarui Data memungkinkan pengguna untuk memperbarui informasi terkait pekerjaan yang sedang dilakukan atau sudah selesai dilakukan. Dengan menggunakan fitur ini, pengguna dapat mengubah atau memperbaiki detail-detail tertentu seperti status progres, tanggal mulai dan selesai, deskripsi pekerjaan, dan informasi lainnya yang terkait dengan pekerjaan tersebut. Fitur ini memberikan fleksibilitas bagi pengguna untuk memastikan bahwa informasi yang tercatat tetap akurat dan terkini sepanjang perjalanan proyek atau tugas yang sedang dikerjakan.
+            Perbarui Data memungkinkan pengguna untuk memperbarui informasi terkai yang sedang dilakukan atau sudah selesai dilakukan. Dengan menggunakan fitur ini, pengguna dapat mengubah atau memperbaiki detail-detail tertentu seperti status progres, tanggal mulai dan selesai, deskrips, dan informasi lainnya yang terkait denga tersebut. Fitur ini memberikan fleksibilitas bagi pengguna untuk memastikan bahwa informasi yang tercatat tetap akurat dan terkini sepanjang perjalanan proyek atau tugas yang sedang dikerjakan.
         </p>
         <p class="mb-3">
-            Hapus Data memungkinkan pengguna untuk menghapus seluruh informasi atau data terkait pekerjaan yang sudah selesai atau tidak diperlukan lagi. Saat menggunakan fitur ini, penting untuk diingat bahwa semua data yang terkait dengan pekerjaan tersebut akan dihapus secara permanen dari sistem. Sebelum menghapus data pekerjaan, sangat disarankan untuk mencadangkan semua informasi yang dianggap penting atau perlu disimpan sebagai referensi di masa depan. Proses penghapusan data pekerjaan harus dilakukan dengan hati-hati dan pertimbangkan untuk memastikan tidak ada informasi penting yang hilang atau terhapus tanpa disengaja.
+            Hapus Data memungkinkan pengguna untuk menghapus seluruh informasi atau data terkai yang sudah selesai atau tidak diperlukan lagi. Saat menggunakan fitur ini, penting untuk diingat bahwa semua data yang terkait denga tersebut akan dihapus secara permanen dari sistem. Sebelum menghapus dat, sangat disarankan untuk mencadangkan semua informasi yang dianggap penting atau perlu disimpan sebagai referensi di masa depan. Proses penghapusan dat harus dilakukan dengan hati-hati dan pertimbangkan untuk memastikan tidak ada informasi penting yang hilang atau terhapus tanpa disengaja.
         </p>
 
         <div class="grid xl:grid-cols-2 gap-6">
@@ -412,7 +390,7 @@
                             </div>
                             <div class="p-4 overflow-y-auto">
                                 <p class="dark:text-gray-400 mb-3">
-                                    Ketika data <b>Pelaksana dengan Pekerjaan {{ $pelaksana->pekerjaan->nama }} Badan Usaha {{ $pelaksana->badan_usaha->nama }}</b> telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data data.
+                                    Ketika data <b>Pelaksana dengan Pekerjaan {{ $pelaksana->nama }} Perusahaan {{ $pelaksana->perusahaan->nama }}</b> telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data data.
                                 </p>
                                 <div class="text-center">
                                     <form method="post" action="{{ route('pelaksana.destroy', $pelaksana->slug) }}">
@@ -469,13 +447,13 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/tenaga-ahli/${cell}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
                                     <i class="uil uil-eye"></i>
                                 </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/tenaga-ahli/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/pelaksana-tenaga-ahli/${ {{ Js::from($pelaksana->slug) }} }/${cell}" method="post" class="d-inline">
+                                <form action="/pelaksana-tenaga-ahli/${ {{ Js::from($pelaksana->slug) }} }/${cell}" method="post" class="d-inline">
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
                                         <i class="uil uil-trash-alt"></i>

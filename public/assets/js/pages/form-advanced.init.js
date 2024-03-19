@@ -9,6 +9,7 @@
         //     dateFormat: "Y-m-d H:i"
         // }),
         c("#humanfd-datepicker").flatpickr({
+            locale: "id",
             altInput: !0,
             altFormat: "F j, Y",
             dateFormat: "Y-m-d"

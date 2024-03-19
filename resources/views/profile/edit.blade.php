@@ -15,7 +15,7 @@
                 <div class="mb-3">
                     <label class="block mb-2 font-semibold" for="name">Nama</label>
                     <div>
-                        <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan nama">
+                        <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('name')
                     <small class="text-danger">{{ $message }}</small>
@@ -25,7 +25,7 @@
                 <div class="mb-3">
                     <label class="block mb-2 font-semibold" for="username">Username</label>
                     <div>
-                        <input type="text" id="username" name="username" value="{{ old('username', $user->username) }}" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan username">
+                        <input type="text" id="username" name="username" value="{{ old('username', $user->username) }}" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('username')
                     <small class="text-danger">{{ $message }}</small>
@@ -35,7 +35,7 @@
                 <div class="mb-5">
                     <label class="block mb-2 font-semibold" for="email">Email</label>
                     <div>
-                        <input type="text" id="email" name="email" value="{{ old('email', $user->email) }}" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan email">
+                        <input type="text" id="email" name="email" value="{{ old('email', $user->email) }}" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('email')
                     <small class="text-danger">{{ $message }}</small>
@@ -61,7 +61,7 @@
                 <div class="mb-3">
                     <label class="block mb-2 font-semibold" for="current_password">Password saat ini</label>
                     <div>
-                        <input type="password" id="current_password" name="current_password" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan password saat ini">
+                        <input type="password" id="current_password" name="current_password" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('current_password', 'updatePassword')
                     <small class="text-danger">{{ $message }}</small>
@@ -71,7 +71,7 @@
                 <div class="mb-3">
                     <label class="block mb-2 font-semibold" for="password">Password baru</label>
                     <div>
-                        <input type="password" id="password" name="password" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan password baru">
+                        <input type="password" id="password" name="password" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('password', 'updatePassword')
                     <small class="text-danger">{{ $message }}</small>
@@ -81,7 +81,7 @@
                 <div class="mb-5">
                     <label class="block mb-2 font-semibold" for="password_confirmation">Passowrd konfirmasi</label>
                     <div>
-                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-input w-full placeholder:text-gray-400" placeholder="Masukan password konfirmasi">
+                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-input w-full placeholder:text-gray-400">
                     </div>
                     @error('password_confirmation', 'updatePassword')
                     <small class="text-danger">{{ $message }}</small>
@@ -133,7 +133,7 @@
                                         @csrf
                                         @method('delete')
 
-                                        <input type="password" id="password" name="password" class="form-input w-full placeholder:text-gray-400 mb-3" placeholder="Masukan password">
+                                        <input type="password" id="password" name="password" class="form-input w-full placeholder:text-gray-400 mb-3">
 
                                         <button type="submit" class="btn bg-danger text-white hover:bg-danger">
                                             Hapus Akun

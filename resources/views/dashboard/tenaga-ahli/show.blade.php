@@ -35,9 +35,9 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $tenaga_ahli->nama }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Badan Usaha</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Perusahaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $tenaga_ahli->badan_usaha->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $tenaga_ahli->perusahaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tempat Lahir</td>
@@ -151,10 +151,10 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/riwayat-pendidikan/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/riwayat-pendidikan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/riwayat-pendidikan/${cell}" method="post" class="d-inline">
+                                <form action="/riwayat-pendidikan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
@@ -190,29 +190,12 @@
                     {
                         name: "Sertifikat",
                         formatter: function (e) {
-                            return gridjs.html(`<a href="/dashboard/keahlian/view-sertifikat/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
+                            return gridjs.html(`<a href="/laporan/view-sertifikat/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
                                 <i class="uil uil-search px-1"></i>
                                 Lihat Sertifikat
                             </a>`);
                         }
                     },
-                    {
-                        name: "Aksi",
-                        formatter: (cell, row) => {
-                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/keahlian/${cell}/edit">
-                                    <i class="uil uil-pen"></i>
-                                </a>
-                                <form action="/dashboard/keahlian/${cell}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
-                                        <i class="uil uil-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>`);
-                        }
-                    }
                     ],
                     pagination: { limit: 5 },
                     sort: true,

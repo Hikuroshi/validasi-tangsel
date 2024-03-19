@@ -3,11 +3,8 @@
 use App\Http\Controllers\JenisJasaController;
 use App\Http\Controllers\JenisPekerjaanController;
 use App\Http\Controllers\KeahlianController;
-use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\MetodeController;
-use App\Http\Controllers\PekerjaanController;
-use App\Http\Controllers\BadanUsahaController;
+use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PelaksanaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiwayatPendidikanController;
@@ -32,7 +29,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard.index', ['title' => 'Dashboard']);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -43,41 +40,32 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('/dashboard/user', UserController::class)->except('show');
-    Route::put('/dashboard/user-password', [UserController::class, 'passwordUpdate'])->name('user-password.update');
+    Route::resource('/user', UserController::class)->except('show');
+    Route::put('/user-password', [UserController::class, 'passwordUpdate'])->name('user-password.update');
 
-    Route::resource('/dashboard/tenaga-ahli', TenagaAhliController::class);
-    Route::resource('/dashboard/badan-usaha', BadanUsahaController::class);
-    Route::resource('/dashboard/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
-    Route::resource('/dashboard/sub-pekerjaan', SubPekerjaanController::class)->except('show');
-    Route::resource('/dashboard/kecamatan', KecamatanController::class)->except('show');
-    Route::resource('/dashboard/metode', MetodeController::class)->except('show');
-    Route::resource('/dashboard/jenis-jasa', JenisJasaController::class)->except('show');
-    Route::resource('/dashboard/user', UserController::class)->except('show');
+    Route::resource('/tenaga-ahli', TenagaAhliController::class);
+    Route::resource('/badan-usaha', PerusahaanController::class);
+    Route::resource('/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
+    Route::resource('/sub-pekerjaan', SubPekerjaanController::class)->except('show');
+    Route::resource('/jenis-jasa', JenisJasaController::class)->except('show');
+    Route::resource('/user', UserController::class)->except('show');
 
-    Route::resource('/dashboard/pelaksana', PelaksanaController::class);
-    Route::post('/dashboard/pelaksana-tenaga-ahli/{pelaksana}/{tenaga_ahli}', [PelaksanaController::class,'deleteTenagaAhli'])->name('pelaksana.delete-tenaga-ahli');
-    Route::put('/dashboard/pelaksana-tenaga-ahli/{pelaksana}', [PelaksanaController::class,'addTenagaAhli'])->name('pelaksana.add-tenaga-ahli');
-    Route::put('/dashboard/pelaksana-tenaga-ahli/{pelaksana}', [PelaksanaController::class,'addTenagaAhli'])->name('pelaksana.add-tenaga-ahli');
-    Route::put('/dashboard/status-pelaksana/{pelaksana}', [StatusPelaksanaController::class,'store'])->name('status-pelaksana.store');
+    Route::resource('/pelaksana', PelaksanaController::class);
+    Route::post('/pelaksana-tenaga-ahli/{pelaksana}/{tenaga_ahli}', [PelaksanaController::class,'deleteTenagaAhli'])->name('pelaksana.delete-tenaga-ahli');
+    Route::put('/pelaksana-tenaga-ahli/{pelaksana}', [PelaksanaController::class,'addTenagaAhli'])->name('pelaksana.add-tenaga-ahli');
+    Route::put('/status-pelaksana/{pelaksana}', [StatusPelaksanaController::class,'store'])->name('status-pelaksana.store');
+    Route::get('/get-jenis-pekerjaan/{id}', [PelaksanaController::class,'getJenisPekerjaan'])->name('pelaksana.jenis-pekerjaan');
+    Route::get('/get-sub-pekerjaan/{id}', [PelaksanaController::class, 'getSubPekerjaan'])->name('pelaksana.sub-pekerjaan');
 
-    Route::resource('/dashboard/pekerjaan', PekerjaanController::class);
-    Route::get('/get-jenis-pekerjaan/{id}', [PekerjaanController::class,'getJenisPekerjaan'])->name('pekerjaan.jenis-pekerjaan');
-    Route::get('/get-sub-pekerjaan/{id}', [PekerjaanController::class, 'getSubPekerjaan'])->name('pekerjaan.sub-pekerjaan');
+    Route::resource('/riwayat-pendidikan', RiwayatPendidikanController::class)->except('index', 'create', 'show');
+    Route::get('/riwayat-pendidikan/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [RiwayatPendidikanController::class, 'create'])->name('riwayat-pendidikan.create');
 
-    Route::resource('/dashboard/riwayat-pendidikan', RiwayatPendidikanController::class)->except('index', 'create', 'show');
-    Route::get('/dashboard/riwayat-pendidikan/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [RiwayatPendidikanController::class, 'create'])->name('riwayat-pendidikan.create');
+    Route::resource('/keahlian', KeahlianController::class)->except('index', 'create', 'show');
+    Route::get('/keahlian/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [KeahlianController::class, 'create'])->name('keahlian.create');
+    Route::get('/keahlian/view-sertifikat/{slug}', [KeahlianController::class, 'viewSertifikat'])->name('keahlian.view-sertifikat');
 
-    Route::resource('/dashboard/keahlian', KeahlianController::class)->except('index', 'create', 'show');
-    Route::get('/dashboard/keahlian/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [KeahlianController::class, 'create'])->name('keahlian.create');
-    Route::get('/dashboard/keahlian/view-sertifikat/{slug}', [KeahlianController::class, 'viewSertifikat'])->name('keahlian.view-sertifikat');
-
-    Route::put('/dashboard/pekerjaan/{pekerjaan}/selesai', [PekerjaanController::class, 'pekerjaanSelesai'])->name('pekerjaan.selesai');
-
-    Route::get('/dashboard/laporan', [LaporanController::class,'index'])->name('laporan.index');
-    Route::post('/dashboard/laporan', [LaporanController::class,'search'])->name('laporan.search');
+    Route::get('/laporan', [LaporanController::class,'index'])->name('laporan.index');
+    Route::get('/laporan/{pelaksana}', [LaporanController::class,'search'])->name('laporan.search');
 });
-
-Route::redirect('/', '/dashboard');
 
 require __DIR__.'/auth.php';

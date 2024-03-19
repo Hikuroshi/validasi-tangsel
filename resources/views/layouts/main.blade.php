@@ -71,13 +71,8 @@
 
                         <ul id="menuMaster" class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="{{ route('pekerjaan.index') }}" class="menu-link">
-                                    <span class="menu-text"> Pekerjaan </span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
                                 <a href="{{ route('badan-usaha.index') }}" class="menu-link">
-                                    <span class="menu-text"> Badan Usaha </span>
+                                    <span class="menu-text"> Perusahaan </span>
                                 </a>
                             </li>
                             <li class="menu-item">
@@ -98,16 +93,6 @@
                             <li class="menu-item">
                                 <a href="{{ route('sub-pekerjaan.index') }}" class="menu-link">
                                     <span class="menu-text"> Sub Pekerjaan </span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ route('kecamatan.index') }}" class="menu-link">
-                                    <span class="menu-text"> Kecamatan </span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ route('metode.index') }}" class="menu-link">
-                                    <span class="menu-text"> Metode </span>
                                 </a>
                             </li>
                             <li class="menu-item">
@@ -209,14 +194,14 @@
                         <button type="button" class="hs-dropdown-toggle nav-link flex items-center gap-2">
                             <img src="/assets/images/avatar-user.png" alt="user-image" class="rounded-full h-8">
                             <span class="md:flex gap-0.5 text-start hidden">
-                                <h5 class="text-sm">{{ request()->user()->nama }}</h5>
+                                <h5 class="text-sm">{{ request()->user()->name }}</h5>
                                 <i class="uil uil-angle-down"></i>
                             </span>
                         </button>
 
                         <div class="hs-dropdown-menu transition-[opacity,margin] !mt-4 py-2 duration hs-dropdown-open:opacity-100 opacity-0 bg-white shadow rounded dark:bg-gray-800 dark:border dark:border-gray-700 hidden">
                             <!-- item-->
-                            <h6 class="flex items-center py-2 px-3  text-gray-800 dark:text-gray-400">Welcome !</h6>
+                            <h6 class="flex items-center py-2 px-3  text-gray-800 dark:text-gray-400">Halo {{ auth()->user()->name }}</h6>
 
                             <!-- item-->
                             <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 py-1.5 px-4 text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">

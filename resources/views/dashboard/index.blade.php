@@ -14,7 +14,7 @@
             <div class="p-5">
                 <div class="flex">
                     <div class="flex-grow">
-                        <span class="text-xs text-gray-500 uppercase font-bold dark:text-gray-400">Badan Usaha</span>
+                        <span class="text-xs text-gray-500 uppercase font-bold dark:text-gray-400">Perusahaan</span>
                         <h3 class="text-2xl dark:text-gray-300">$2100</h3>
                     </div>
                     <div class="text-center flex-shrink-0">

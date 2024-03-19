@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('nik')->unique();
             $table->string('npwp')->unique();
-            $table->unsignedBigInteger('badan_usaha_id');
+            $table->unsignedBigInteger('perusahaan_id');
             $table->string('jabatan');
             $table->string('tempat_lahir');
             $table->date('tgl_lahir');

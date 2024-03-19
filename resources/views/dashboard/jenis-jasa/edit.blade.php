@@ -18,7 +18,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama', $jenis_jasa->nama) }}" class="form-input" placeholder="Nama">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama', $jenis_jasa->nama) }}" class="form-input">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror

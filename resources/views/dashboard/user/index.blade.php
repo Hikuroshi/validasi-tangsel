@@ -48,7 +48,7 @@
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
-                            const editUrl = {{ Js::from(auth()->user()->username) }} === cell ? '/profile' : '/dashboard/user/' + cell + '/edit';
+                            const editUrl = {{ Js::from(auth()->user()->username) }} === cell ? '/profile' : '/user/' + cell + '/edit';
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
                                 <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="${editUrl}">
                                     <i class="uil uil-pen"></i>

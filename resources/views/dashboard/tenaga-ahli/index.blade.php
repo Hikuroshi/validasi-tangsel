@@ -43,7 +43,7 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama",
-                    "Badan Usaha",
+                    "Perusahaan",
                     "Jabatan",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
                     "No Telp",
@@ -64,13 +64,13 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/tenaga-ahli/${cell}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
                                     <i class="uil uil-eye"></i>
                                 </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/tenaga-ahli/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/tenaga-ahli/${cell}" method="post" class="d-inline">
+                                <form action="/tenaga-ahli/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
@@ -87,7 +87,7 @@
                     data: tenaga_ahlis.map((tenaga_ahli, index) => [
                     index + 1,
                     tenaga_ahli.nama,
-                    tenaga_ahli.badan_usaha.nama,
+                    tenaga_ahli.perusahaan.nama,
                     tenaga_ahli.jabatan,
                     tenaga_ahli.email,
                     tenaga_ahli.telepon,

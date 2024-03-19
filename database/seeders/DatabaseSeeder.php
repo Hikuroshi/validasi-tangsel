@@ -3,11 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\BadanUsaha;
+use App\Models\Perusahaan;
 use App\Models\JenisJasa;
 use App\Models\JenisPekerjaan;
-use App\Models\Kecamatan;
-use App\Models\Metode;
 use App\Models\RiwayatPendidikan;
 use App\Models\SubPekerjaan;
 use App\Models\TenagaAhli;
@@ -30,7 +28,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('test'),
         ]);
 
-        BadanUsaha::create([
+        Perusahaan::create([
             'nama' => 'PT ABCD',
             'slug' => Str::slug('PT ABCD'),
             'npwp' => '0987654321',
@@ -53,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Jane Doe'),
             'nik' => '0987654321098765',
             'npwp' => '1234567890',
-            'badan_usaha_id' => 1,
+            'perusahaan_id' => 1,
             'jabatan' => 'Arsitek',
             'tempat_lahir' => 'Jakarta',
             'tgl_lahir' => now()->subYears(35),
@@ -78,26 +76,6 @@ class DatabaseSeeder extends Seeder
             'tenaga_ahli_id' => 1,
             'author_id' => 1,
         ]);
-
-        $kecamatan_tangerang_selatan = ['Ciputat', 'Ciputat Timur', 'Pamulang', 'Pondok Aren', 'Serpong', 'Serpong Utara', 'Setu'];
-
-        foreach ($kecamatan_tangerang_selatan as $kecamatan) {
-            Kecamatan::create([
-                'nama' => $kecamatan,
-                'slug' => Str::slug($kecamatan),
-                'author_id' => 1,
-            ]);
-        }
-
-        $metodes = ['Tender', 'Penunjukan Langsung'];
-
-        foreach ($metodes as $metode) {
-            Metode::create([
-                'nama' => $metode,
-                'slug' => Str::slug($metode),
-                'author_id' => 1,
-            ]);
-        }
 
         $jenis_jasas = ['Jasa Kontruksi', 'Jasa Konsultasi'];
 

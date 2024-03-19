@@ -12,10 +12,10 @@
 
 @section('container')
 
-@if(session()->has('badan_usaha_full'))
+@if(session()->has('perusahaan_full'))
     <div id="dismiss-secondary" class="bg-danger/10 text-danger border border-danger/20 text-sm rounded py-3 px-5 flex justify-between items-center mb-6">
         <p>
-            <span class="font-bold">{{ session('badan_usaha_full') }}</span>
+            <span class="font-bold">{{ session('perusahaan_full') }}</span>
         </p>
         <button class="text-xl/[0]" data-hs-remove-element="#dismiss-secondary" type="button">
             <i class="uil uil-multiply text-xl"></i>
@@ -46,17 +46,27 @@
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="nama">Nama Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
-                                <option>Pilih Badan Usaha</option>
-                                @foreach ($badan_usahas as $badan_usaha)
-                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id') == $badan_usaha->id)>
-                                    {{ $badan_usaha->nama }}
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input">
+                            @error('nama')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="perusahaan_id">Perusahaan <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="perusahaanid" name="perusahaan_id" class="form-select">
+                                <option></option>
+                                @foreach ($perusahaans as $perusahaan)
+                                <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id') == $perusahaan->id)>
+                                    {{ $perusahaan->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('badan_usaha_id')
+                            @error('perusahaan_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -79,26 +89,9 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="pekerjaan_id">Pekerjaan <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="pekerjaan_id" name="pekerjaan_id" class="form-select">
-                                <option>Pilih Pekerjaan</option>
-                                @foreach ($pekerjaans as $pekerjaan)
-                                <option value="{{ $pekerjaan->id }}" @selected(old('pekerjaan_id') == $pekerjaan->id)>
-                                    {{ $pekerjaan->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('pekerjaan_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="no_kontrak">No Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="no_kontrak" name="no_kontrak" value="{{ old('no_kontrak') }}" class="form-input" placeholder="No Kontrak">
+                            <input type="text" id="no_kontrak" name="no_kontrak" value="{{ old('no_kontrak') }}" class="form-input">
                             @error('no_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -108,7 +101,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_kontrak">Tanggal Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_kontrak" name="tgl_kontrak" value="{{ old('tgl_kontrak') }}" class="form-input" placeholder="Tanggal Kontrak">
+                            <input type="text" id="tgl_kontrak" name="tgl_kontrak" value="{{ old('tgl_kontrak') }}" class="form-input">
                             @error('tgl_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -118,7 +111,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_mulai">Tanggal Mulai <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai') }}" class="form-input" placeholder="Tanggal Mulai">
+                            <input type="text" id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai') }}" class="form-input">
                             @error('tgl_mulai')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -128,7 +121,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_selesai">Tanggal Selesai <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_selesai" name="tgl_selesai" value="{{ old('tgl_selesai') }}" class="form-input" placeholder="Tanggal Selesai">
+                            <input type="text" id="tgl_selesai" name="tgl_selesai" value="{{ old('tgl_selesai') }}" class="form-input">
                             @error('tgl_selesai')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -138,7 +131,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="ppk">PPK <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="ppk" name="ppk" value="{{ old('ppk') }}" class="form-input" placeholder="PPK">
+                            <input type="text" id="ppk" name="ppk" value="{{ old('ppk') }}" class="form-input">
                             @error('ppk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -148,7 +141,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="pptk">PPTK <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="pptk" name="pptk" value="{{ old('pptk') }}" class="form-input" placeholder="PPTK">
+                            <input type="text" id="pptk" name="pptk" value="{{ old('pptk') }}" class="form-input">
                             @error('pptk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -158,8 +151,143 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="pho">PHO <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="pho" name="pho" value="{{ old('pho') }}" class="form-input" placeholder="PHO">
+                            <input type="text" id="pho" name="pho" value="{{ old('pho') }}" class="form-input">
                             @error('pho')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="jenis_jasa_id">Jenis Jasa <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
+                                <option value=""></option>
+                                @foreach ($jenis_jasas as $jenis_jasa)
+                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id') == $jenis_jasa->id)>
+                                    {{ $jenis_jasa->nama }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('jenis_jasa_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="jenis_pekerjaan_id">Jenis Pekerjaan <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
+                                <option></option>
+                            </select>
+                            @error('jenis_pekerjaan_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="sub_pekerjaan_id">Sub Pekerjaan <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="sub_pekerjaan_id" name="sub_pekerjaan_id" class="form-select">
+                                <option></option>
+                            </select>
+                            @error('sub_pekerjaan_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
+                        <label class="mb-2" for="deskripsi">Deskripsi <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <textarea id="deskripsi" name="deskripsi" class="form-input" rows="5">{{ old('deskripsi') }}</textarea>
+                            @error('deskripsi')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="nilai_pagu">Nilai Pagu <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="nilai_pagu" name="nilai_pagu" value="{{ old('nilai_pagu') }}" class="form-input currency-input">
+                            @error('nilai_pagu')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="nilai_kontrak">Nilai Kontrak <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="nilai_kontrak" name="nilai_kontrak" value="{{ old('nilai_kontrak') }}" class="form-input currency-input">
+                            @error('nilai_kontrak')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
+                        <label class="mb-2" for="lokasi">Lokasi <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <textarea id="lokasi" name="lokasi" class="form-input" rows="5">{{ old('lokasi') }}</textarea>
+                            @error('lokasi')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="sumber_dana">Sumber Dana <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="sumber_dana" name="sumber_dana" class="form-select">
+                                <option></option>
+                                @foreach ($sumber_danas as $sumber_dana)
+                                <option value="{{ $sumber_dana }}" @selected(old('sumber_dana') == $sumber_dana)>
+                                    {{ $sumber_dana }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('sumber_dana')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="thn_anggaran">Tahun Anggaran <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="number" id="thn_anggaran" name="thn_anggaran" value="{{ old('thn_anggaran') }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
+                            @error('thn_anggaran')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="metode">Metode Pengadaan <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="metode" name="metode" class="form-select">
+                                <option></option>
+                                @foreach ($metodes as $metode)
+                                <option value="{{ $metode }}" @selected(old('metode') == $metode)>
+                                    {{ $metode }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('metode')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="jenis_kontruksi">Jenis Kontruksi <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="jenis_kontruksi" name="jenis_kontruksi" value="{{ old('jenis_kontruksi') }}" class="form-input">
+                            @error('jenis_kontruksi')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -169,7 +297,7 @@
                         <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <select id="status_pelaksana" name="status_pelaksana" class="form-select">
-                                <option>Pilih Status</option>
+                                <option></option>
                                 @foreach ($status_pelaksanas as $key => $value)
                                     <option value="{{ $key }}" @selected(old('status_pelaksana') == $key)>
                                         {{ $value }}
@@ -199,24 +327,30 @@
 
 @section('js')
 
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
+
 <!-- Flatpickr Plugin Js -->
 <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="/assets/libs/flatpickr/id.js"></script>
 
 <!-- Select2 js -->
 <script src="/assets/js/select2.min.js"></script>
 
 <script>
     flatpickr("#tgl_kontrak", {
+        locale: "id",
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d"
     });
     flatpickr("#tgl_mulai", {
+        locale: "id",
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d"
     });
     flatpickr("#tgl_selesai", {
+        locale: "id",
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d"
@@ -227,6 +361,77 @@
 
         let selectedOptions = {{ Js::from(old('tenaga_ahli_id')) }};
         $('.select2').val(selectedOptions).trigger('change');
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#jenis_jasa_id').on('change', function() {
+            let jenisJasaId = $(this).val();
+            if (jenisJasaId) {
+                $.ajax({
+                    url: '/get-jenis-pekerjaan/' + jenisJasaId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        $('#jenis_pekerjaan_id').empty();
+                        $('#jenis_pekerjaan_id').append('<option value=""></option>');
+                        $.each(data, function(key, value) {
+                            $('#jenis_pekerjaan_id').append('<option value="'+ value.id +'">'+ value.nama +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#jenis_pekerjaan_id').empty();
+                $('#sub_pekerjaan_id').empty();
+                $('#jenis_pekerjaan_id').append('<option value=""></option>');
+                $('#sub_pekerjaan_id').append('<option value=""></option>');
+            }
+        });
+
+        $('#jenis_pekerjaan_id').on('change', function(){
+            let jenisPekerjaanId = $(this).val();
+            if (jenisPekerjaanId) {
+                $.ajax({
+                    url: '/get-sub-pekerjaan/' + jenisPekerjaanId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#sub_pekerjaan_id').empty();
+                        $('#sub_pekerjaan_id').append('<option value=""></option>');
+                        $.each(data, function(key, value) {
+                            $('#sub_pekerjaan_id').append('<option value="'+ value.id +'">'+ value.nama +'</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#sub_pekerjaan_id').empty();
+                $('#sub_pekerjaan_id').append('<option value=""></option>');
+            }
+        });
+
+        $('.currency-input').on('input', function() {
+            formatCurrencyInputs()
+        });
+
+        formatCurrencyInputs()
+
+        function formatCurrencyInputs() {
+            $('.currency-input').each(function() {
+                let input = $(this).val();
+                let sanitized = input.replace(/[^0-9]/g, '');
+                let formatted = sanitized.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $(this).val(formatted);
+            });
+        }
+
+        $('form').submit(function() {
+            $('.currency-input').each(function() {
+                let input = $(this).val();
+                let sanitized = input.replace(/[^0-9]/g, '');
+                $(this).val(sanitized);
+            });
+        });
     });
 </script>
 

@@ -17,7 +17,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="name">Nama <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-input" placeholder="Nama">
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-input">
                             @error('name')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -27,7 +27,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="username">Username <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="username" name="username" value="{{ old('username') }}" class="form-input" placeholder="Username">
+                            <input type="text" id="username" name="username" value="{{ old('username') }}" class="form-input">
                             @error('username')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -37,7 +37,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="email">Email <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-input" placeholder="Email">
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-input">
                             @error('email')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -47,7 +47,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="password">Password <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="password" id="password" name="password" value="{{ old('password') }}" class="form-input" placeholder="Password">
+                            <input type="password" id="password" name="password" value="{{ old('password') }}" class="form-input">
                             @error('password')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -57,7 +57,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="password_confirmation">Password Konfirmasi <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="password" id="password_confirmation" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-input" placeholder="Password Konfirmasi">
+                            <input type="password" id="password_confirmation" name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-input">
                             @error('password_confirmation')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror

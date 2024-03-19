@@ -1,160 +1,124 @@
 @extends('layouts.main')
 
+@section('css')
+
+<!-- Gridjs Plugin css -->
+<link href="/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" type="text/css" >
+
+@endsection
+
 @section('container')
 
-<div class="card mb-6">
-    <div class="p-6">
-        <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }}</h4>
-        <p class="text-gray-500 mb-6 dark:text-gray-400">
-            Inputkan data laporan dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
-        </p>
-
-        <div class="grid gap-6">
-            <div>
-                <form method="POST" action="{{ route('laporan.search') }}">
-                    @csrf
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="thn_anggaran">Tahun Anggaran <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="number" id="thn_anggaran" name="thn_anggaran" value="{{ old('thn_anggaran') }}" class="form-input" placeholder="Tahun Anggaran" min="1901" max="{{ now()->format('Y') }}" step="1">
-                            @error('thn_anggaran')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="no_kontrak">No Kontrak <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="no_kontrak" name="no_kontrak" value="{{ old('no_kontrak') }}" class="form-input" placeholder="No Kontrak">
-                            @error('no_kontrak')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="jenis_jasa_id">Jenis Jasa <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
-                                <option value="">Pilih Jenis Jasa</option>
-                                @foreach ($jenis_jasas as $jenis_jasa)
-                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id') == $jenis_jasa->id)>
-                                    {{ $jenis_jasa->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('jenis_jasa_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="jenis_pekerjaan_id">Jenis Pekerjaan <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
-                                <option>Pilih Jenis Pekerjaan</option>
-                            </select>
-                            @error('jenis_pekerjaan_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="sub_pekerjaan_id">Sub Pekerjaan <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="sub_pekerjaan_id" name="sub_pekerjaan_id" class="form-select">
-                                <option>Pilih Sub Pekerjaan</option>
-                            </select>
-                            @error('sub_pekerjaan_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="badan_usaha_id">Badan Usaha <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="badan_usaha_id" name="badan_usaha_id" class="form-select">
-                                <option>Pilih Badan Usaha</option>
-                                @foreach ($badan_usahas as $badan_usaha)
-                                <option value="{{ $badan_usaha->id }}" @selected(old('badan_usaha_id') == $badan_usaha->id)>
-                                    {{ $badan_usaha->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('badan_usaha_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
-                        <div></div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" onclick="history.back()" class="btn bg-secondary/90 text-white hover:bg-secondary text-end">Kembali</button>
-                            <button type="submit" class="btn bg-primary/90 text-white hover:bg-primary text-end">Simpan</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div class="card">
+    <div class="card-header">
+        <div class="flex justify-between items-center">
+            <h4 class="card-title">{{ $title }}</h4>
         </div>
     </div>
+
+    <div class="p-6">
+        <div id="table-gridjs"></div>
+    </div>
 </div>
+
 
 @endsection
 
 @section('js')
-    <script src="/assets/js/jquery-3.7.1.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#jenis_jasa_id').on('change', function() {
-                let jenisJasaId = $(this).val();
-                if (jenisJasaId) {
-                    $.ajax({
-                        url: '/get-jenis-pekerjaan/' + jenisJasaId,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data){
-                            $('#jenis_pekerjaan_id').empty();
-                            $('#jenis_pekerjaan_id').append('<option value="">Pilih Jenis Pekerjaan</option>');
-                            $.each(data, function(key, value) {
-                                $('#jenis_pekerjaan_id').append('<option value="'+ value.id +'">'+ value.nama +'</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#jenis_pekerjaan_id').empty();
-                    $('#sub_pekerjaan_id').empty();
-                    $('#jenis_pekerjaan_id').append('<option value="">Pilih Jenis Pekerjaan</option>');
-                    $('#sub_pekerjaan_id').append('<option value="">Pilih Sub Pekerjaan</option>');
-                }
-            });
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
 
-            $('#jenis_pekerjaan_id').on('change', function(){
-                let jenisPekerjaanId = $(this).val();
-                if (jenisPekerjaanId) {
-                    $.ajax({
-                        url: '/get-sub-pekerjaan/' + jenisPekerjaanId,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (data) {
-                            $('#sub_pekerjaan_id').empty();
-                            $('#sub_pekerjaan_id').append('<option value="">Pilih Sub Pekerjaan</option>');
-                            $.each(data, function(key, value) {
-                                $('#sub_pekerjaan_id').append('<option value="'+ value.id +'">'+ value.nama +'</option>');
-                            });
+<!-- Gridjs Plugin js -->
+<script src="/assets/libs/gridjs/gridjs.umd.js"></script>
+
+<script>
+    class GridDatatable {
+        init(laporans) {
+            this.basicTableInit(laporans);
+        }
+
+        basicTableInit(laporans) {
+            if (document.getElementById("table-gridjs")) {
+                new gridjs.Grid({
+                    columns: [
+                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    "Nama Pekerjaan",
+                    "Tanggal Kontrak",
+                    {
+                        name: "Laporan",
+                        formatter: function (e) {
+                            return gridjs.html(`<a href="/laporan/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
+                                <i class="uil uil-search px-1"></i>
+                                Lihat Laporan
+                            </a>`);
                         }
-                    });
-                } else {
-                    $('#sub_pekerjaan_id').empty();
-                    $('#sub_pekerjaan_id').append('<option value="">Pilih Sub Pekerjaan</option>');
-                }
-            });
+                    },
+                    ],
+                    pagination: { limit: 10 },
+                    sort: true,
+                    search: true,
+                    data: laporans.map((laporan, index) => [
+                    index + 1,
+                    laporan.nama,
+                    laporan.tgl_kontrak_f,
+                    laporan.slug,
+                    ]),
+                }).render(document.getElementById("table-gridjs"));
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function (e) {
+        const laporans = {{ Js::from($laporans) }};
+        new GridDatatable().init(laporans);
+    });
+</script>
+
+<!-- Sweet-alert js  -->
+<script src="/assets/js/sweetalert2.all.min.js"></script>
+
+@if(session()->has('success'))
+<script>
+    $(document).ready(function() {
+        let Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
         });
-    </script>
+
+        Toast.fire({
+            icon: 'success',
+            title: '{{ session('success') }}'
+        });
+    });
+</script>
+@endif
+
+<script>
+	$(document).on('click', '#deleteData', function() {
+		let title = $(this).data('title');
+
+		Swal.fire({
+			title: 'Hapus ' + title + '?',
+			html: "Apakah kamu yakin ingin menghapus <b>" + title + "</b>? Data yang sudah dihapus tidak bisa dikembalikan!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Ya, Hapus',
+			cancelButtonText: 'Batal'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$(this).closest('form').submit();
+			}
+		});
+	});
+</script>
+
 @endsection

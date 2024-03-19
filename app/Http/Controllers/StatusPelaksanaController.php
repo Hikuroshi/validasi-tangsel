@@ -51,13 +51,13 @@ class StatusPelaksanaController extends Controller
                 TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
                 if ($latestStatusKey != 'done' && $latestStatusKey != 'cancelled') {
-                    $pelaksana->badan_usaha->decrement('jumlah_pekerjaan');
+                    $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
                 }
             } else {
                 TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
 
                 if ($latestStatusKey == 'done' || $latestStatusKey == 'cancelled') {
-                    $pelaksana->badan_usaha->increment('jumlah_pekerjaan');
+                    $pelaksana->perusahaan->increment('jumlah_pekerjaan');
                 }
             }
 

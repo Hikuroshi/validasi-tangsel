@@ -17,7 +17,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama Lembaga <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input" placeholder="Nama Lembaga">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -27,7 +27,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="jurusan">Jurusan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="jurusan" name="jurusan" value="{{ old('jurusan') }}" class="form-input" placeholder="Jurusan">
+                            <input type="text" id="jurusan" name="jurusan" value="{{ old('jurusan') }}" class="form-input">
                             @error('jurusan')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -37,7 +37,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="gelar">Gelar <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="gelar" name="gelar" value="{{ old('gelar') }}" class="form-input" placeholder="Gelar">
+                            <input type="text" id="gelar" name="gelar" value="{{ old('gelar') }}" class="form-input">
                             @error('gelar')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -47,7 +47,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="thn_masuk">Tahun Masuk <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="thn_masuk" name="thn_masuk" value="{{ old('thn_masuk') }}" class="form-input" placeholder="Tahun Masuk" min="1901" max="{{ now()->format('Y') }}" step="1">
+                            <input type="number" id="thn_masuk" name="thn_masuk" value="{{ old('thn_masuk') }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
                             @error('thn_masuk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -57,7 +57,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="thn_lulus">Tahun Lulus <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="thn_lulus" name="thn_lulus" value="{{ old('thn_lulus') }}" class="form-input" placeholder="Tahun Lulus" min="1901" max="{{ now()->format('Y') }}" step="1">
+                            <input type="number" id="thn_lulus" name="thn_lulus" value="{{ old('thn_lulus') }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
                             @error('thn_lulus')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -67,7 +67,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="ijazah">Ijazah <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="ijazah" name="ijazah" value="{{ old('ijazah') }}" class="form-input" placeholder="Ijazah">
+                            <input type="text" id="ijazah" name="ijazah" value="{{ old('ijazah') }}" class="form-input">
                             @error('ijazah')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror

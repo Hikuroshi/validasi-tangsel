@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('badan_usahas', function (Blueprint $table) {
+        Schema::table('perusahaans', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
 
         Schema::table('tenaga_ahlis', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('badan_usaha_id')->references('id')->on('badan_usahas');
+            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
         });
 
         Schema::table('riwayat_pendidikans', function (Blueprint $table) {
@@ -40,28 +40,12 @@ return new class extends Migration
             $table->foreign('author_id')->references('id')->on('users');
         });
 
-        Schema::table('pekerjaans', function (Blueprint $table) {
-            $table->foreign('sub_pekerjaan_id')->references('id')->on('sub_pekerjaans');
-            $table->foreign('kecamatan_id')->references('id')->on('kecamatans');
-            $table->foreign('metode_id')->references('id')->on('metodes');
-            $table->foreign('author_id')->references('id')->on('users');
-        });
-
-        Schema::table('kecamatans', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
-        });
-
-        Schema::table('metodes', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
-        });
-
         Schema::table('jenis_jasas', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
 
         Schema::table('pelaksanas', function (Blueprint $table) {
-            $table->foreign('badan_usaha_id')->references('id')->on('badan_usahas');
-            $table->foreign('pekerjaan_id')->references('id')->on('pekerjaans');
+            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
             $table->foreign('author_id')->references('id')->on('users');
         });
 
@@ -76,15 +60,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('badan_usahas');
+        Schema::dropIfExists('perusahaans');
         Schema::dropIfExists('tenaga_ahlis');
         Schema::dropIfExists('riwayat_pendidikans');
         Schema::dropIfExists('keahlians');
         Schema::dropIfExists('jenis_pekerjaans');
         Schema::dropIfExists('sub_pekerjaans');
-        Schema::dropIfExists('pekerjaans');
-        Schema::dropIfExists('kecamatans');
-        Schema::dropIfExists('metodes');
         Schema::dropIfExists('jenis_jasas');
         Schema::dropIfExists('pelaksanas');
         Schema::dropIfExists('status_pelaksanas');

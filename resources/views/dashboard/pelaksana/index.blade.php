@@ -43,7 +43,7 @@
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Badan Usaha",
+                    "Perusahaan",
                     "Pekerjaan",
                     "No Kontrak",
                     "Tanggal Kontrak",
@@ -60,13 +60,13 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/dashboard/pelaksana/${cell}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/pelaksana/${cell}">
                                     <i class="uil uil-eye"></i>
                                 </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/pelaksana/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/pelaksana/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/pelaksana/${cell}" method="post" class="d-inline">
+                                <form action="/pelaksana/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
@@ -82,8 +82,8 @@
                     search: true,
                     data: pelaksanas.map((pelaksana, index) => [
                     index + 1,
-                    pelaksana.badan_usaha.nama,
-                    pelaksana.pekerjaan.nama,
+                    pelaksana.perusahaan.nama,
+                    pelaksana.nama,
                     pelaksana.no_kontrak,
                     pelaksana.tgl_kontrak,
                     pelaksana.status_pelaksana_f,

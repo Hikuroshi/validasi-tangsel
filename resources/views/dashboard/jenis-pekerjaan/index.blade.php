@@ -29,6 +29,8 @@
 
 @section('js')
 
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
+
 <!-- Gridjs Plugin js -->
 <script src="/assets/libs/gridjs/gridjs.umd.js"></script>
 
@@ -49,10 +51,10 @@
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dashboard/jenis-pekerjaan/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/jenis-pekerjaan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/dashboard/jenis-pekerjaan/${cell}" method="post" class="d-inline">
+                                <form action="/jenis-pekerjaan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">

@@ -18,7 +18,7 @@
                         <label class="mb-2" for="jenis_pekerjaan_id">Jenis Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
-                                <option>Pilih Jenis Pekerjaan</option>
+                                <option></option>
                                 @foreach ($jenis_pekerjaans as $jenis_pekerjaan)
                                 <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id') == $jenis_pekerjaan->id)>
                                     {{ $jenis_pekerjaan->nama }}
@@ -34,7 +34,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Jenis Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input" placeholder="Jenis Pekerjaan">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
