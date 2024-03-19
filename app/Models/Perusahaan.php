@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,15 @@ class Perusahaan extends Model
         return new Attribute(
             get: function () {
                 return $this->status ? 'Aktif' : 'Tidak Aktif';
+            }
+        );
+    }
+
+    protected function tglAktaF(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return Carbon::parse($this->tgl_akta)->isoFormat('D MMMM YYYY');
             }
         );
     }
