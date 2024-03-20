@@ -222,10 +222,23 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                    {{-- <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="thn_anggaran">Tahun Anggaran <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <input type="number" id="thn_anggaran" name="thn_anggaran" value="{{ old('thn_anggaran') }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
+                            @error('thn_anggaran')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div> --}}
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="thn_anggaran">Tahun Anggaran <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="thn_anggaran" name="thn_anggaran" class="form-select">
+                                <option></option>
+                                <option value="2024" @selected(old('thn_anggaran') == 2024)>2024</option>
+                            </select>
                             @error('thn_anggaran')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror

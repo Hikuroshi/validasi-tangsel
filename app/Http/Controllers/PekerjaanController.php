@@ -78,7 +78,7 @@ class PekerjaanController extends Controller
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
 
         if ($perusahaan) {
-            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal pekerjaan.');
+            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {
             return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
@@ -179,7 +179,7 @@ class PekerjaanController extends Controller
             ->toArray();
 
         if ($perusahaan) {
-            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal pekerjaan.');
+            return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {
             return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
