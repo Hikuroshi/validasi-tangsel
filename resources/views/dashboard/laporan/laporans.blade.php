@@ -42,10 +42,11 @@
                 <th>Tanggal Kontrak</th>
                 <th>Waktu Pelaksanaan (Hari Kalender)</th>
                 <th>Jenis Kontruksi</th>
+                <th>Status Pekerjaan</th>
             </tr>
             @foreach ($laporans as $laporan)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td style="text-align: center">{{ $loop->iteration }}</td>
                 <td>{{ $laporan->nama }}</td>
                 <td>{{ $laporan->nilai_pagu_f }}</td>
                 <td>{{ $laporan->nilai_kontrak_f }}</td>
@@ -55,6 +56,7 @@
                 <td>{{ $laporan->tgl_kontrak_f }}</td>
                 <td>{{ $laporan->lama_hari }}</td>
                 <td>{{ $laporan->jenis_pekerjaan->nama }}</td>
+                <td>{{ $laporan->status_pekerjaan->nama }}</td>
             </tr>
             @endforeach
         </table>
