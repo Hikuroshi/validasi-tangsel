@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pekerjaan;
 use App\Models\StatusPekerjaan;
-use App\Models\TenagaAhli;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StatusPekerjaanController extends Controller
 {
@@ -15,7 +12,12 @@ class StatusPekerjaanController extends Controller
      */
     public function index()
     {
-        //
+        $jenis_pekerjaans = StatusPekerjaan::latest()->get(['slug', 'nama']);
+
+        return view('dashboard.status-pekerjaan.index', [
+            'title' => 'Daftar Jenis Pekerjaan',
+            'status_pekerjaans' => $jenis_pekerjaans,
+        ]);
     }
 
     /**
@@ -23,48 +25,24 @@ class StatusPekerjaanController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.status-pekerjaan.create', [
+            'title' => 'Tambah Jenis Pekerjaan',
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Pekerjaan $pekerjaan)
+    public function store(Request $request)
     {
         $validatedData =  $request->validate([
-            'status_pekerjaan' => 'required',
-            'keterangan'=> 'required|string',
+            'nama' => 'required|string|max:255',
         ]);
 
-        $validatedData[$request->status_pekerjaan] = true;
-        $validatedData['pekerjaan_id'] = $pekerjaan->id;
         $validatedData['author_id'] = $request->user()->id;
 
-        $latestStatusKey = collect($pekerjaan->status_pekerjaans()->latest()->first()->toArray())
-                ->only(['request', 'on_progress', 'reporting', 'done', 'pending', 'cancelled'])
-                ->filter(fn ($value, $key) => $value == true)
-                ->keys()
-                ->last();
-
-        DB::transaction(function () use ($request, $validatedData, $pekerjaan, $latestStatusKey) {
-            if ($request->status_pekerjaan == 'done' || $request->status_pekerjaan == 'cancelled') {
-                TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
-
-                if ($latestStatusKey != 'done' && $latestStatusKey != 'cancelled') {
-                    $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
-                }
-            } else {
-                TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
-
-                if ($latestStatusKey == 'done' || $latestStatusKey == 'cancelled') {
-                    $pekerjaan->perusahaan->increment('jumlah_pekerjaan');
-                }
-            }
-
-            StatusPekerjaan::create($validatedData);
-        });
-
-        return redirect()->back()->with('success', 'Status Pekerjaan berhasil diperbarui!');
+        StatusPekerjaan::create($validatedData);
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil disimpan');
     }
 
     /**
@@ -80,7 +58,10 @@ class StatusPekerjaanController extends Controller
      */
     public function edit(StatusPekerjaan $statusPekerjaan)
     {
-        //
+        return view('dashboard.status-pekerjaan.edit', [
+            'title' => 'Perbarui Jenis Pekerjaan',
+            'status_pekerjaan' => $statusPekerjaan,
+        ]);
     }
 
     /**
@@ -88,7 +69,16 @@ class StatusPekerjaanController extends Controller
      */
     public function update(Request $request, StatusPekerjaan $statusPekerjaan)
     {
-        //
+        $rules = [
+            'nama' => 'required|string|max:255',
+        ];
+
+        $validatedData =  $request->validate($rules);
+
+        $validatedData['author_id'] = $request->user()->id;
+
+        $statusPekerjaan->update($validatedData);
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil diperbarui!');
     }
 
     /**
@@ -96,6 +86,7 @@ class StatusPekerjaanController extends Controller
      */
     public function destroy(StatusPekerjaan $statusPekerjaan)
     {
-        //
+        $statusPekerjaan->delete();
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil dihapus!');
     }
 }

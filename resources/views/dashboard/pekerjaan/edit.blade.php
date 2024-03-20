@@ -151,22 +151,12 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="pho">PHO <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="pho" name="pho" value="{{ old('pho', $pekerjaan->pho) }}" class="form-input">
-                            @error('pho')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="jenis_pekerjaan_id">Jenis pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
                                 <option></option>
                                 @foreach ($jenis_pekerjaans as $jenis_pekerjaan)
-                                <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_pekerjaan_id) == $jenis_pekerjaan->id)>
+                                <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id', $pekerjaan->jenis_pekerjaan_id) == $jenis_pekerjaan->id)>
                                     {{ $jenis_pekerjaan->nama }}
                                 </option>
                                 @endforeach
@@ -245,17 +235,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="metode">Metode Pengadaan <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="metode_id">Metode Pengadaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="metode" name="metode" class="form-select">
-                                <option></option>
+                            <select id="metode_id" name="metode_id" class="form-select">
+                                <option value=""></option>
                                 @foreach ($metodes as $metode)
-                                <option value="{{ $metode }}" @selected(old('metode', $pekerjaan->metode) == $metode)>
-                                    {{ $metode }}
+                                <option value="{{ $metode->id }}" @selected(old('metode_id', $pekerjaan->metode_id) == $metode->id)>
+                                    {{ $metode->nama }}
                                 </option>
                                 @endforeach
                             </select>
-                            @error('metode')
+                            @error('metode_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -272,18 +262,18 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="status_pekerjaan">Status <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="status_pekerjaan_id">Status Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="status_pekerjaan" name="status_pekerjaan" class="form-select">
-                                <option></option>
-                                @foreach ($status_pekerjaans as $key => $value)
-                                    <option value="{{ $key }}" @selected(old('status_pekerjaan', $pekerjaan->status_pekerjaan_f['slug']) == $key)>
-                                        {{ $value }}
-                                    </option>
+                            <select id="status_pekerjaan_id" name="status_pekerjaan_id" class="form-select">
+                                <option value=""></option>
+                                @foreach ($status_pekerjaans as $status_pekerjaan)
+                                <option value="{{ $status_pekerjaan->id }}" @selected(old('status_pekerjaan_id', $pekerjaan->status_pekerjaan_id) == $status_pekerjaan->id)>
+                                    {{ $status_pekerjaan->nama }}
+                                </option>
                                 @endforeach
                             </select>
-                            @error('status_pekerjaan')
-                                <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @error('status_pekerjaan_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
                     </div>

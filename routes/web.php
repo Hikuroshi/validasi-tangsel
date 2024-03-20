@@ -4,6 +4,7 @@ use App\Http\Controllers\JenisJasaController;
 use App\Http\Controllers\JenisPekerjaanController;
 use App\Http\Controllers\KeahlianController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\MetodeController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProfileController;
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tenaga-ahli', TenagaAhliController::class);
     Route::resource('/perusahaan', PerusahaanController::class);
     Route::resource('/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
+    Route::resource('/status-pekerjaan', StatusPekerjaanController::class)->except('show');
+    Route::resource('/metode', MetodeController::class)->except('show');
     Route::resource('/user', UserController::class)->except('show');
 
     Route::resource('/pekerjaan', PekerjaanController::class);
@@ -54,8 +57,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/pekerjaan-tenaga-ahli/{pekerjaan}/{tenaga_ahli}', 'deleteTenagaAhli')->name('pekerjaan.delete-tenaga-ahli');
         Route::put('/pekerjaan-tenaga-ahli/{pekerjaan}', 'addTenagaAhli')->name('pekerjaan.add-tenaga-ahli');
     });
-
-    Route::put('/status-pekerjaan/{pekerjaan}', [StatusPekerjaanController::class,'store'])->name('status-pekerjaan.store');
 
     Route::resource('/riwayat-pendidikan', RiwayatPendidikanController::class)->except('index', 'create', 'show');
     Route::get('/riwayat-pendidikan/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [RiwayatPendidikanController::class, 'create'])->name('riwayat-pendidikan.create');

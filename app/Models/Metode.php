@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class StatusPekerjaan extends Model
+class Metode extends Model
 {
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
 
-    public function pekerjaans(): HasMany
-    {
-        return $this->hasMany(Pekerjaan::class, 'status_pekerjaan_id');
-    }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function pekerjaans(): HasMany
+    {
+        return $this->hasMany(Pekerjaan::class, 'metode_id');
     }
 
     public function getRouteKeyName()

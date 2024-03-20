@@ -23,8 +23,8 @@ return new class extends Migration
             $table->date('tgl_lahir');
             $table->text('alamat');
             $table->boolean('kelamin');
-            $table->string('email')->unique();
-            $table->string('telepon')->unique();
+            $table->string('email')->unique()->nullable();
+            $table->string('telepon')->unique()->nullable();
             $table->text('keahlian');
             $table->boolean('status');
             $table->boolean('status_pekerjaan')->default('1');

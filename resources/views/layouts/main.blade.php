@@ -86,6 +86,16 @@
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="{{ route('status-pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Status Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('metode.index') }}" class="menu-link">
+                                    <span class="menu-text"> Metode </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{ route('user.index') }}" class="menu-link">
                                     <span class="menu-text"> User </span>
                                 </a>

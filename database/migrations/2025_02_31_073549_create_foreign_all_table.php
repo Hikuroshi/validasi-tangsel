@@ -34,14 +34,19 @@ return new class extends Migration
             $table->foreign('author_id')->references('id')->on('users');
         });
 
+        Schema::table('metodes', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
         Schema::table('pekerjaans', function (Blueprint $table) {
-            $table->foreign('jenis_pekerjaan_id')->references('id')->on('jenis_pekerjaans');
             $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
+            $table->foreign('jenis_pekerjaan_id')->references('id')->on('jenis_pekerjaans');
+            $table->foreign('status_pekerjaan_id')->references('id')->on('status_pekerjaans');
+            $table->foreign('metode_id')->references('id')->on('metodes');
             $table->foreign('author_id')->references('id')->on('users');
         });
 
         Schema::table('status_pekerjaans', function (Blueprint $table) {
-            $table->foreign('pekerjaan_id')->references('id')->on('pekerjaans')->cascadeOnDelete();
             $table->foreign('author_id')->references('id')->on('users');
         });
     }
@@ -55,8 +60,9 @@ return new class extends Migration
         Schema::dropIfExists('tenaga_ahlis');
         Schema::dropIfExists('riwayat_pendidikans');
         Schema::dropIfExists('keahlians');
-        Schema::dropIfExists('jenis_pekerjaans');
         Schema::dropIfExists('pekerjaans');
+        Schema::dropIfExists('jenis_pekerjaans');
+        Schema::dropIfExists('metodes');
         Schema::dropIfExists('status_pekerjaans');
     }
 };

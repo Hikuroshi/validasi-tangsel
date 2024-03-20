@@ -26,26 +26,6 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="sertifikat">No Sertifikat <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="sertifikat" name="sertifikat" value="{{ old('sertifikat', $perusahaan->sertifikat) }}" class="form-input">
-                            @error('sertifikat')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="registrasi">No Registrasi <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="registrasi" name="registrasi" value="{{ old('registrasi', $perusahaan->registrasi) }}" class="form-input">
-                            @error('registrasi')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="nama" name="nama" value="{{ old('nama', $perusahaan->nama) }}" class="form-input">
@@ -76,7 +56,7 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="email">Email <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="email">Email </label>
                         <div class=" w-full sm:w-5/6">
                             <input type="email" id="email" name="email" value="{{ old('email', $perusahaan->email) }}" class="form-input">
                             @error('email')
@@ -86,40 +66,10 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="telepon">Telepon <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="telepon">Telepon </label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="telepon" name="telepon" value="{{ old('telepon', $perusahaan->telepon) }}" class="form-input">
                             @error('telepon')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="no_akta">No Akta <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="no_akta" name="no_akta" value="{{ old('no_akta', $perusahaan->no_akta) }}" class="form-input">
-                            @error('no_akta')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="humanfd-datepicker">Tanggal Akta <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <input type="text" id="humanfd-datepicker" name="tgl_akta" value="{{ old('tgl_akta', $perusahaan->tgl_akta) }}" class="form-input">
-                            @error('tgl_akta')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
-                        <label class="mb-2" for="klasifikasi">Klasifikasi <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <textarea id="klasifikasi" name="klasifikasi" class="form-input" rows="5">{{ old('klasifikasi', $perusahaan->klasifikasi) }}</textarea>
-                            @error('klasifikasi')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -162,10 +112,6 @@
         $("#npwp").on("input", function(e) {
             formatInput(e, "00.000.000.0-000.000");
             // formatInput(e, "0000 0000 0000 0000");
-        });
-
-        $("#registrasi").on("input", function(e) {
-            formatInput(e, "0-0000-00-000-0-0-000000");
         });
 
         $("#telepon").on("input", function(e) {

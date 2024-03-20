@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Metode;
 use App\Models\Perusahaan;
 use App\Models\JenisJasa;
 use App\Models\JenisPekerjaan;
 use App\Models\RiwayatPendidikan;
+use App\Models\StatusPekerjaan;
 use App\Models\SubPekerjaan;
 use App\Models\TenagaAhli;
 use App\Models\User;
@@ -255,6 +257,48 @@ class DatabaseSeeder extends Seeder
         JenisPekerjaan::create([
             'nama' => 'Pengawasan Konstruksi',
             'slug' => Str::slug('Pengawasan Konstruksi'),
+            'author_id' => 1,
+        ]);
+
+        StatusPekerjaan::create([
+            'nama' => 'Request',
+            'slug' => Str::slug('Request'),
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'On Progress',
+            'slug' => Str::slug('On Progress'),
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Reporting',
+            'slug' => Str::slug('Reporting'),
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Done',
+            'slug' => Str::slug('Done'),
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Pending',
+            'slug' => Str::slug('Pending'),
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Cancelled',
+            'slug' => Str::slug('Cancelled'),
+            'author_id' => 1,
+        ]);
+
+        Metode::create([
+            'nama' => 'Tender',
+            'slug' => Str::slug('Tender'),
+            'author_id' => 1,
+        ]);
+        Metode::create([
+            'nama' => 'Penunjukan Langsung',
+            'slug' => Str::slug('Penunjukan Langsung'),
             'author_id' => 1,
         ]);
     }

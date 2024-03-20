@@ -23,6 +23,16 @@ class User extends Authenticatable
         return $this->hasMany(JenisPekerjaan::class, 'author_id');
     }
 
+    public function status_pekerjaans(): HasMany
+    {
+        return $this->hasMany(StatusPekerjaan::class, 'author_id');
+    }
+
+    public function metodes(): HasMany
+    {
+        return $this->hasMany(Metode::class, 'author_id');
+    }
+
     public function keahlians(): HasMany
     {
         return $this->hasMany(Keahlian::class, 'author_id');
@@ -31,11 +41,6 @@ class User extends Authenticatable
     public function riwayat_pendidikans(): HasMany
     {
         return $this->hasMany(RiwayatPendidikan::class, 'author_id');
-    }
-
-    public function sub_pekerjaans(): HasMany
-    {
-        return $this->hasMany(SubPekerjaan::class, 'author_id');
     }
 
     public function tenaga_ahlis(): HasMany

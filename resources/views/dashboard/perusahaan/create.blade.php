@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="email">Email <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="email">Email </label>
                         <div class=" w-full sm:w-5/6">
                             <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-input">
                             @error('email')
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="telepon">Telepon <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="telepon">Telepon </label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="telepon" name="telepon" value="{{ old('telepon') }}" class="form-input">
                             @error('telepon')
@@ -111,10 +111,6 @@
         $("#npwp").on("input", function(e) {
             formatInput(e, "00.000.000.0-000.000");
             // formatInput(e, "0000 0000 0000 0000");
-        });
-
-        $("#registrasi").on("input", function(e) {
-            formatInput(e, "0-0000-00-000-0-0-000000");
         });
 
         $("#telepon").on("input", function(e) {

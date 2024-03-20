@@ -208,14 +208,19 @@ class Pekerjaan extends Model
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
-    public function status_pekerjaans(): HasMany
-    {
-        return $this->hasMany(StatusPekerjaan::class, 'pekerjaan_id');
-    }
-
     public function jenis_pekerjaan(): BelongsTo
     {
         return $this->belongsTo(JenisPekerjaan::class, 'jenis_pekerjaan_id');
+    }
+
+    public function status_pekerjaan(): BelongsTo
+    {
+        return $this->belongsTo(StatusPekerjaan::class, 'status_pekerjaan_id');
+    }
+
+    public function metode(): BelongsTo
+    {
+        return $this->belongsTo(Metode::class, 'metode_id');
     }
 
     public function tenaga_ahlis()

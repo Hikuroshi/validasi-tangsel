@@ -53,8 +53,8 @@ class TenagaAhliController extends Controller
             'tgl_lahir' => 'required|date',
             'alamat' => 'required|string',
             'kelamin' => 'required|boolean',
-            'email' => 'required|string|email|max:255|unique:tenaga_ahlis',
-            'telepon' => 'required|max:15|unique:tenaga_ahlis',
+            'email' => 'nullable|string|email|max:255|unique:tenaga_ahlis',
+            'telepon' => 'nullable|max:15|unique:tenaga_ahlis',
             'keahlian' => 'required|string',
             'status' => 'required|boolean',
         ]);
@@ -121,10 +121,10 @@ class TenagaAhliController extends Controller
             $rules['npwp'] = 'required|max:21|unique:tenaga_ahlis';
         }
         if ($request->telepon != $tenagaAhli->telepon) {
-            $rules['telepon'] = 'required|max:15|unique:tenaga_ahlis';
+            $rules['telepon'] = 'nullable|max:15|unique:tenaga_ahlis';
         }
         if ($request->email != $tenagaAhli->email) {
-            $rules['email'] = 'required|string|email|max:255|unique:tenaga_ahlis';
+            $rules['email'] = 'nullable|string|email|max:255|unique:tenaga_ahlis';
         }
 
         $validatedData =  $request->validate($rules);

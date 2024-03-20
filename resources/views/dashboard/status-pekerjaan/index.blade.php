@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('pekerjaan.create') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('status-pekerjaan.create') }}" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-plus"></i>
             </a>
         </div>
@@ -24,43 +24,39 @@
     </div>
 </div>
 
+
 @endsection
 
 @section('js')
+
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
 
 <!-- Gridjs Plugin js -->
 <script src="/assets/libs/gridjs/gridjs.umd.js"></script>
 
 <script>
     class GridDatatable {
-        init(pekerjaans) {
-            this.basicTableInit(pekerjaans);
+        init(status_pekerjaans) {
+            this.basicTableInit(status_pekerjaans);
         }
 
-        basicTableInit(pekerjaans) {
+        basicTableInit(status_pekerjaans) {
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Perusahaan",
-                    "Pekerjaan",
-                    "No Kontrak",
-                    "Tanggal Kontrak",
-                    "Status",
+                    "Jenis Pekerjaan",
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/pekerjaan/${cell}">
-                                    <i class="uil uil-eye"></i>
-                                </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/pekerjaan/${cell}/edit">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/status-pekerjaan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/pekerjaan/${cell}" method="post" class="d-inline">
+                                <form action="/status-pekerjaan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
                                         <i class="uil uil-trash-alt"></i>
                                     </button>
                                 </form>
@@ -71,14 +67,10 @@
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
-                    data: pekerjaans.map((pekerjaan, index) => [
+                    data: status_pekerjaans.map((status_pekerjaan, index) => [
                     index + 1,
-                    pekerjaan.perusahaan.nama,
-                    pekerjaan.nama,
-                    pekerjaan.no_kontrak,
-                    pekerjaan.tgl_kontrak,
-                    pekerjaan.status_pekerjaan.nama,
-                    pekerjaan.slug,
+                    status_pekerjaan.nama,
+                    status_pekerjaan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }
@@ -86,8 +78,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
-        const pekerjaans = {{ Js::from($pekerjaans) }};
-        new GridDatatable().init(pekerjaans);
+        const status_pekerjaans = {{ Js::from($status_pekerjaans) }};
+        new GridDatatable().init(status_pekerjaans);
     });
 </script>
 
