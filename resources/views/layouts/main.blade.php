@@ -268,7 +268,7 @@
             <footer class="footer h-16 flex items-center px-6 border-t border-gray-200 dark:border-gray-600 mt-auto">
                 <div class="flex md:justify-center justify-center w-full gap-4">
                     <div>
-                        <script>document.write(new Date().getFullYear())</script> © Validasi Tangsel
+                        <script>document.write(new Date().getFullYear())</script> © DATIN-PPK
                     </div>
                 </div>
             </footer>

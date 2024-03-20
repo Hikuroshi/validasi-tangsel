@@ -139,6 +139,10 @@ class PekerjaanController extends Controller
      */
     public function update(Request $request, Pekerjaan $pekerjaan)
     {
+        if (str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'done') || str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'cancelled')){
+            return redirect()->route('pekerjaan.show', $pekerjaan->slug)->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
+        }
+
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
             'perusahaan_id' => 'required|exists:perusahaans,id',
@@ -245,6 +249,10 @@ class PekerjaanController extends Controller
         $nama_status = StatusPekerjaan::where('id', $request->status_pekerjaan_id)->value('nama');
 
         $statusSebelumnyaMirip = str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'done') || str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'cancelled');
+
+        if ($statusSebelumnyaMirip) {
+            return redirect()->back()->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
+        }
 
         if (str_contains(strtolower($nama_status), 'done') || str_contains(strtolower($nama_status), 'cancelled')) {
             if (!$statusSebelumnyaMirip) {

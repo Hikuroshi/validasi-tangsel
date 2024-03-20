@@ -548,6 +548,29 @@
 </script>
 @enderror
 
+@if(session()->has('dataSelesai'))
+<script>
+    $(document).ready(function() {
+        let Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+        Toast.fire({
+            icon: 'error',
+            title: '{{ session('dataSelesai') }}'
+        });
+    });
+</script>
+@endif
+
 <script>
     $(document).on('click', '#deleteData', function() {
         let title = $(this).data('title');

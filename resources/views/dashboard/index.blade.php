@@ -87,7 +87,7 @@
                 @endforeach
 
                 <div class="flex justify-end">
-                    <a href="{{ route('status-pekerjaan.index') }}" class="p-4 text-primary">Lihat semua <i class="uil-arrow-right"></i></a>
+                    <a href="{{ route('pekerjaan.index') }}" class="p-4 text-primary">Lihat semua <i class="uil-arrow-right"></i></a>
                 </div>
             </div>
         </div>
