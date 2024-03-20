@@ -47,7 +47,7 @@ class TenagaAhliController extends Controller
             'nama' => 'required|string|max:255',
             'nik' => 'required|max:21|unique:tenaga_ahlis',
             'npwp' => 'required|max:21|unique:tenaga_ahlis',
-            'perusahaan_id' => 'required|exists:perusahaans,id',
+            'perusahaan_id' => 'nullable|exists:perusahaans,id',
             'jabatan' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',
@@ -104,7 +104,7 @@ class TenagaAhliController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'perusahaan_id' => 'required|exists:perusahaans,id',
+            'perusahaan_id' => 'nullable|exists:perusahaans,id',
             'jabatan' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tgl_lahir' => 'required|date',

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('status_pelaksanas', function (Blueprint $table) {
+        Schema::create('status_pekerjaans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('keterangan')->nullable();
             $table->boolean('request')->default(false);
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('done')->default(false);
             $table->boolean('pending')->default(false);
             $table->boolean('cancelled')->default(false);
-            $table->unsignedBigInteger('pelaksana_id');
+            $table->unsignedBigInteger('pekerjaan_id');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('status_pelaksanas');
+        Schema::dropIfExists('status_pekerjaans');
     }
 };

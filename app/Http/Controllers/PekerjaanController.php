@@ -5,27 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Perusahaan;
 use App\Models\JenisJasa;
 use App\Models\JenisPekerjaan;
-use App\Models\Pelaksana;
-use App\Models\StatusPelaksana;
+use App\Models\Pekerjaan;
+use App\Models\StatusPekerjaan;
 use App\Models\SubPekerjaan;
 use App\Models\TenagaAhli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PelaksanaController extends Controller
+class PekerjaanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pelaksanas = Pelaksana::latest()->with(['perusahaan:id,nama', 'status_pelaksanas'])
+        $pekerjaans = Pekerjaan::latest()->with(['perusahaan:id,nama', 'status_pekerjaans'])
                                     ->get(['id', 'slug', 'nama', 'perusahaan_id', 'no_kontrak', 'tgl_kontrak'])
-                                    ->append(['status_pelaksana_f']);
+                                    ->append(['status_pekerjaan_f']);
 
-        return view('dashboard.pelaksana.index', [
-            'title' => 'Daftar Pelaksana',
-            'pelaksanas' => $pelaksanas,
+        return view('dashboard.pekerjaan.index', [
+            'title' => 'Daftar Pekerjaan',
+            'pekerjaans' => $pekerjaans,
         ]);
     }
 
@@ -46,12 +46,12 @@ class PelaksanaController extends Controller
         $metode = ['Tender', 'Penunjukan Langsung'];
         $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
 
-        return view('dashboard.pelaksana.create', [
-            'title' => 'Tambah Pelaksana',
+        return view('dashboard.pekerjaan.create', [
+            'title' => 'Tambah Pekerjaan',
             'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
             'jenis_jasas' => JenisJasa::get(['id', 'nama']),
-            'status_pelaksanas' => $status,
+            'status_pekerjaans' => $status,
             'metodes' => $metode,
             'sumber_danas' => $sumber_dana,
         ]);
@@ -73,7 +73,7 @@ class PelaksanaController extends Controller
             'ppk' => 'required|string|max:255',
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
-            'status_pelaksana' => 'required',
+            'status_pekerjaan' => 'required',
             'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
             'deskripsi' => 'required|string',
             'nilai_pagu' => 'required|string|max:255',
@@ -101,23 +101,23 @@ class PelaksanaController extends Controller
             Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
 
-            $pelaksana = Pelaksana::create($validatedData);
+            $pekerjaan = Pekerjaan::create($validatedData);
 
-            StatusPelaksana::create([
-                'pelaksana_id' => $pelaksana->id,
-                $validatedData['status_pelaksana'] => true,
+            StatusPekerjaan::create([
+                'pekerjaan_id' => $pekerjaan->id,
+                $validatedData['status_pekerjaan'] => true,
                 'author_id' => $request->user()->id,
             ]);
-            $pelaksana->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+            $pekerjaan->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
         });
 
-        return redirect()->route('pelaksana.index')->with('success', 'Pelaksana berhasil disimpan');
+        return redirect()->route('pekerjaan.index')->with('success', 'Pekerjaan berhasil disimpan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Pelaksana $pelaksana)
+    public function show(Pekerjaan $pekerjaan)
     {
         $status = [
             'request' => 'Request',
@@ -128,21 +128,22 @@ class PelaksanaController extends Controller
             'cancelled' => 'Cancelled'
         ];
 
-        $pelaksana->load(['perusahaan:id,nama', 'pekerjaan', 'status_pelaksanas', 'status_pelaksanas.author'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pelaksana_f', 'progress_pelaksana']);
+        $pekerjaan->load(['perusahaan:id,nama', 'status_pekerjaans.author'])->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pekerjaan_f', 'progress_pekerjaan']);
 
-        return view('dashboard.pelaksana.show', [
-            'title' => 'Detail Pelaksana',
-            'pelaksana' => $pelaksana,
-            'tenaga_ahlis' => $pelaksana->tenaga_ahlis()->get(['slug', 'nama', 'jabatan', 'status'])->append(['status_f']),
+        return view('dashboard.pekerjaan.show', [
+            'title' => 'Detail Pekerjaan',
+            'pekerjaan' => $pekerjaan,
+            'tenaga_ahlis' => $pekerjaan->tenaga_ahlis()->get(['slug', 'nama', 'jabatan', 'status'])->append(['status_f']),
+            'status_pekerjaans' => $pekerjaan->status_pekerjaans()->latest()->get(),
             'add_tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
-            'status_pelaksanas' => $status,
+            'status' => $status,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pelaksana $pelaksana)
+    public function edit(Pekerjaan $pekerjaan)
     {
         $status = [
             'request' => 'Request',
@@ -156,19 +157,19 @@ class PelaksanaController extends Controller
         $metode = ['Tender', 'Penunjukan Langsung'];
         $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
 
-        $selected_tenaga_ahlis = $pelaksana->tenaga_ahlis->pluck('id');
+        $selected_tenaga_ahlis = $pekerjaan->tenaga_ahlis->pluck('id');
 
-        $jenis_pekerjaans = JenisPekerjaan::where('jenis_jasa_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id)->get(['id', 'nama']);
-        $sub_pekerjaans = SubPekerjaan::where('jenis_pekerjaan_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan_id)->get(['id', 'nama']);
+        $jenis_pekerjaans = JenisPekerjaan::where('jenis_jasa_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id)->get(['id', 'nama']);
+        $sub_pekerjaans = SubPekerjaan::where('jenis_pekerjaan_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan_id)->get(['id', 'nama']);
 
-        return view('dashboard.pelaksana.edit', [
-            'title' => 'Perbarui Pelaksana',
-            'pelaksana' => $pelaksana->load(['perusahaan:id,nama', 'tenaga_ahlis:id,nama']),
+        return view('dashboard.pekerjaan.edit', [
+            'title' => 'Perbarui Pekerjaan',
+            'pekerjaan' => $pekerjaan->load(['perusahaan:id,nama', 'tenaga_ahlis:id,nama']),
             'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
             'jenis_jasas' => JenisJasa::get(['id', 'nama']),
             'selected_tenaga_ahlis' => $selected_tenaga_ahlis,
-            'status_pelaksanas' => $status,
+            'status_pekerjaans' => $status,
             'metodes' => $metode,
             'sumber_danas' => $sumber_dana,
             'jenis_pekerjaans' => $jenis_pekerjaans,
@@ -179,7 +180,7 @@ class PelaksanaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pelaksana $pelaksana)
+    public function update(Request $request, Pekerjaan $pekerjaan)
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
@@ -192,7 +193,7 @@ class PelaksanaController extends Controller
             'ppk' => 'required|string|max:255',
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
-            'status_pelaksana' => 'required',
+            'status_pekerjaan' => 'required',
             'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
             'deskripsi' => 'required|string',
             'nilai_pagu' => 'required|string|max:255',
@@ -208,12 +209,12 @@ class PelaksanaController extends Controller
 
         $perusahaan = Perusahaan::where('id', $request->perusahaan_id)
             ->where('jumlah_pekerjaan', '>', 5)
-            ->whereNotIn('id', [$pelaksana->perusahaan_id])
+            ->whereNotIn('id', [$pekerjaan->perusahaan_id])
             ->first(['nama']);
 
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
             ->where('status_pekerjaan', 0)
-            ->whereNotIn('id', $pelaksana->tenaga_ahlis->pluck('id')->toArray())
+            ->whereNotIn('id', $pekerjaan->tenaga_ahlis->pluck('id')->toArray())
             ->pluck('nama')
             ->toArray();
 
@@ -224,42 +225,42 @@ class PelaksanaController extends Controller
             return redirect()->back()->withInput()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
         }
 
-        DB::transaction(function () use ($request, $validatedData, $pelaksana) {
-            $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
+        DB::transaction(function () use ($request, $validatedData, $pekerjaan) {
+            $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
             Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
 
-            TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
 
-            $pelaksana->update($validatedData);
+            $pekerjaan->update($validatedData);
 
-            StatusPelaksana::create([
-                'pelaksana_id' => $pelaksana->id,
-                $validatedData['status_pelaksana'] => true,
+            StatusPekerjaan::create([
+                'pekerjaan_id' => $pekerjaan->id,
+                $validatedData['status_pekerjaan'] => true,
                 'author_id' => $request->user()->id,
             ]);
 
-            $pelaksana->tenaga_ahlis()->sync($validatedData['tenaga_ahli_id']);
+            $pekerjaan->tenaga_ahlis()->sync($validatedData['tenaga_ahli_id']);
         });
 
-        return redirect()->route('pelaksana.index')->with('success', 'Pelaksana berhasil diperbarui!');
+        return redirect()->route('pekerjaan.index')->with('success', 'Pekerjaan berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pelaksana $pelaksana)
+    public function destroy(Pekerjaan $pekerjaan)
     {
-        $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
-        TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+        $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
+        TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
-        $pelaksana->tenaga_ahlis()->detach();
-        $pelaksana->delete();
+        $pekerjaan->tenaga_ahlis()->detach();
+        $pekerjaan->delete();
 
-        return redirect()->route('pelaksana.index')->with('success', 'Pelaksana berhasil dihapus!');
+        return redirect()->route('pekerjaan.index')->with('success', 'Pekerjaan berhasil dihapus!');
     }
 
-    public function addTenagaAhli(Request $request, Pelaksana $pelaksana)
+    public function addTenagaAhli(Request $request, Pekerjaan $pekerjaan)
     {
         $validatedData =  $request->validate([
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
@@ -274,15 +275,16 @@ class PelaksanaController extends Controller
             return redirect()->back()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
         }
 
-        $pelaksana->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
-        return redirect()->back()->with('success', 'Tenaga ahli berhasil ditambahkan ke pelaksana pekerjaan!');
+        TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
+        $pekerjaan->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+        return redirect()->back()->with('success', 'Tenaga ahli berhasil ditambahkan ke pekerjaan pekerjaan!');
     }
 
-    public function deleteTenagaAhli(Pelaksana $pelaksana, TenagaAhli $tenagaAhli)
+    public function deleteTenagaAhli(Pekerjaan $pekerjaan, TenagaAhli $tenagaAhli)
     {
         TenagaAhli::where('id', $tenagaAhli->id)->update(['status_pekerjaan' => 1]);
-        $pelaksana->tenaga_ahlis()->detach($tenagaAhli->id);
-        return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pelaksana pekerjaan!');
+        $pekerjaan->tenaga_ahlis()->detach($tenagaAhli->id);
+        return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pekerjaan pekerjaan!');
     }
 
     public function getJenisPekerjaan($id)

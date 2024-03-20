@@ -26,7 +26,7 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="calendar-check" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tgl_kontrak_f }}</h4>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pekerjaan->tgl_kontrak_f }}</h4>
                                 <span class="text-sm dark:text-gray-400">Tanggal Kontrak</span>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="calendar-x" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tgl_selesai_f }}</h4>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pekerjaan->tgl_selesai_f }}</h4>
                                 <span class="text-sm dark:text-gray-400">Tanggal Berakhir</span>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="users" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pelaksana->tenaga_ahlis->count() }}</h4>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ $pekerjaan->tenaga_ahlis->count() }}</h4>
                                 <span class="text-sm dark:text-gray-400">Tenaga Ahli</span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="clock-5" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans($pelaksana->tgl_mulai) }}</h4>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans($pekerjaan->tgl_mulai) }}</h4>
                                 <span class="text-sm dark:text-gray-400">Waktu</span>
                             </div>
                         </div>
@@ -65,23 +65,23 @@
                 </div>
 
                 <div class="p-6">
-                    <p class="mb-2 dark:text-gray-400">{{ $pelaksana->progress_pelaksana['desc'] }}</p>
+                    <p class="mb-2 dark:text-gray-400">{{ $pekerjaan->progress_pekerjaan['desc'] }}</p>
                     <div class="flex w-full h-6 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700 mb-5">
-                        <div class="flex flex-col justify-center overflow-hidden bg-{{ $pelaksana->progress_pelaksana['color'] }} text-xs text-white text-center" role="progressbar" style="width: {{ $pelaksana->progress_pelaksana['percent'] }}%" aria-valuenow="{{ $pelaksana->progress_pelaksana['percent'] }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ $pelaksana->progress_pelaksana['color'] == 'secondary' ? 'Gagal menyelesaika dengan tepat waktu' : $pelaksana->progress_pelaksana['percent'] . '%' }}
+                        <div class="flex flex-col justify-center overflow-hidden bg-{{ $pekerjaan->progress_pekerjaan['color'] }} text-xs text-white text-center" role="progressbar" style="width: {{ $pekerjaan->progress_pekerjaan['percent'] }}%" aria-valuenow="{{ $pekerjaan->progress_pekerjaan['percent'] }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ $pekerjaan->progress_pekerjaan['color'] == 'secondary' ? 'Gagal menyelesaika dengan tepat waktu' : $pekerjaan->progress_pekerjaan['percent'] . '%' }}
                         </div>
                     </div>
 
-                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pelaksana->status_pelaksana_f['color'] }}/20 btn bg-{{ $pelaksana->status_pelaksana_f['color'] }}/20 text-{{ $pelaksana->status_pelaksana_f['color'] }} hover:bg-{{ $pelaksana->status_pelaksana_f['color'] }} hover:text-white py-2 px-3 rounded">
-                        <i class="uil uil-{{ $pelaksana->status_pelaksana_f['icon'] }} me-1"></i>
-                        {{ $pelaksana->status_pelaksana_f['name'] }}
+                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20 btn bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20 text-{{ $pekerjaan->status_pekerjaan_f['color'] }} hover:bg-{{ $pekerjaan->status_pekerjaan_f['color'] }} hover:text-white py-2 px-3 rounded">
+                        <i class="uil uil-{{ $pekerjaan->status_pekerjaan_f['icon'] }} me-1"></i>
+                        {{ $pekerjaan->status_pekerjaan_f['name'] }}
                     </button>
                     <div id="update-status" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
                         <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
                             <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                                 <div class="flex justify-between items-center pt-3 px-4">
                                     <h3 class="font-bold text-gray-800 dark:text-white">
-                                        Status Pelaksana
+                                        Status Pekerjaan
                                     </h3>
                                     <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#update-status">
                                         <span class="sr-only">Tutup</span>
@@ -89,22 +89,22 @@
                                     </button>
                                 </div>
                                 <div class="p-4 overflow-y-auto">
-                                    <form method="POST" action="{{ route('status-pelaksana.store', $pelaksana->slug) }}">
+                                    <form method="POST" action="{{ route('status-pekerjaan.store', $pekerjaan->slug) }}">
                                         @method('put')
                                         @csrf
 
                                         <div class="mb-3">
-                                            <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
+                                            <label class="mb-2" for="status_pekerjaan">Status <span class="text-danger">*</span></label>
                                             <div class="mb-3">
-                                                <select id="status_pelaksana" name="status_pelaksana" class="form-select" required>
+                                                <select id="status_pekerjaan" name="status_pekerjaan" class="form-select" required>
                                                     <option>Pilih Status</option>
-                                                    @foreach ($status_pelaksanas as $key => $value)
-                                                    <option value="{{ $key }}" @selected(old('status_pelaksana', $pelaksana->status_pelaksana_f['slug']) == $key)>
+                                                    @foreach ($status as $key => $value)
+                                                    <option value="{{ $key }}" @selected(old('status_pekerjaan', $pekerjaan->status_pekerjaan_f['slug']) == $key)>
                                                         {{ $value }}
                                                     </option>
                                                     @endforeach
                                                 </select>
-                                                @error('status_pelaksana')
+                                                @error('status_pekerjaan')
                                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                                                 @enderror
                                             </div>
@@ -113,7 +113,7 @@
                                         <div class="mb-3">
                                             <label class="mb-2" for="keterangan">Keterangan <span class="text-danger">*</span></label>
                                             <div class="mb-3">
-                                                <textarea id="keterangan" name="keterangan" class="form-input" rows="5" placeholder="Keterangan" required>{{ old('keterangan', $pelaksana->status_pelaksana_f['keterangan']) }}</textarea>
+                                                <textarea id="keterangan" name="keterangan" class="form-input" rows="5" placeholder="Keterangan" required>{{ old('keterangan', $pekerjaan->status_pekerjaan_f['keterangan']) }}</textarea>
                                                 @error('keterangan')
                                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                                                 @enderror
@@ -140,16 +140,16 @@
 
                 <div class="p-6 pt-0 pb-3">
                     <div id="data-container" class="divide-y divide-gray-100 dark:divide-gray-600">
-                        @foreach ($pelaksana->status_pelaksanas as $status_pelaksana)
+                        @foreach ($status_pekerjaans as $status_pekerjaan)
                         <div>
                             <div class="flex items-start gap-5 py-3">
                                 <div class="text-center">
-                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-primary bg-primary/20">{{ $status_pelaksana->created_at->format('d') }}</h2>
-                                    <small>{{ $status_pelaksana->created_at->format('M') }}</small>
+                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $status_pekerjaan->active['color'] }} bg-{{ $status_pekerjaan->active['color'] }}/20">{{ $status_pekerjaan->created_at->format('d') }}</h2>
+                                    <small>{{ $status_pekerjaan->created_at->format('M') }}</small>
                                 </div>
                                 <div>
-                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $status_pelaksana->active }}</p>
-                                    <p class="text-gray-400">{{ $status_pelaksana->author->name }} telah memperbarui status</p>
+                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $status_pekerjaan->active['name'] }}</p>
+                                    <p class="text-gray-400">{{ $status_pekerjaan->author->name }} telah memperbarui status</p>
                                 </div>
                             </div>
                         </div>
@@ -181,119 +181,119 @@
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nama Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Perusahaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->perusahaan->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->perusahaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">No Kontrak</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->no_kontrak }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->no_kontrak }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tanggal Kontrak</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->tgl_kontrak_f }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->tgl_kontrak_f }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Status</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pelaksana->status_pelaksana_f['color'] }}/10 text-{{ $pelaksana->status_pelaksana_f['color'] }}">
-                            <i class="uil uil-{{ $pelaksana->status_pelaksana_f['icon'] }}"></i>
-                            {{ $pelaksana->status_pelaksana_f['name'] }}
+                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/10 text-{{ $pekerjaan->status_pekerjaan_f['color'] }}">
+                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan_f['icon'] }}"></i>
+                            {{ $pekerjaan->status_pekerjaan_f['name'] }}
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Jasa</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->jenis_pekerjaan->jenis_jasa->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sub Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sub_pekerjaan->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Pagu</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nilai_pagu_f }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->nilai_pagu_f }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Kontrak</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->nilai_kontrak_f }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->nilai_kontrak_f }}</td>
                 </tr>
             </table>
             <table class="min-w-full">
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tanggal Mulai</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->tgl_mulai_f }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->tgl_mulai_f }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tanggal Selesai</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->tgl_selesai_f }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->tgl_selesai_f }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">PPK</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->ppk }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->ppk }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">PPTK</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pptk }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->pptk }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">PHO</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->pho }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->pho }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Lokasi</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->lokasi }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->lokasi }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sumber Dana</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->sumber_dana }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sumber_dana }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tahun Anggaran</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->thn_anggaran }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->thn_anggaran }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Metode Pengadaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->metode }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->metode }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Kontruksi</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->jenis_kontruksi }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->jenis_kontruksi }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Deskripsi</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pelaksana->deskripsi }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->deskripsi }}</td>
                 </tr>
             </table>
         </div>
@@ -315,7 +315,7 @@
             <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                 <div class="flex justify-between items-center pt-3 px-4">
                     <h3 class="font-bold text-gray-800 dark:text-white">
-                        Tambah Tenaga Ahli Pelaksana
+                        Tambah Tenaga Ahli Pekerjaan
                     </h3>
                     <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#add-tenaga-ahli">
                         <span class="sr-only">Tutup</span>
@@ -328,7 +328,7 @@
                             Tenaga Ahli
                         </h3>
 
-                        <form method="POST" action="{{ route('pelaksana.add-tenaga-ahli', $pelaksana->slug) }}">
+                        <form method="POST" action="{{ route('pekerjaan.add-tenaga-ahli', $pekerjaan->slug) }}">
                             @method('put')
                             @csrf
 
@@ -369,31 +369,31 @@
 
         <div class="grid xl:grid-cols-2 gap-6">
             <div>
-                <a href="{{ route('pelaksana.edit', $pelaksana->slug) }}" class="btn bg-primary text-white hover:bg-primary me-2">
+                <a href="{{ route('pekerjaan.edit', $pekerjaan->slug) }}" class="btn bg-primary text-white hover:bg-primary me-2">
                     Perbarui Data
                 </a>
-                <button type="button" data-hs-overlay="#deleteDataPelaksana" class="btn bg-danger text-white hover:bg-danger">
+                <button type="button" data-hs-overlay="#deleteDataPekerjaan" class="btn bg-danger text-white hover:bg-danger">
                     Hapus Data
                 </button>
 
-                <div id="deleteDataPelaksana" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
+                <div id="deleteDataPekerjaan" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
                     <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
                         <div class="flex flex-col bg-white border shadow-sm rounded dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                             <div class="flex justify-between items-center pt-3 px-4">
                                 <h3 class="font-bold text-gray-800 dark:text-white">
                                     Apakah kamu yakin ingin menghapus data?
                                 </h3>
-                                <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#deleteDataPelaksana">
+                                <button type="button" class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#deleteDataPekerjaan">
                                     <span class="sr-only">Tutup</span>
                                     <i class="uil uil-times text-2xl"></i>
                                 </button>
                             </div>
                             <div class="p-4 overflow-y-auto">
                                 <p class="dark:text-gray-400 mb-3">
-                                    Ketika data <b>Pelaksana dengan Pekerjaan {{ $pelaksana->nama }} Perusahaan {{ $pelaksana->perusahaan->nama }}</b> telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data data.
+                                    Ketika data <b>Pekerjaan dengan Pekerjaan {{ $pekerjaan->nama }} Perusahaan {{ $pekerjaan->perusahaan->nama }}</b> telah dihapus, semua data akan otomatis terhapus secara permanen. Sebelum menghapus pastikan untuk mencadangkan semua data data.
                                 </p>
                                 <div class="text-center">
-                                    <form method="post" action="{{ route('pelaksana.destroy', $pelaksana->slug) }}">
+                                    <form method="post" action="{{ route('pekerjaan.destroy', $pekerjaan->slug) }}">
                                         @csrf
                                         @method('delete')
 
@@ -453,7 +453,7 @@
                                 <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
-                                <form action="/pelaksana-tenaga-ahli/${ {{ Js::from($pelaksana->slug) }} }/${cell}" method="post" class="d-inline">
+                                <form action="/pekerjaan-tenaga-ahli/${ {{ Js::from($pekerjaan->slug) }} }/${cell}" method="post" class="d-inline">
                                     @csrf
                                     <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
                                         <i class="uil uil-trash-alt"></i>
@@ -581,7 +581,7 @@
 
         Swal.fire({
             title: 'Hapus ' + title + '?',
-            html: "Apakah kamu yakin ingin menghapus <b>" + title + "</b> dari tenaga ahli pelaksana?",
+            html: "Apakah kamu yakin ingin menghapus <b>" + title + "</b> dari tenaga ahli pekerjaan?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

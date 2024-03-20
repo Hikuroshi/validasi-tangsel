@@ -44,13 +44,13 @@ return new class extends Migration
             $table->foreign('author_id')->references('id')->on('users');
         });
 
-        Schema::table('pelaksanas', function (Blueprint $table) {
+        Schema::table('pekerjaans', function (Blueprint $table) {
             $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
             $table->foreign('author_id')->references('id')->on('users');
         });
 
-        Schema::table('status_pelaksanas', function (Blueprint $table) {
-            $table->foreign('pelaksana_id')->references('id')->on('pelaksanas')->cascadeOnDelete();
+        Schema::table('status_pekerjaans', function (Blueprint $table) {
+            $table->foreign('pekerjaan_id')->references('id')->on('pekerjaans')->cascadeOnDelete();
             $table->foreign('author_id')->references('id')->on('users');
         });
     }
@@ -67,7 +67,7 @@ return new class extends Migration
         Schema::dropIfExists('jenis_pekerjaans');
         Schema::dropIfExists('sub_pekerjaans');
         Schema::dropIfExists('jenis_jasas');
-        Schema::dropIfExists('pelaksanas');
-        Schema::dropIfExists('status_pelaksanas');
+        Schema::dropIfExists('pekerjaans');
+        Schema::dropIfExists('status_pekerjaans');
     }
 };

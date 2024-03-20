@@ -60,9 +60,9 @@ class TenagaAhli extends Model
         return $this->hasMany(Keahlian::class, 'tenaga_ahli_id');
     }
 
-    public function pelaksanas()
+    public function pekerjaans()
     {
-        return $this->belongsToMany(Pelaksana::class, 'pelaksana_tenaga_ahli', 'tenaga_ahli_id', 'pelaksana_id');
+        return $this->belongsToMany(Pekerjaan::class, 'pekerjaan_tenaga_ahli', 'tenaga_ahli_id', 'pekerjaan_id');
     }
 
     public function getRouteKeyName()

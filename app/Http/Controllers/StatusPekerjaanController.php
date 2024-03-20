@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelaksana;
-use App\Models\StatusPelaksana;
+use App\Models\Pekerjaan;
+use App\Models\StatusPekerjaan;
 use App\Models\TenagaAhli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class StatusPelaksanaController extends Controller
+class StatusPekerjaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,48 +29,48 @@ class StatusPelaksanaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Pelaksana $pelaksana)
+    public function store(Request $request, Pekerjaan $pekerjaan)
     {
         $validatedData =  $request->validate([
-            'status_pelaksana' => 'required',
+            'status_pekerjaan' => 'required',
             'keterangan'=> 'required|string',
         ]);
 
-        $validatedData[$request->status_pelaksana] = true;
-        $validatedData['pelaksana_id'] = $pelaksana->id;
+        $validatedData[$request->status_pekerjaan] = true;
+        $validatedData['pekerjaan_id'] = $pekerjaan->id;
         $validatedData['author_id'] = $request->user()->id;
 
-        $latestStatusKey = collect($pelaksana->status_pelaksanas()->latest()->first()->toArray())
+        $latestStatusKey = collect($pekerjaan->status_pekerjaans()->latest()->first()->toArray())
                 ->only(['request', 'on_progress', 'reporting', 'done', 'pending', 'cancelled'])
                 ->filter(fn ($value, $key) => $value == true)
                 ->keys()
                 ->last();
 
-        DB::transaction(function () use ($request, $validatedData, $pelaksana, $latestStatusKey) {
-            if ($request->status_pelaksana == 'done' || $request->status_pelaksana == 'cancelled') {
-                TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+        DB::transaction(function () use ($request, $validatedData, $pekerjaan, $latestStatusKey) {
+            if ($request->status_pekerjaan == 'done' || $request->status_pekerjaan == 'cancelled') {
+                TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
                 if ($latestStatusKey != 'done' && $latestStatusKey != 'cancelled') {
-                    $pelaksana->perusahaan->decrement('jumlah_pekerjaan');
+                    $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
                 }
             } else {
-                TenagaAhli::whereIn('id', $pelaksana->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
+                TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
 
                 if ($latestStatusKey == 'done' || $latestStatusKey == 'cancelled') {
-                    $pelaksana->perusahaan->increment('jumlah_pekerjaan');
+                    $pekerjaan->perusahaan->increment('jumlah_pekerjaan');
                 }
             }
 
-            StatusPelaksana::create($validatedData);
+            StatusPekerjaan::create($validatedData);
         });
 
-        return redirect()->back()->with('success', 'Status Pelaksana berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Status Pekerjaan berhasil diperbarui!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(StatusPelaksana $statusPelaksana)
+    public function show(StatusPekerjaan $statusPekerjaan)
     {
         //
     }
@@ -78,7 +78,7 @@ class StatusPelaksanaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StatusPelaksana $statusPelaksana)
+    public function edit(StatusPekerjaan $statusPekerjaan)
     {
         //
     }
@@ -86,7 +86,7 @@ class StatusPelaksanaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StatusPelaksana $statusPelaksana)
+    public function update(Request $request, StatusPekerjaan $statusPekerjaan)
     {
         //
     }
@@ -94,7 +94,7 @@ class StatusPelaksanaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StatusPelaksana $statusPelaksana)
+    public function destroy(StatusPekerjaan $statusPekerjaan)
     {
         //
     }

@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="perusahaan_id">Perusahaan <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="perusahaan_id">Perusahaan </label>
                         <div class=" w-full sm:w-5/6">
                             <select id="perusahaan_id" name="perusahaan_id" class="form-select" {{ session('flash_perusahaan_id') ? 'disabled' : '' }}>
                                 <option></option>

@@ -44,9 +44,9 @@ class Perusahaan extends Model
         return $this->hasMany(TenagaAhli::class, 'perusahaan_id');
     }
 
-    public function pelaksanas(): HasMany
+    public function pekerjaans(): HasMany
     {
-        return $this->hasMany(Pelaksana::class, 'perusahaan_id');
+        return $this->hasMany(Pekerjaan::class, 'perusahaan_id');
     }
 
     public function getRouteKeyName()

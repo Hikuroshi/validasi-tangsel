@@ -37,12 +37,12 @@
     <div class="p-6">
         <h4 class="uppercase mb-2 dark:text-gray-300">{{ $title }}</h4>
         <p class="text-gray-500 mb-6 dark:text-gray-400">
-            Inputkan data pelaksana dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
+            Inputkan data pekerjaan dengan benar, kolom yang bertanda <span class="text-danger">*</span> harus di isi.
         </p>
 
         <div class="grid gap-6">
             <div>
-                <form method="POST" action="{{ route('pelaksana.update', $pelaksana->slug) }}">
+                <form method="POST" action="{{ route('pekerjaan.update', $pekerjaan->slug) }}">
                     @method('put')
                     @csrf
 
@@ -50,7 +50,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nama" name="nama" value="{{ old('nama', $pelaksana->nama) }}" class="form-input">
+                            <input type="text" id="nama" name="nama" value="{{ old('nama', $pekerjaan->nama) }}" class="form-input">
                             @error('nama')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -63,7 +63,7 @@
                             <select id="perusahaan_id" name="perusahaan_id" class="form-select">
                                 <option></option>
                                 @foreach ($perusahaans as $perusahaan)
-                                <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id', $pelaksana->perusahaan_id) == $perusahaan->id)>
+                                <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id', $pekerjaan->perusahaan_id) == $perusahaan->id)>
                                     {{ $perusahaan->nama }}
                                 </option>
                                 @endforeach
@@ -93,7 +93,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="no_kontrak">No Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="no_kontrak" name="no_kontrak" value="{{ old('no_kontrak', $pelaksana->no_kontrak) }}" class="form-input">
+                            <input type="text" id="no_kontrak" name="no_kontrak" value="{{ old('no_kontrak', $pekerjaan->no_kontrak) }}" class="form-input">
                             @error('no_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -103,7 +103,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_kontrak">Tanggal Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_kontrak" name="tgl_kontrak" value="{{ old('tgl_kontrak', $pelaksana->tgl_kontrak) }}" class="form-input">
+                            <input type="text" id="tgl_kontrak" name="tgl_kontrak" value="{{ old('tgl_kontrak', $pekerjaan->tgl_kontrak) }}" class="form-input">
                             @error('tgl_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -113,7 +113,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_mulai">Tanggal Mulai <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai', $pelaksana->tgl_mulai) }}" class="form-input">
+                            <input type="text" id="tgl_mulai" name="tgl_mulai" value="{{ old('tgl_mulai', $pekerjaan->tgl_mulai) }}" class="form-input">
                             @error('tgl_mulai')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -123,7 +123,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="tgl_selesai">Tanggal Selesai <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="tgl_selesai" name="tgl_selesai" value="{{ old('tgl_selesai', $pelaksana->tgl_selesai) }}" class="form-input">
+                            <input type="text" id="tgl_selesai" name="tgl_selesai" value="{{ old('tgl_selesai', $pekerjaan->tgl_selesai) }}" class="form-input">
                             @error('tgl_selesai')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -133,7 +133,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="ppk">PPK <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="ppk" name="ppk" value="{{ old('ppk', $pelaksana->ppk) }}" class="form-input">
+                            <input type="text" id="ppk" name="ppk" value="{{ old('ppk', $pekerjaan->ppk) }}" class="form-input">
                             @error('ppk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -143,7 +143,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="pptk">PPTK <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="pptk" name="pptk" value="{{ old('pptk', $pelaksana->pptk) }}" class="form-input">
+                            <input type="text" id="pptk" name="pptk" value="{{ old('pptk', $pekerjaan->pptk) }}" class="form-input">
                             @error('pptk')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -153,7 +153,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="pho">PHO <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="pho" name="pho" value="{{ old('pho', $pelaksana->pho) }}" class="form-input">
+                            <input type="text" id="pho" name="pho" value="{{ old('pho', $pekerjaan->pho) }}" class="form-input">
                             @error('pho')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -166,7 +166,7 @@
                             <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
                                 <option></option>
                                 @foreach ($jenis_jasas as $jenis_jasa)
-                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id) == $jenis_jasa->id)>
+                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id) == $jenis_jasa->id)>
                                     {{ $jenis_jasa->nama }}
                                 </option>
                                 @endforeach
@@ -183,7 +183,7 @@
                             <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
                                 <option></option>
                                 @foreach ($jenis_pekerjaans as $jenis_pekerjaan)
-                                <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id', $pelaksana->sub_pekerjaan->jenis_pekerjaan_id) == $jenis_pekerjaan->id)>
+                                <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan_id) == $jenis_pekerjaan->id)>
                                     {{ $jenis_pekerjaan->nama }}
                                 </option>
                                 @endforeach
@@ -200,7 +200,7 @@
                             <select id="sub_pekerjaan_id" name="sub_pekerjaan_id" class="form-select">
                                 <option></option>
                                 @foreach ($sub_pekerjaans as $sub_pekerjaan)
-                                <option value="{{ $sub_pekerjaan->id }}" @selected(old('sub_pekerjaan_id', $pelaksana->sub_pekerjaan_id) == $sub_pekerjaan->id)>
+                                <option value="{{ $sub_pekerjaan->id }}" @selected(old('sub_pekerjaan_id', $pekerjaan->sub_pekerjaan_id) == $sub_pekerjaan->id)>
                                     {{ $sub_pekerjaan->nama }}
                                 </option>
                                 @endforeach
@@ -214,7 +214,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <label class="mb-2" for="deskripsi">Deskripsi <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <textarea id="deskripsi" name="deskripsi" class="form-input" rows="5">{{ old('deskripsi', $pelaksana->deskripsi) }}</textarea>
+                            <textarea id="deskripsi" name="deskripsi" class="form-input" rows="5">{{ old('deskripsi', $pekerjaan->deskripsi) }}</textarea>
                             @error('deskripsi')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -224,7 +224,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nilai_pagu">Nilai Pagu <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nilai_pagu" name="nilai_pagu" value="{{ old('nilai_pagu', $pelaksana->nilai_pagu) }}" class="form-input currency-input">
+                            <input type="text" id="nilai_pagu" name="nilai_pagu" value="{{ old('nilai_pagu', $pekerjaan->nilai_pagu) }}" class="form-input currency-input">
                             @error('nilai_pagu')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -234,7 +234,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nilai_kontrak">Nilai Kontrak <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="nilai_kontrak" name="nilai_kontrak" value="{{ old('nilai_kontrak', $pelaksana->nilai_kontrak) }}" class="form-input currency-input">
+                            <input type="text" id="nilai_kontrak" name="nilai_kontrak" value="{{ old('nilai_kontrak', $pekerjaan->nilai_kontrak) }}" class="form-input currency-input">
                             @error('nilai_kontrak')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -244,7 +244,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <label class="mb-2" for="lokasi">Lokasi <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <textarea id="lokasi" name="lokasi" class="form-input" rows="5">{{ old('lokasi', $pelaksana->lokasi) }}</textarea>
+                            <textarea id="lokasi" name="lokasi" class="form-input" rows="5">{{ old('lokasi', $pekerjaan->lokasi) }}</textarea>
                             @error('lokasi')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -257,7 +257,7 @@
                             <select id="sumber_dana" name="sumber_dana" class="form-select">
                                 <option></option>
                                 @foreach ($sumber_danas as $sumber_dana)
-                                <option value="{{ $sumber_dana }}" @selected(old('sumber_dana', $pelaksana->sumber_dana) == $sumber_dana)>
+                                <option value="{{ $sumber_dana }}" @selected(old('sumber_dana', $pekerjaan->sumber_dana) == $sumber_dana)>
                                     {{ $sumber_dana }}
                                 </option>
                                 @endforeach
@@ -271,7 +271,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="thn_anggaran">Tahun Anggaran <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="number" id="thn_anggaran" name="thn_anggaran" value="{{ old('thn_anggaran', $pelaksana->thn_anggaran) }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
+                            <input type="number" id="thn_anggaran" name="thn_anggaran" value="{{ old('thn_anggaran', $pekerjaan->thn_anggaran) }}" class="form-input" min="1901" max="{{ now()->format('Y') }}" step="1">
                             @error('thn_anggaran')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -284,7 +284,7 @@
                             <select id="metode" name="metode" class="form-select">
                                 <option></option>
                                 @foreach ($metodes as $metode)
-                                <option value="{{ $metode }}" @selected(old('metode', $pelaksana->metode) == $metode)>
+                                <option value="{{ $metode }}" @selected(old('metode', $pekerjaan->metode) == $metode)>
                                     {{ $metode }}
                                 </option>
                                 @endforeach
@@ -298,7 +298,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="jenis_kontruksi">Jenis Kontruksi <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <input type="text" id="jenis_kontruksi" name="jenis_kontruksi" value="{{ old('jenis_kontruksi', $pelaksana->jenis_kontruksi) }}" class="form-input">
+                            <input type="text" id="jenis_kontruksi" name="jenis_kontruksi" value="{{ old('jenis_kontruksi', $pekerjaan->jenis_kontruksi) }}" class="form-input">
                             @error('jenis_kontruksi')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
@@ -306,17 +306,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="status_pekerjaan">Status <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="status_pelaksana" name="status_pelaksana" class="form-select">
+                            <select id="status_pekerjaan" name="status_pekerjaan" class="form-select">
                                 <option></option>
-                                @foreach ($status_pelaksanas as $key => $value)
-                                    <option value="{{ $key }}" @selected(old('status_pelaksana', $pelaksana->status_pelaksana_f['slug']) == $key)>
+                                @foreach ($status_pekerjaans as $key => $value)
+                                    <option value="{{ $key }}" @selected(old('status_pekerjaan', $pekerjaan->status_pekerjaan_f['slug']) == $key)>
                                         {{ $value }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('status_pelaksana')
+                            @error('status_pekerjaan')
                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -365,7 +365,8 @@
         locale: "id",
         altInput: true,
         altFormat: "F j, Y",
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        minDate: "today"
     });
 
     $(document).ready(function() {

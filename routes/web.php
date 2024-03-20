@@ -5,10 +5,11 @@ use App\Http\Controllers\JenisPekerjaanController;
 use App\Http\Controllers\KeahlianController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PerusahaanController;
-use App\Http\Controllers\PelaksanaController;
+use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProsesController;
 use App\Http\Controllers\RiwayatPendidikanController;
-use App\Http\Controllers\StatusPelaksanaController;
+use App\Http\Controllers\StatusPekerjaanController;
 use App\Http\Controllers\SubPekerjaanController;
 use App\Http\Controllers\TenagaAhliController;
 use App\Http\Controllers\UserController;
@@ -50,22 +51,34 @@ Route::middleware('auth')->group(function () {
     Route::resource('/jenis-jasa', JenisJasaController::class)->except('show');
     Route::resource('/user', UserController::class)->except('show');
 
-    Route::resource('/pelaksana', PelaksanaController::class);
-    Route::post('/pelaksana-tenaga-ahli/{pelaksana}/{tenaga_ahli}', [PelaksanaController::class,'deleteTenagaAhli'])->name('pelaksana.delete-tenaga-ahli');
-    Route::put('/pelaksana-tenaga-ahli/{pelaksana}', [PelaksanaController::class,'addTenagaAhli'])->name('pelaksana.add-tenaga-ahli');
-    Route::put('/status-pelaksana/{pelaksana}', [StatusPelaksanaController::class,'store'])->name('status-pelaksana.store');
-    Route::get('/get-jenis-pekerjaan/{id}', [PelaksanaController::class,'getJenisPekerjaan'])->name('pelaksana.jenis-pekerjaan');
-    Route::get('/get-sub-pekerjaan/{id}', [PelaksanaController::class, 'getSubPekerjaan'])->name('pelaksana.sub-pekerjaan');
+    Route::resource('/pekerjaan', PekerjaanController::class);
+    Route::controller(PekerjaanController::class)->group(function () {
+        Route::post('/pekerjaan-tenaga-ahli/{pekerjaan}/{tenaga_ahli}', 'deleteTenagaAhli')->name('pekerjaan.delete-tenaga-ahli');
+        Route::put('/pekerjaan-tenaga-ahli/{pekerjaan}', 'addTenagaAhli')->name('pekerjaan.add-tenaga-ahli');
+        Route::get('/get-jenis-pekerjaan/{id}', 'getJenisPekerjaan')->name('pekerjaan.jenis-pekerjaan');
+        Route::get('/get-sub-pekerjaan/{id}',  'getSubPekerjaan')->name('pekerjaan.sub-pekerjaan');
+    });
+
+    Route::put('/status-pekerjaan/{pekerjaan}', [StatusPekerjaanController::class,'store'])->name('status-pekerjaan.store');
 
     Route::resource('/riwayat-pendidikan', RiwayatPendidikanController::class)->except('index', 'create', 'show');
     Route::get('/riwayat-pendidikan/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [RiwayatPendidikanController::class, 'create'])->name('riwayat-pendidikan.create');
 
     Route::resource('/keahlian', KeahlianController::class)->except('index', 'create', 'show');
-    Route::get('/keahlian/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', [KeahlianController::class, 'create'])->name('keahlian.create');
-    Route::get('/keahlian/view-sertifikat/{slug}', [KeahlianController::class, 'viewSertifikat'])->name('keahlian.view-sertifikat');
+    Route::controller(KeahlianController::class)->group(function () {
+        Route::get('/keahlian/create/{tenaga_ahli_id}/{tenaga_ahli_nama}', 'create')->name('keahlian.create');
+        Route::get('/keahlian/view-sertifikat/{slug}', 'viewSertifikat')->name('keahlian.view-sertifikat');
+    });
 
-    Route::get('/laporan', [LaporanController::class,'index'])->name('laporan.index');
-    Route::get('/laporan/{pelaksana}', [LaporanController::class,'search'])->name('laporan.search');
+    Route::controller(LaporanController::class)->group(function () {
+        Route::get('/laporan', 'index')->name('laporan.index');
+        Route::get('/laporan/{pekerjaan}', 'search')->name('laporan.search');
+    });
+
+    Route::controller(ProsesController::class)->group(function () {
+        Route::get('/proses/perusahaan', 'perusahaan')->name('proses.perusahaan');
+        Route::get('/proses/tenaga-ahli', 'tenagaAhli')->name('proses.tenagaAhli');
+    });
 });
 
 require __DIR__.'/auth.php';

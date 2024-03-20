@@ -107,14 +107,41 @@
                             <span class="menu-icon">
                                 <i data-lucide="shopping-cart"></i>
                             </span>
-                            <span class="menu-text"> Transaksi </span>
+                            <span class="menu-text"> Pekerjaan </span>
                             <span class="menu-arrow"></span>
                         </a>
 
                         <ul id="menuTransaksi" class="sub-menu hidden">
                             <li class="menu-item">
-                                <a href="{{ route('pelaksana.index') }}" class="menu-link">
-                                    <span class="menu-text"> Pelaksana </span>
+                                <a href="{{ route('pekerjaan.create') }}" class="menu-link">
+                                    <span class="menu-text"> Input Pekerjaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('pekerjaan.index') }}" class="menu-link">
+                                    <span class="menu-text"> List Pekerjaan </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0)" data-hs-collapse="#menuProses" class="menu-link">
+                            <span class="menu-icon">
+                                <i data-lucide="construction"></i>
+                            </span>
+                            <span class="menu-text"> Proses Pekerjaan </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <ul id="menuProses" class="sub-menu hidden">
+                            <li class="menu-item">
+                                <a href="{{ route('proses.perusahaan') }}" class="menu-link">
+                                    <span class="menu-text"> Perusahaan </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('proses.tenagaAhli') }}" class="menu-link">
+                                    <span class="menu-text"> Tenaga Ahli </span>
                                 </a>
                             </li>
                         </ul>

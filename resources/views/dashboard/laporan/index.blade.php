@@ -43,6 +43,7 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama Pekerjaan",
+                    "Nama Perusahaan",
                     "Tanggal Kontrak",
                     {
                         name: "Laporan",
@@ -60,6 +61,7 @@
                     data: laporans.map((laporan, index) => [
                     index + 1,
                     laporan.nama,
+                    laporan.perusahaan.nama,
                     laporan.tgl_kontrak_f,
                     laporan.slug,
                     ]),

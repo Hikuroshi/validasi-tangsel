@@ -42,7 +42,7 @@
 
         <div class="grid gap-6">
             <div>
-                <form method="POST" action="{{ route('pelaksana.store') }}">
+                <form method="POST" action="{{ route('pekerjaan.store') }}">
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
@@ -294,17 +294,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="status_pelaksana">Status <span class="text-danger">*</span></label>
+                        <label class="mb-2" for="status_pekerjaan">Status <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="status_pelaksana" name="status_pelaksana" class="form-select">
+                            <select id="status_pekerjaan" name="status_pekerjaan" class="form-select">
                                 <option></option>
-                                @foreach ($status_pelaksanas as $key => $value)
-                                    <option value="{{ $key }}" @selected(old('status_pelaksana') == $key)>
+                                @foreach ($status_pekerjaans as $key => $value)
+                                    <option value="{{ $key }}" @selected(old('status_pekerjaan') == $key)>
                                         {{ $value }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('status_pelaksana')
+                            @error('status_pekerjaan')
                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>
@@ -353,7 +353,8 @@
         locale: "id",
         altInput: true,
         altFormat: "F j, Y",
-        dateFormat: "Y-m-d"
+        dateFormat: "Y-m-d",
+        minDate: "today"
     });
 
     $(document).ready(function() {

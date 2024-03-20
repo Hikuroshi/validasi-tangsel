@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Pelaksana extends Model
+class Pekerjaan extends Model
 {
     use HasFactory, Sluggable;
 
@@ -43,6 +43,17 @@ class Pelaksana extends Model
         );
     }
 
+    protected function sisaHari(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                $tgl_selesai = Carbon::parse($this->tgl_selesai);
+
+                return now()->diffInDays($tgl_selesai);
+            }
+        );
+    }
+
     protected function nilaiPaguF(): Attribute
     {
         return new Attribute(
@@ -61,7 +72,7 @@ class Pelaksana extends Model
         );
     }
 
-    protected function progressPelaksana(): Attribute
+    protected function progressPekerjaan(): Attribute
     {
         return new Attribute(
             get: function () {
@@ -69,7 +80,7 @@ class Pelaksana extends Model
                 $percent = '';
                 $desc = '';
 
-                $status = $this->status_pelaksana_f['slug'];
+                $status = $this->status_pekerjaan_f['slug'];
                 $start_date = $this->tgl_kontrak;
                 $end_date = $this->tgl_selesai;
 
@@ -116,7 +127,7 @@ class Pelaksana extends Model
         );
     }
 
-    protected function statusPelaksanaF(): Attribute
+    protected function statusPekerjaanF(): Attribute
     {
         return new Attribute(
             get: function () {
@@ -159,7 +170,7 @@ class Pelaksana extends Model
                     ]
                 ];
 
-                $latestStatus = $this->status_pelaksanas()->latest()->first();
+                $latestStatus = $this->status_pekerjaans()->latest()->first();
 
                 if ($latestStatus) {
                     $latestStatusKey = collect($latestStatus->toArray())
@@ -197,9 +208,9 @@ class Pelaksana extends Model
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
 
-    public function status_pelaksanas(): HasMany
+    public function status_pekerjaans(): HasMany
     {
-        return $this->hasMany(StatusPelaksana::class, 'pelaksana_id');
+        return $this->hasMany(StatusPekerjaan::class, 'pekerjaan_id');
     }
 
     public function sub_pekerjaan(): BelongsTo
@@ -209,7 +220,7 @@ class Pelaksana extends Model
 
     public function tenaga_ahlis()
     {
-        return $this->belongsToMany(TenagaAhli::class, 'pelaksana_tenaga_ahli', 'pelaksana_id', 'tenaga_ahli_id');
+        return $this->belongsToMany(TenagaAhli::class, 'pekerjaan_tenaga_ahli', 'pekerjaan_id', 'tenaga_ahli_id');
     }
 
     public function getRouteKeyName()

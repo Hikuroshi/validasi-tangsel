@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Perusahaan;
-use App\Models\Pelaksana;
+use App\Models\Pekerjaan;
 use App\Models\TenagaAhli;
 use Illuminate\Console\Command;
 
@@ -28,14 +28,14 @@ class UpdateAvailability extends Command
      */
     public function handle()
     {
-        $pelaksana = Pelaksana::all();
+        $pekerjaan = Pekerjaan::all();
 
-        $pekerjaanBebas = $pelaksana->filter(function ($pelaksana) {
-            return in_array($pelaksana->status_pekerjaan, ['Direncanakan', 'Selesai', 'Selesai, Melewati batas waktu', 'Tidak Selesai, Melewati batas waktu']);
+        $pekerjaanBebas = $pekerjaan->filter(function ($pekerjaan) {
+            return in_array($pekerjaan->status_pekerjaan, ['Direncanakan', 'Selesai', 'Selesai, Melewati batas waktu', 'Tidak Selesai, Melewati batas waktu']);
         });
 
-        $pekerjaanProses = $pelaksana->filter(function ($pelaksana) {
-            return $pelaksana->status_pekerjaan == 'Proses';
+        $pekerjaanProses = $pekerjaan->filter(function ($pekerjaan) {
+            return $pekerjaan->status_pekerjaan == 'Proses';
         });
 
         $pekerjaanProses->groupBy('perusahaan_id')->each(function ($groupedKontrak) {
