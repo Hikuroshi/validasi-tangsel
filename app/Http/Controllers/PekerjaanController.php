@@ -235,4 +235,36 @@ class PekerjaanController extends Controller
         $pekerjaan->tenaga_ahlis()->detach($tenagaAhli->id);
         return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pekerjaan pekerjaan!');
     }
+
+    public function changeStatus(Request $request, Pekerjaan $pekerjaan)
+    {
+        $request->validate([
+            'status_pekerjaan_id' => 'required|exists:status_pekerjaans,id',
+        ]);
+
+        $nama_status = StatusPekerjaan::where('id', $request->status_pekerjaan_id)->value('nama');
+
+        $statusSebelumnyaMirip = str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'done') || str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'cancelled');
+
+        if (str_contains(strtolower($nama_status), 'done') || str_contains(strtolower($nama_status), 'cancelled')) {
+            if (!$statusSebelumnyaMirip) {
+                $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
+            }
+            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+
+            $pekerjaan->update([
+                'status_pekerjaan_id' => $request->status_pekerjaan_id,
+                'pekerjaan_selesai' => true,
+            ]);
+        } else {
+            if ($statusSebelumnyaMirip) {
+                $pekerjaan->perusahaan->increment('jumlah_pekerjaan');
+            }
+            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
+
+            $pekerjaan->update(['status_pekerjaan_id' => $request->status_pekerjaan_id]);
+        }
+
+        return redirect()->back()->with('success', 'Status berhasil diperbarui');
+    }
 }

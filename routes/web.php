@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(PekerjaanController::class)->group(function () {
         Route::post('/pekerjaan-tenaga-ahli/{pekerjaan}/{tenaga_ahli}', 'deleteTenagaAhli')->name('pekerjaan.delete-tenaga-ahli');
         Route::put('/pekerjaan-tenaga-ahli/{pekerjaan}', 'addTenagaAhli')->name('pekerjaan.add-tenaga-ahli');
+        Route::put('/change-status/{pekerjaan}', 'changeStatus')->name('pekerjaan.change-status');
     });
 
     Route::resource('/riwayat-pendidikan', RiwayatPendidikanController::class)->except('index', 'create', 'show');

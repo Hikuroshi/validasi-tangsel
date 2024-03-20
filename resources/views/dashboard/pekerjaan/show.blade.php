@@ -89,7 +89,7 @@
                                     </button>
                                 </div>
                                 <div class="p-4 overflow-y-auto">
-                                    <form method="POST" action="{{ route('status-pekerjaan.store', $pekerjaan->slug) }}">
+                                    <form method="POST" action="{{ route('pekerjaan.change-status', $pekerjaan->slug) }}">
                                         @method('put')
                                         @csrf
 
