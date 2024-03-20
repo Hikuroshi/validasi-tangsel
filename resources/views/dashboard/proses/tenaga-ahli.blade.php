@@ -2,6 +2,53 @@
 
 @section('container')
 
+<div class="card my-5">
+    <div class="flex justify-between items-center p-5">
+        <div class="flex justify-between items-center">
+            <h4 class="text-gray-900 dark:text-gray-200 text-lg font-medium">Daftar Proses Tenaga Ahli</h4>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="md:flex hidden items-center gap-2.5 text-sm font-semibold">
+                <div class="static overflow-y-hidden">
+                    <form action="{{ route('proses.tenagaAhli') }}" method="GET">
+                        <div class="relative flex items-center border rounded dark:border-gray-600">
+                            <input type="text" name="search" class="form-input border-0 border-dark/10 ps-8 dark:border-gray-600" placeholder="Cari tenaga ahli...">
+                            <span class="uil uil-search absolute text-base leading-9 left-2.5 top-0"></span>
+                            <button class="btn bg-primary/20 text-primary rounded" type="submit">
+                                <i class="uil uil-file-search-alt"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <div class="hs-dropdown relative inline-flex [--placement:left-top]">
+                    <button id="hs-dropright" type="button" class="hs-dropdown-toggle btn bg-secondary text-white rounded">
+                        <i class="uil uil-sort-amount-down text-base"></i>
+                    </button>
+
+                    <div class="hs-dropdown-menu transition-[opacity,margin] w-40 duration hs-dropdown-open:opacity-100 opacity-0 hidden z-10 bg-white shadow rounded py-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-600" aria-labelledby="hs-dropright">
+                        <a class="flex items-center py-1.5 px-5 text-sm text-gray-500 hover:bg-light hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="javascript:void(0)">
+                            Request
+                        </a>
+                        <a class="flex items-center py-1.5 px-5 text-sm text-gray-500 hover:bg-light hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="javascript:void(0)">
+                            On Progress
+                        </a>
+                        <a class="flex items-center py-1.5 px-5 text-sm text-gray-500 hover:bg-light hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="javascript:void(0)">
+                            Reporting
+                        </a>
+                        <a class="flex items-center py-1.5 px-5 text-sm text-gray-500 hover:bg-light hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300" href="javascript:void(0)">
+                            Pending
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="flex flex-auto flex-col">
     <div class="grid lg::grid-cols-2 xl:grid-cols-3 gap-6">
 

@@ -29,16 +29,21 @@ class ProsesController extends Controller
     }
 
     public function tenagaAhli() {
+        $query = TenagaAhli::where('status_pekerjaan', false);
+
+        if (request()->has('search')) {
+            $query->where('nama', 'like', '%' . request()->search . '%');
+        }
+
+        $prosess = $query->with([
+            'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id',
+            'pekerjaans.status_pekerjaans',
+            'pekerjaans.perusahaan:id,nama',
+        ])->latest()->get(['id', 'nama']);
+
         return view('dashboard.proses.tenaga-ahli', [
-            'title'=> 'Proses Pekerjaan',
-            'prosess' => TenagaAhli::where('status_pekerjaan', false)
-            ->with([
-                'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id',
-                'pekerjaans.status_pekerjaans',
-                'pekerjaans.perusahaan:id,nama'
-            ])
-            ->latest()
-            ->get(['id', 'nama']),
+            'title' => 'Proses Pekerjaan',
+            'prosess' => $prosess,
         ]);
     }
 }
