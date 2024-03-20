@@ -80,7 +80,7 @@ class Pekerjaan extends Model
                 $percent = '';
                 $desc = '';
 
-                $status = $this->status_pekerjaan_f['slug'];
+                $status = $this->status_pekerjaan->status['slug'];
                 $start_date = $this->tgl_kontrak;
                 $end_date = $this->tgl_selesai;
 
@@ -122,69 +122,6 @@ class Pekerjaan extends Model
                     'color' => $color,
                     'percent' => $percent,
                     'desc' => $desc,
-                ];
-            }
-        );
-    }
-
-    protected function statusPekerjaanF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                $statuses = [
-                    [
-                        'name' => 'Request',
-                        'slug' => 'request',
-                        'color' => 'primary',
-                        'icon' => 'export',
-                    ],
-                    [
-                        'name' => 'On Progress',
-                        'slug' => 'on_progress',
-                        'color' => 'secondary',
-                        'icon' => 'sync'
-                    ],
-                    [
-                        'name' => 'Reporting',
-                        'slug' => 'reporting',
-                        'color' => 'info',
-                        'icon' => 'book-alt'
-                    ],
-                    [
-                        'name' => 'Done',
-                        'slug' => 'done',
-                        'color' => 'success',
-                        'icon' => 'check'
-                    ],
-                    [
-                        'name' => 'Pending',
-                        'slug' => 'pending',
-                        'color' => 'warning',
-                        'icon' => 'pause-circle'
-                    ],
-                    [
-                        'name' => 'Cancelled',
-                        'slug' => 'cancelled',
-                        'color' => 'danger',
-                        'icon' => 'times'
-                    ]
-                ];
-
-                $latestStatus = $this->status_pekerjaan;
-
-                if ($latestStatus) {
-                    $matchedStatus = collect($statuses)->firstWhere('name', $latestStatus->nama);
-
-                    if ($matchedStatus) {
-                        return $matchedStatus;
-                    }
-                }
-
-                return [
-                    'name' => 'Not Found',
-                    'slug' => 'not_found',
-                    'color' => 'dark',
-                    'icon' => 'exclamation-circle'
                 ];
             }
         );

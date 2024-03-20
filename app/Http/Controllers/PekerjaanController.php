@@ -101,7 +101,7 @@ class PekerjaanController extends Controller
     public function show(Pekerjaan $pekerjaan)
     {
         $pekerjaan->load(['perusahaan:id,nama', 'status_pekerjaan:id,nama,author_id,created_at', 'status_pekerjaan.author:id,name'])
-        ->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'status_pekerjaan_f', 'progress_pekerjaan']);
+        ->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'progress_pekerjaan']);
 
         return view('dashboard.pekerjaan.show', [
             'title' => 'Detail Pekerjaan',

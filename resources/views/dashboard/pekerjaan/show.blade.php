@@ -72,9 +72,9 @@
                         </div>
                     </div>
 
-                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20 btn bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20 text-{{ $pekerjaan->status_pekerjaan_f['color'] }} hover:bg-{{ $pekerjaan->status_pekerjaan_f['color'] }} hover:text-white py-2 px-3 rounded">
-                        <i class="uil uil-{{ $pekerjaan->status_pekerjaan_f['icon'] }} me-1"></i>
-                        {{ $pekerjaan->status_pekerjaan_f['name'] }}
+                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20 btn bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20 text-{{ $pekerjaan->status_pekerjaan->status['color'] }} hover:bg-{{ $pekerjaan->status_pekerjaan->status['color'] }} hover:text-white py-2 px-3 rounded">
+                        <i class="uil uil-{{ $pekerjaan->status_pekerjaan->status['icon'] }} me-1"></i>
+                        {{ $pekerjaan->status_pekerjaan->status['name'] }}
                     </button>
                     <div id="update-status" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
                         <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -133,11 +133,11 @@
                         <div>
                             <div class="flex items-start gap-5 py-3">
                                 <div class="text-center">
-                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $pekerjaan->status_pekerjaan_f['color'] }} bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20">{{ $pekerjaan->status_pekerjaan->created_at->format('d') }}</h2>
+                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $pekerjaan->status_pekerjaan->status['color'] }} bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20">{{ $pekerjaan->status_pekerjaan->created_at->format('d') }}</h2>
                                     <small>{{ $pekerjaan->status_pekerjaan->created_at->format('M') }}</small>
                                 </div>
                                 <div>
-                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $pekerjaan->status_pekerjaan_f['name'] }}</p>
+                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $pekerjaan->status_pekerjaan->status['name'] }}</p>
                                     <p class="text-gray-400">{{ $pekerjaan->status_pekerjaan->author->name }} telah memperbarui status</p>
                                 </div>
                             </div>
@@ -195,9 +195,9 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Status</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/10 text-{{ $pekerjaan->status_pekerjaan_f['color'] }}">
-                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan_f['icon'] }}"></i>
-                            {{ $pekerjaan->status_pekerjaan_f['name'] }}
+                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/10 text-{{ $pekerjaan->status_pekerjaan->status['color'] }}">
+                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan->status['icon'] }}"></i>
+                            {{ $pekerjaan->status_pekerjaan->status['name'] }}
                         </span>
                     </td>
                 </tr>
