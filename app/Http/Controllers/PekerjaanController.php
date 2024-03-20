@@ -37,7 +37,7 @@ class PekerjaanController extends Controller
         return view('dashboard.pekerjaan.create', [
             'title' => 'Tambah Pekerjaan',
             'perusahaans' => Perusahaan::get(['id', 'nama']),
-            'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
+            'tenaga_ahlis' => TenagaAhli::where('perusahaan_id', null)->get(['id', 'nama']),
             'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
             'status_pekerjaans' => StatusPekerjaan::get(['id', 'nama']),
             'metodes' => Metode::get(['id', 'nama']),
@@ -211,6 +211,17 @@ class PekerjaanController extends Controller
         $pekerjaan->delete();
 
         return redirect()->route('pekerjaan.index')->with('success', 'Pekerjaan berhasil dihapus!');
+    }
+
+    public function getTenagaAhli($perusahaanId = null)
+    {
+        if ($perusahaanId) {
+            $tenagaAhlis = TenagaAhli::where('perusahaan_id', $perusahaanId)->get(['id', 'nama']);
+        } else {
+            $tenagaAhlis = TenagaAhli::whereNull('perusahaan_id')->get(['id', 'nama']);
+        }
+
+        return response()->json($tenagaAhlis);
     }
 
     public function addTenagaAhli(Request $request, Pekerjaan $pekerjaan)

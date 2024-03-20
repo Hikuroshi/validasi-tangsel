@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/pekerjaan', PekerjaanController::class);
     Route::controller(PekerjaanController::class)->group(function () {
+        Route::get('/get-tenaga-ahli/{pekerjaanId?}', 'getTenagaAhli')->name('pekerjaan.get-tenaga-ahli');
         Route::post('/pekerjaan-tenaga-ahli/{pekerjaan}/{tenaga_ahli}', 'deleteTenagaAhli')->name('pekerjaan.delete-tenaga-ahli');
         Route::put('/pekerjaan-tenaga-ahli/{pekerjaan}', 'addTenagaAhli')->name('pekerjaan.add-tenaga-ahli');
         Route::put('/change-status/{pekerjaan}', 'changeStatus')->name('pekerjaan.change-status');

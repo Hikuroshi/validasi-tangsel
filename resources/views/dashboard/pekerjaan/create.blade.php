@@ -58,7 +58,7 @@
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="perusahaan_id">Perusahaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
-                            <select id="perusahaanid" name="perusahaan_id" class="form-select">
+                            <select id="perusahaan_id" name="perusahaan_id" class="form-select">
                                 <option></option>
                                 @foreach ($perusahaans as $perusahaan)
                                 <option value="{{ $perusahaan->id }}" @selected(old('perusahaan_id') == $perusahaan->id)>
@@ -314,6 +314,27 @@
 
 <!-- Select2 js -->
 <script src="/assets/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#perusahaan_id').on('change', function(){
+            var perusahaanId = $(this).val();
+            var url = perusahaanId ? '/get-tenaga-ahli/' + perusahaanId : '/get-tenaga-ahli';
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#tenaga_ahli_id').empty();
+                    $.each(data, function(key, value) {
+                        $('#tenaga_ahli_id').append('<option value="' + value.id + '">' + value.nama + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     flatpickr("#tgl_kontrak", {
