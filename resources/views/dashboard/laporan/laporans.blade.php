@@ -27,7 +27,7 @@
             <h4>Seksi Pembangunan Jalan Dan Jembatan Kota</h4>
             <h5>Bidang Bina Marga</h5>
             <h5>Dinas Sumber Daya Air, Bina Marga dan Bina Kontruksi KotaTangerang Selatan</h5>
-            <h5>Tahun Anggaran {{ $laporan->thn_anggaran }}</h5>
+            <h5>Tahun Anggaran 2024</h5>
         </div>
 
         <table style="border: 1px solid black; border-collapse: collapse; width: 100%;">
@@ -43,11 +43,9 @@
                 <th>Waktu Pelaksanaan (Hari Kalender)</th>
                 <th>Jenis Kontruksi</th>
             </tr>
-            {{-- <tr style="background-color: rgba(0, 0, 0, 0.2)">
-                <td colspan="10" style="font-weight: bold;">{{ $laporan->jenis_pekerjaan->nama }}</td>
-            </tr> --}}
+            @foreach ($laporans as $laporan)
             <tr>
-                <td>1.</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $laporan->nama }}</td>
                 <td>{{ $laporan->nilai_pagu_f }}</td>
                 <td>{{ $laporan->nilai_kontrak_f }}</td>
@@ -58,6 +56,7 @@
                 <td>{{ $laporan->lama_hari }}</td>
                 <td>{{ $laporan->jenis_pekerjaan->nama }}</td>
             </tr>
+            @endforeach
         </table>
     </div>
 </body>

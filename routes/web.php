@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(LaporanController::class)->group(function () {
         Route::get('/laporan', 'index')->name('laporan.index');
         Route::get('/laporan/{pekerjaan}', 'search')->name('laporan.search');
+        Route::get('/laporans', 'printAll')->name('laporan.all');
     });
 
     Route::controller(ProsesController::class)->group(function () {

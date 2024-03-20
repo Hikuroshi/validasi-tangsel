@@ -43,6 +43,18 @@ class Pekerjaan extends Model
         );
     }
 
+    protected function lamaHari(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                $tgl_kontrak = Carbon::parse($this->tgl_kontrak);
+                $tgl_selesai = Carbon::parse($this->tgl_selesai);
+
+                return $tgl_kontrak->diffInDays($tgl_selesai);
+            }
+        );
+    }
+
     protected function sisaHari(): Attribute
     {
         return new Attribute(
