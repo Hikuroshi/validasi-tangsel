@@ -43,7 +43,12 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama",
-                    "Perusahaan",
+                    {
+                        name: "Perusahaan",
+                        formatter: function (e) {
+                            return gridjs.html(e ? e.nama : "-");
+                        }
+                    },
                     "Jabatan",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
                     "No Telp",
@@ -87,7 +92,7 @@
                     data: tenaga_ahlis.map((tenaga_ahli, index) => [
                     index + 1,
                     tenaga_ahli.nama,
-                    tenaga_ahli.perusahaan.nama,
+                    tenaga_ahli.perusahaan,
                     tenaga_ahli.jabatan,
                     tenaga_ahli.email,
                     tenaga_ahli.telepon,

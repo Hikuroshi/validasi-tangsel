@@ -5,6 +5,7 @@ use App\Http\Controllers\JenisPekerjaanController;
 use App\Http\Controllers\KeahlianController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MetodeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProfileController;
@@ -30,10 +31,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/', function () {
-    return view('dashboard.index', ['title' => 'Dashboard']);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -75,6 +72,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(ProsesController::class)->group(function () {
         Route::get('/proses/perusahaan', 'perusahaan')->name('proses.perusahaan');
         Route::get('/proses/tenaga-ahli', 'tenagaAhli')->name('proses.tenagaAhli');
+    });
+
+    Route::controller(PageController::class)->group(function () {
+        Route::get('/', 'index')->name('dashboard');
     });
 });
 
