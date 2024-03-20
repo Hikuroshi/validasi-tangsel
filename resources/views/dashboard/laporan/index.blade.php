@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('laporan.all') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('laporan.all') }}" target="_blank" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-export"></i>
             </a>
         </div>
