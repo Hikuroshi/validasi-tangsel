@@ -81,18 +81,8 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ route('jenis-jasa.index') }}" class="menu-link">
-                                    <span class="menu-text"> Jenis Jasa </span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
                                 <a href="{{ route('jenis-pekerjaan.index') }}" class="menu-link">
                                     <span class="menu-text"> Jenis Pekerjaan </span>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ route('sub-pekerjaan.index') }}" class="menu-link">
-                                    <span class="menu-text"> Sub Pekerjaan </span>
                                 </a>
                             </li>
                             <li class="menu-item">
@@ -103,15 +93,15 @@
                         </ul>
                     </li>
                     <li class="menu-item">
-                        <a href="javascript:void(0)" data-hs-collapse="#menuTransaksi" class="menu-link">
+                        <a href="javascript:void(0)" data-hs-collapse="#menuPekerjaan" class="menu-link">
                             <span class="menu-icon">
-                                <i data-lucide="shopping-cart"></i>
+                                <i data-lucide="briefcase"></i>
                             </span>
                             <span class="menu-text"> Pekerjaan </span>
                             <span class="menu-arrow"></span>
                         </a>
 
-                        <ul id="menuTransaksi" class="sub-menu hidden">
+                        <ul id="menuPekerjaan" class="sub-menu hidden">
                             <li class="menu-item">
                                 <a href="{{ route('pekerjaan.create') }}" class="menu-link">
                                     <span class="menu-text"> Input Pekerjaan </span>

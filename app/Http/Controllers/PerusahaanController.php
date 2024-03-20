@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PerusahaanController extends Controller
 {
@@ -12,7 +13,7 @@ class PerusahaanController extends Controller
      */
     public function index()
     {
-        $perusahaans = Perusahaan::latest()->get(['slug', 'nama', 'sertifikat', 'direktur', 'email', 'telepon', 'status'])->append(['status_f']);
+        $perusahaans = Perusahaan::latest()->get(['slug', 'nama', 'direktur', 'email', 'telepon', 'status'])->append(['status_f']);
 
         return view('dashboard.perusahaan.index', [
             'title' => 'Daftar Perusahaan',
@@ -38,15 +39,10 @@ class PerusahaanController extends Controller
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
             'npwp' => 'required|max:21|unique:perusahaans',
-            'sertifikat' => 'required|max:21',
-            'registrasi' => 'required|max:24',
             'direktur' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'email' => 'required|string|email|max:255|unique:perusahaans',
-            'telepon' => 'required|max:15|unique:perusahaans',
-            'no_akta' => 'required|max:24',
-            'tgl_akta' => 'required|date',
-            'klasifikasi' => 'required|string',
+            'email' => 'nullable|string|email|max:255|unique:perusahaans',
+            'telepon' => 'nullable|max:15|unique:perusahaans',
             'status' => 'required|boolean',
         ]);
 
@@ -91,13 +87,8 @@ class PerusahaanController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'sertifikat' => 'required|max:21',
-            'registrasi' => 'required|max:24',
             'direktur' => 'required|string|max:255',
             'alamat' => 'required|string',
-            'no_akta' => 'required|max:24',
-            'tgl_akta' => 'required|date',
-            'klasifikasi' => 'required|string',
             'status' => 'required|boolean',
         ];
 
@@ -105,10 +96,10 @@ class PerusahaanController extends Controller
             $rules['npwp'] = 'required|max:16|unique:perusahaans';
         }
         if ($request->telepon != $perusahaan->telepon) {
-            $rules['telepon'] = 'required|max:15|unique:perusahaans';
+            $rules['telepon'] = 'nullable|max:15|unique:perusahaans';
         }
         if ($request->email != $perusahaan->email) {
-            $rules['email'] = 'required|string|email|max:255|unique:perusahaans';
+            $rules['email'] = 'nullable|string|email|max:255|unique:perusahaans';
         }
 
         $validatedData =  $request->validate($rules);
@@ -124,7 +115,11 @@ class PerusahaanController extends Controller
      */
     public function destroy(Perusahaan $perusahaan)
     {
-        $perusahaan->delete();
+        DB::transaction(function () use ($perusahaan) {
+            $perusahaan->tenaga_ahlis()->update(['perusahaan_id' => null]);
+            $perusahaan->delete();
+        });
+
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil dihapus!');
     }
 }

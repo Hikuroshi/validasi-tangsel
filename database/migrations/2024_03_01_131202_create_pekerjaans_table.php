@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('ppk');
             $table->string('pptk');
             $table->string('pho');
-            $table->unsignedBigInteger('sub_pekerjaan_id');
+            $table->unsignedBigInteger('jenis_pekerjaan_id');
             $table->text('deskripsi');
             $table->string('nilai_pagu');
             $table->string('nilai_kontrak');

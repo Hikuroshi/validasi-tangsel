@@ -50,7 +50,7 @@ class PekerjaanController extends Controller
             'title' => 'Tambah Pekerjaan',
             'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
-            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
+            'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
             'status_pekerjaans' => $status,
             'metodes' => $metode,
             'sumber_danas' => $sumber_dana,
@@ -74,7 +74,7 @@ class PekerjaanController extends Controller
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
             'status_pekerjaan' => 'required',
-            'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
+            'jenis_pekerjaan_id' => 'required|exists:jenis_pekerjaans,id',
             'deskripsi' => 'required|string',
             'nilai_pagu' => 'required|string|max:255',
             'nilai_kontrak' => 'required|string|max:255',
@@ -159,21 +159,16 @@ class PekerjaanController extends Controller
 
         $selected_tenaga_ahlis = $pekerjaan->tenaga_ahlis->pluck('id');
 
-        $jenis_pekerjaans = JenisPekerjaan::where('jenis_jasa_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa_id)->get(['id', 'nama']);
-        $sub_pekerjaans = SubPekerjaan::where('jenis_pekerjaan_id', $pekerjaan->sub_pekerjaan->jenis_pekerjaan_id)->get(['id', 'nama']);
-
         return view('dashboard.pekerjaan.edit', [
             'title' => 'Perbarui Pekerjaan',
             'pekerjaan' => $pekerjaan->load(['perusahaan:id,nama', 'tenaga_ahlis:id,nama']),
             'perusahaans' => Perusahaan::get(['id', 'nama']),
             'tenaga_ahlis' => TenagaAhli::get(['id', 'nama']),
-            'jenis_jasas' => JenisJasa::get(['id', 'nama']),
+            'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
             'selected_tenaga_ahlis' => $selected_tenaga_ahlis,
             'status_pekerjaans' => $status,
             'metodes' => $metode,
             'sumber_danas' => $sumber_dana,
-            'jenis_pekerjaans' => $jenis_pekerjaans,
-            'sub_pekerjaans' => $sub_pekerjaans,
         ]);
     }
 
@@ -194,7 +189,7 @@ class PekerjaanController extends Controller
             'pptk' => 'required|string|max:255',
             'pho' => 'required|string|max:255',
             'status_pekerjaan' => 'required',
-            'sub_pekerjaan_id' => 'required|exists:sub_pekerjaans,id',
+            'jenis_pekerjaan_id' => 'required|exists:jenis_pekerjaans,id',
             'deskripsi' => 'required|string',
             'nilai_pagu' => 'required|string|max:255',
             'nilai_kontrak' => 'required|string|max:255',
@@ -285,17 +280,5 @@ class PekerjaanController extends Controller
         TenagaAhli::where('id', $tenagaAhli->id)->update(['status_pekerjaan' => 1]);
         $pekerjaan->tenaga_ahlis()->detach($tenagaAhli->id);
         return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pekerjaan pekerjaan!');
-    }
-
-    public function getJenisPekerjaan($id)
-    {
-        $jenisPekerjaans = JenisJasa::where('id', $id)->with(['jenis_pekerjaans:id,nama,jenis_jasa_id'])->first()->jenis_pekerjaans;
-        return response()->json($jenisPekerjaans);
-    }
-
-    public function getSubPekerjaan($id)
-    {
-        $subPekerjaans = JenisPekerjaan::where('id', $id)->with(['sub_pekerjaans:id,nama,jenis_pekerjaan_id'])->first()->sub_pekerjaans;
-        return response()->json($subPekerjaans);
     }
 }

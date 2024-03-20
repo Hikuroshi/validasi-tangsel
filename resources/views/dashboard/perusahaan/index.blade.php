@@ -46,7 +46,6 @@
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     "Nama",
-                    "SBU",
                     "Direktur",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
                     "Telepon",
@@ -89,7 +88,6 @@
                     data: perusahaans.map((perusahaan, index) => [
                     index + 1,
                     perusahaan.nama,
-                    perusahaan.sertifikat,
                     perusahaan.direktur,
                     perusahaan.email,
                     perusahaan.telepon,

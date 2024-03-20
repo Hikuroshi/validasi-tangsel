@@ -15,11 +15,10 @@
                 <div class="flex">
                     <div class="flex-grow">
                         <span class="text-xs text-gray-500 uppercase font-bold dark:text-gray-400">Perusahaan</span>
-                        <h3 class="text-2xl dark:text-gray-300">$2100</h3>
+                        <h3 class="text-2xl dark:text-gray-300">500</h3>
                     </div>
-                    <div class="text-center flex-shrink-0">
-                        <div id="today-revenue-chart" class="apex-charts"></div>
-                        <span class="text-success fw-bold fs-13"><i class='uil uil-arrow-up'></i> 10.21%</span>
+                    <div class="text-center">
+                        <i class='uil uil-arrow-up'></i>
                     </div>
                 </div>
             </div>

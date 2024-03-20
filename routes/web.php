@@ -47,16 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/tenaga-ahli', TenagaAhliController::class);
     Route::resource('/perusahaan', PerusahaanController::class);
     Route::resource('/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
-    Route::resource('/sub-pekerjaan', SubPekerjaanController::class)->except('show');
-    Route::resource('/jenis-jasa', JenisJasaController::class)->except('show');
     Route::resource('/user', UserController::class)->except('show');
 
     Route::resource('/pekerjaan', PekerjaanController::class);
     Route::controller(PekerjaanController::class)->group(function () {
         Route::post('/pekerjaan-tenaga-ahli/{pekerjaan}/{tenaga_ahli}', 'deleteTenagaAhli')->name('pekerjaan.delete-tenaga-ahli');
         Route::put('/pekerjaan-tenaga-ahli/{pekerjaan}', 'addTenagaAhli')->name('pekerjaan.add-tenaga-ahli');
-        Route::get('/get-jenis-pekerjaan/{id}', 'getJenisPekerjaan')->name('pekerjaan.jenis-pekerjaan');
-        Route::get('/get-sub-pekerjaan/{id}',  'getSubPekerjaan')->name('pekerjaan.sub-pekerjaan');
     });
 
     Route::put('/status-pekerjaan/{pekerjaan}', [StatusPekerjaanController::class,'store'])->name('status-pekerjaan.store');

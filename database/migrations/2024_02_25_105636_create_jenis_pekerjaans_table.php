@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
-            $table->unsignedBigInteger('jenis_jasa_id');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });

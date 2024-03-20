@@ -16,15 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
             $table->string('npwp')->unique();
-            $table->string('sertifikat');
-            $table->string('registrasi');
             $table->string('direktur');
             $table->text('alamat');
-            $table->string('email')->unique();
-            $table->string('telepon')->unique();
-            $table->string('no_akta');
-            $table->date('tgl_akta');
-            $table->text('klasifikasi');
+            $table->string('email')->unique()->nullable();
+            $table->string('telepon')->unique()->nullable();
             $table->boolean('status');
             $table->integer('jumlah_pekerjaan')->default('0');
             $table->unsignedBigInteger('author_id');

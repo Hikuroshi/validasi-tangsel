@@ -1,12 +1,5 @@
 @extends('layouts.main')
 
-@section('css')
-
-<!-- Flatpickr css -->
-<link rel="stylesheet" href="/assets/libs/flatpickr/flatpickr.min.css">
-
-@endsection
-
 @section('container')
 
 <div class="card mb-6">
@@ -164,22 +157,11 @@
 
 <script src="/assets/js/jquery-3.7.1.min.js"></script>
 
-<!-- Flatpickr Plugin Js -->
-<script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
-<script src="/assets/libs/flatpickr/id.js"></script>
-
 <script>
-    flatpickr("#humanfd-datepicker", {
-        locale: "id",
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d"
-    });
-
     $(document).ready(function() {
         $("#npwp").on("input", function(e) {
-            // formatInput(e, "00.000.000.0-000.000");
-            formatInput(e, "0000 0000 0000 0000");
+            formatInput(e, "00.000.000.0-000.000");
+            // formatInput(e, "0000 0000 0000 0000");
         });
 
         $("#registrasi").on("input", function(e) {
@@ -264,8 +246,5 @@
         }
     }
 </script>
-
-<!-- Init js -->
-<script src="/assets/js/pages/form-advanced.init.js"></script>
 
 @endsection

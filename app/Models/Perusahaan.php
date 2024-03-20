@@ -25,15 +25,6 @@ class Perusahaan extends Model
         );
     }
 
-    protected function tglAktaF(): Attribute
-    {
-        return new Attribute(
-            get: function () {
-                return Carbon::parse($this->tgl_akta)->isoFormat('D MMMM YYYY');
-            }
-        );
-    }
-
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');

@@ -16,23 +16,6 @@
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="jenis_jasa_id">Jenis Jasa <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
-                                <option></option>
-                                @foreach ($jenis_jasas as $jenis_jasa)
-                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id', $jenis_pekerjaan->jenis_jasa_id) == $jenis_jasa->id)>
-                                    {{ $jenis_jasa->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('jenis_jasa_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Jenis Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="nama" name="nama" value="{{ old('nama', $jenis_pekerjaan->nama) }}" class="form-input">

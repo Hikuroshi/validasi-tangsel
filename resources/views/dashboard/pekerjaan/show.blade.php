@@ -50,8 +50,8 @@
                         <div class="flex items-center gap-5">
                             <i data-lucide="clock-5" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                             <div>
-                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans($pekerjaan->tgl_mulai) }}</h4>
-                                <span class="text-sm dark:text-gray-400">Waktu</span>
+                                <h4 class="text-lg text-gray-700 dark:text-gray-300 font-semibold">{{ now()->diffForHumans(Carbon\Carbon::parse($pekerjaan->tgl_kontrak)) }}</h4>
+                                <span class="text-sm dark:text-gray-400">Waktu telah berlalu</span>
                             </div>
                         </div>
 
@@ -214,19 +214,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Jasa</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->jenis_pekerjaan->jenis_jasa->nama }}</td>
-                </tr>
-                <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Pekerjaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->jenis_pekerjaan->nama }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sub Pekerjaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->sub_pekerjaan->nama }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->jenis_pekerjaan->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nilai Pagu</td>

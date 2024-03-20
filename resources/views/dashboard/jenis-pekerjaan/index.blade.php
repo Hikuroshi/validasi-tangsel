@@ -45,7 +45,6 @@
                 new gridjs.Grid({
                     columns: [
                     { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Jenis Jasa",
                     "Jenis Pekerjaan",
                     {
                         name: "Aksi",
@@ -70,7 +69,6 @@
                     search: true,
                     data: jenis_pekerjaans.map((jenis_pekerjaan, index) => [
                     index + 1,
-                    jenis_pekerjaan.jenis_jasa.nama,
                     jenis_pekerjaan.nama,
                     jenis_pekerjaan.slug,
                     ]),

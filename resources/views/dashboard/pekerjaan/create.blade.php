@@ -159,41 +159,17 @@
                     </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="jenis_jasa_id">Jenis Jasa <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="jenis_jasa_id" name="jenis_jasa_id" class="form-select">
-                                <option value=""></option>
-                                @foreach ($jenis_jasas as $jenis_jasa)
-                                <option value="{{ $jenis_jasa->id }}" @selected(old('jenis_jasa_id') == $jenis_jasa->id)>
-                                    {{ $jenis_jasa->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('jenis_jasa_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="jenis_pekerjaan_id">Jenis Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <select id="jenis_pekerjaan_id" name="jenis_pekerjaan_id" class="form-select">
-                                <option></option>
+                                <option value=""></option>
+                                @foreach ($jenis_pekerjaans as $jenis_pekerjaan)
+                                <option value="{{ $jenis_pekerjaan->id }}" @selected(old('jenis_pekerjaan_id') == $jenis_pekerjaan->id)>
+                                    {{ $jenis_pekerjaan->nama }}
+                                </option>
+                                @endforeach
                             </select>
                             @error('jenis_pekerjaan_id')
-                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
-                        <label class="mb-2" for="sub_pekerjaan_id">Sub Pekerjaan <span class="text-danger">*</span></label>
-                        <div class=" w-full sm:w-5/6">
-                            <select id="sub_pekerjaan_id" name="sub_pekerjaan_id" class="form-select">
-                                <option></option>
-                            </select>
-                            @error('sub_pekerjaan_id')
                             <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                             @enderror
                         </div>

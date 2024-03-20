@@ -25,16 +25,6 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->npwp }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sertifikat Perusahaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->sertifikat }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">No Reg Perusahaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->registrasi }}</td>
-                </tr>
-                <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nama</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->nama }}</td>
@@ -62,26 +52,11 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->telepon }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">No Akta</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->no_akta }}</td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Tanggal Akta</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->tgl_akta_f }}</td>
-                </tr>
-                <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Status</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium {{ $perusahaan->status ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger' }}">{{ $perusahaan->status_f }}</span>
                     </td>
-                </tr>
-                <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Klasifikasi Perusahaan</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $perusahaan->klasifikasi }}</td>
                 </tr>
             </table>
         </div>

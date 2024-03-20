@@ -32,15 +32,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Cahaya Abadi',
             'slug' => Str::slug('PT Cahaya Abadi'),
             'npwp' => '0123456789',
-            'sertifikat' => '9876543210',
-            'registrasi' => '1234567890',
             'direktur' => 'Jane Doe',
             'alamat' => 'Jl. Harmoni No. 456',
             'email' => 'ptcahayaabadi@example.com',
             'telepon' => '081234567890',
-            'no_akta' => '1357924680',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Teknologi Informasi',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -69,15 +64,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Maju Sejahtera',
             'slug' => Str::slug('PT Maju Sejahtera'),
             'npwp' => '1357924680',
-            'sertifikat' => '5678901234',
-            'registrasi' => '6789012345',
             'direktur' => 'Ahmad Yani',
             'alamat' => 'Jl. Maju No. 789',
             'email' => 'ptmajusejahtera@example.com',
             'telepon' => '089876543210',
-            'no_akta' => '9876543210',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Perdagangan',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -106,15 +96,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Bersama Makmur',
             'slug' => Str::slug('PT Bersama Makmur'),
             'npwp' => '5678901234',
-            'sertifikat' => '0987654654321',
-            'registrasi' => '3456789012',
             'direktur' => 'Rina Indah',
             'alamat' => 'Jl. Makmur No. 345',
             'email' => 'ptbersamamakmur@example.com',
             'telepon' => '0987675432109',
-            'no_akta' => '5432109876',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Konsultan',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -143,15 +128,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Berkah Sentosa',
             'slug' => Str::slug('PT Berkah Sentosa'),
             'npwp' => '6789012345',
-            'sertifikat' => '5432109876',
-            'registrasi' => '9012345678',
             'direktur' => 'Dewi Lestari',
             'alamat' => 'Jl. Sentosa No. 123',
             'email' => 'ptberkahsentosa@example.com',
             'telepon' => '076543210987',
-            'no_akta' => '6543210987',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Perhotelan',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -180,15 +160,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Cahaya Cemerlang',
             'slug' => Str::slug('PT Cahaya Cemerlang'),
             'npwp' => '5432109876',
-            'sertifikat' => '034987654321',
-            'registrasi' => '7654321098',
             'direktur' => 'Siti Rahayu',
             'alamat' => 'Jl. Cemerlang No. 789',
             'email' => 'ptcahayacemerlang@example.com',
             'telepon' => '087654321098',
-            'no_akta' => '5432109876',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Konsultan Keuangan',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -217,15 +192,10 @@ class DatabaseSeeder extends Seeder
             'nama' => 'PT Mandiri Sejahtera',
             'slug' => Str::slug('PT Mandiri Sejahtera'),
             'npwp' => '012987654321',
-            'sertifikat' => '6543210987',
-            'registrasi' => '8765432109',
             'direktur' => 'Agus Salim',
             'alamat' => 'Jl. Mandiri No. 345',
             'email' => 'ptmandirisejahtera@example.com',
             'telepon' => '02398765432109',
-            'no_akta' => '09387654321',
-            'tgl_akta' => now(),
-            'klasifikasi' => 'Pendidikan',
             'status' => true,
             'jumlah_pekerjaan' => 0,
             'author_id' => 1,
@@ -262,27 +232,29 @@ class DatabaseSeeder extends Seeder
             'author_id' => 1,
         ]);
 
-        $jenis_jasas = ['Jasa Kontruksi', 'Jasa Konsultasi'];
-
-        foreach ($jenis_jasas as $jenis_jasa) {
-            JenisJasa::create([
-                'nama' => $jenis_jasa,
-                'slug' => Str::slug($jenis_jasa),
-                'author_id' => 1,
-            ]);
-        }
-
         JenisPekerjaan::create([
-            'nama' => 'Test jenis pekerjaan',
-            'slug' => Str::slug('Test jenis pekerjaan'),
-            'jenis_jasa_id' => 1,
+            'nama' => 'Arsitektur',
+            'slug' => Str::slug('Arsitektur'),
             'author_id' => 1,
         ]);
-
-        SubPekerjaan::create([
-            'nama' => 'Test sub pekerjaan',
-            'slug' => Str::slug('Test sub pekerjaan'),
-            'jenis_pekerjaan_id' => 1,
+        JenisPekerjaan::create([
+            'nama' => 'Teknik Sipil',
+            'slug' => Str::slug('Teknik Sipil'),
+            'author_id' => 1,
+        ]);
+        JenisPekerjaan::create([
+            'nama' => 'Manajemen Proyek Konstruksi',
+            'slug' => Str::slug('Manajemen Proyek Konstruksi'),
+            'author_id' => 1,
+        ]);
+        JenisPekerjaan::create([
+            'nama' => 'Konstruksi Bangunan',
+            'slug' => Str::slug('Konstruksi Bangunan'),
+            'author_id' => 1,
+        ]);
+        JenisPekerjaan::create([
+            'nama' => 'Pengawasan Konstruksi',
+            'slug' => Str::slug('Pengawasan Konstruksi'),
             'author_id' => 1,
         ]);
     }
