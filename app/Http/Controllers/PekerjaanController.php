@@ -74,7 +74,7 @@ class PekerjaanController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->where('jumlah_pekerjaan', '>', '5')->first(['nama']);
+        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->where('jumlah_pekerjaan', '>=', '5')->first(['nama']);
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
 
         if ($perusahaan) {
@@ -164,7 +164,7 @@ class PekerjaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         $perusahaan = Perusahaan::where('id', $request->perusahaan_id)
-            ->where('jumlah_pekerjaan', '>', 5)
+            ->where('jumlah_pekerjaan', '>=', 5)
             ->whereNotIn('id', [$pekerjaan->perusahaan_id])
             ->first(['nama']);
 
