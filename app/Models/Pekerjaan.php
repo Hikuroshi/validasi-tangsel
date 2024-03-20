@@ -170,27 +170,19 @@ class Pekerjaan extends Model
                     ]
                 ];
 
-                $latestStatus = $this->status_pekerjaans()->latest()->first();
+                $latestStatus = $this->status_pekerjaan;
 
                 if ($latestStatus) {
-                    $latestStatusKey = collect($latestStatus->toArray())
-                        ->only(['request', 'on_progress', 'reporting', 'done', 'pending', 'cancelled'])
-                        ->filter(fn ($value, $key) => $value == true)
-                        ->keys()
-                        ->last();
+                    $matchedStatus = collect($statuses)->firstWhere('name', $latestStatus->nama);
 
-                    if ($latestStatusKey != null) {
-                        $status = collect($statuses)->where('slug', $latestStatusKey)->first();
-                        $status['keterangan'] = $latestStatus->keterangan;
-
-                        return $status;
+                    if ($matchedStatus) {
+                        return $matchedStatus;
                     }
                 }
 
                 return [
                     'name' => 'Not Found',
                     'slug' => 'not_found',
-                    'keterangan' => 'unavailable',
                     'color' => 'dark',
                     'icon' => 'exclamation-circle'
                 ];

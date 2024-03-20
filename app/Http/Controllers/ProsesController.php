@@ -16,8 +16,8 @@ class ProsesController extends Controller
         }
 
         $prosess = $query->with([
-            'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id',
-            'pekerjaans.status_pekerjaans',
+            'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id,status_pekerjaan_id',
+            'pekerjaans.status_pekerjaan:id,nama',
             'pekerjaans.perusahaan:id,nama',
             'pekerjaans.tenaga_ahlis:id,nama'
         ])->latest()->get(['id', 'nama']);
@@ -36,8 +36,8 @@ class ProsesController extends Controller
         }
 
         $prosess = $query->with([
-            'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id',
-            'pekerjaans.status_pekerjaans',
+            'pekerjaans:id,slug,nama,tgl_kontrak,tgl_selesai,deskripsi,thn_anggaran,perusahaan_id,status_pekerjaan_id',
+            'pekerjaans.status_pekerjaan:id,nama',
             'pekerjaans.perusahaan:id,nama',
         ])->latest()->get(['id', 'nama']);
 

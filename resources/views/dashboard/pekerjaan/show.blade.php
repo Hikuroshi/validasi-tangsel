@@ -94,27 +94,17 @@
                                         @csrf
 
                                         <div class="mb-3">
-                                            <label class="mb-2" for="status_pekerjaan">Status <span class="text-danger">*</span></label>
+                                            <label class="mb-2" for="status_pekerjaan_id">Status <span class="text-danger">*</span></label>
                                             <div class="mb-3">
-                                                <select id="status_pekerjaan" name="status_pekerjaan" class="form-select" required>
-                                                    <option>Pilih Status</option>
-                                                    @foreach ($status as $key => $value)
-                                                    <option value="{{ $key }}" @selected(old('status_pekerjaan', $pekerjaan->status_pekerjaan_f['slug']) == $key)>
-                                                        {{ $value }}
+                                                <select id="status_pekerjaan_id" name="status_pekerjaan_id" class="form-select">
+                                                    <option value=""></option>
+                                                    @foreach ($status_pekerjaans as $status_pekerjaan)
+                                                    <option value="{{ $status_pekerjaan->id }}" @selected(old('status_pekerjaan_id') == $status_pekerjaan->id)>
+                                                        {{ $status_pekerjaan->nama }}
                                                     </option>
                                                     @endforeach
                                                 </select>
-                                                @error('status_pekerjaan')
-                                                <p class="inline-block text-danger"><small>{{ $message }}</small></p>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="mb-2" for="keterangan">Keterangan <span class="text-danger">*</span></label>
-                                            <div class="mb-3">
-                                                <textarea id="keterangan" name="keterangan" class="form-input" rows="5" placeholder="Keterangan" required>{{ old('keterangan', $pekerjaan->status_pekerjaan_f['keterangan']) }}</textarea>
-                                                @error('keterangan')
+                                                @error('status_pekerjaan_id')
                                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                                                 @enderror
                                             </div>
@@ -140,20 +130,18 @@
 
                 <div class="p-6 pt-0 pb-3">
                     <div id="data-container" class="divide-y divide-gray-100 dark:divide-gray-600">
-                        @foreach ($status_pekerjaans as $status_pekerjaan)
                         <div>
                             <div class="flex items-start gap-5 py-3">
                                 <div class="text-center">
-                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $status_pekerjaan->active['color'] }} bg-{{ $status_pekerjaan->active['color'] }}/20">{{ $status_pekerjaan->created_at->format('d') }}</h2>
-                                    <small>{{ $status_pekerjaan->created_at->format('M') }}</small>
+                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $pekerjaan->status_pekerjaan_f['color'] }} bg-{{ $pekerjaan->status_pekerjaan_f['color'] }}/20">{{ $pekerjaan->status_pekerjaan->created_at->format('d') }}</h2>
+                                    <small>{{ $pekerjaan->status_pekerjaan->created_at->format('M') }}</small>
                                 </div>
                                 <div>
-                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $status_pekerjaan->active['name'] }}</p>
-                                    <p class="text-gray-400">{{ $status_pekerjaan->author->name }} telah memperbarui status</p>
+                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $pekerjaan->status_pekerjaan_f['name'] }}</p>
+                                    <p class="text-gray-400">{{ $pekerjaan->status_pekerjaan->author->name }} telah memperbarui status</p>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
                     </div>
 
                     <div class="text-center">
@@ -251,11 +239,6 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->pptk }}</td>
                 </tr>
                 <tr>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">PHO</td>
-                    <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->pho }}</td>
-                </tr>
-                <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Lokasi</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->lokasi }}</td>
@@ -273,7 +256,7 @@
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Metode Pengadaan</td>
                     <td>:</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->metode }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->metode->nama }}</td>
                 </tr>
                 <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Jenis Kontruksi</td>

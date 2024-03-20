@@ -12,11 +12,11 @@ class StatusPekerjaanController extends Controller
      */
     public function index()
     {
-        $jenis_pekerjaans = StatusPekerjaan::latest()->get(['slug', 'nama']);
+        $status_pekerjaans = StatusPekerjaan::latest()->get(['slug', 'nama']);
 
         return view('dashboard.status-pekerjaan.index', [
-            'title' => 'Daftar Jenis Pekerjaan',
-            'status_pekerjaans' => $jenis_pekerjaans,
+            'title' => 'Daftar Status Pekerjaan',
+            'status_pekerjaans' => $status_pekerjaans,
         ]);
     }
 
@@ -26,7 +26,7 @@ class StatusPekerjaanController extends Controller
     public function create()
     {
         return view('dashboard.status-pekerjaan.create', [
-            'title' => 'Tambah Jenis Pekerjaan',
+            'title' => 'Tambah Status Pekerjaan',
         ]);
     }
 
@@ -42,7 +42,7 @@ class StatusPekerjaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         StatusPekerjaan::create($validatedData);
-        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil disimpan');
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Status Pekerjaan berhasil disimpan');
     }
 
     /**
@@ -59,7 +59,7 @@ class StatusPekerjaanController extends Controller
     public function edit(StatusPekerjaan $statusPekerjaan)
     {
         return view('dashboard.status-pekerjaan.edit', [
-            'title' => 'Perbarui Jenis Pekerjaan',
+            'title' => 'Perbarui Status Pekerjaan',
             'status_pekerjaan' => $statusPekerjaan,
         ]);
     }
@@ -78,7 +78,7 @@ class StatusPekerjaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         $statusPekerjaan->update($validatedData);
-        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil diperbarui!');
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Status Pekerjaan berhasil diperbarui!');
     }
 
     /**
@@ -87,6 +87,6 @@ class StatusPekerjaanController extends Controller
     public function destroy(StatusPekerjaan $statusPekerjaan)
     {
         $statusPekerjaan->delete();
-        return redirect()->route('status-pekerjaan.index')->with('success', 'Jenis Pekerjaan berhasil dihapus!');
+        return redirect()->route('status-pekerjaan.index')->with('success', 'Status Pekerjaan berhasil dihapus!');
     }
 }
