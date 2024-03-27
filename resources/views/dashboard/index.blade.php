@@ -76,37 +76,41 @@
             </div>
         </div>
 
-        <div class="card mt-5">
-            <div class="card-header">
-                <div class="flex justify-between items-center">
-                    <h4 class="card-title">Status Pekerjaan Perusahaan</h4>
-                </div>
-            </div>
+        <!-- overview -->
+        <div class="xl:col-span-1">
+            <div class="card">
+                <div>
+                    <div class="flex items-center justify-between p-5 border-b">
+                        <h5 class="uppercase mb-0 dark:text-gray-300">Overview Status</h5>
+                    </div>
 
-            <div class="p-6">
-                <div id="table-gridjs"></div>
+                    @foreach ($status_pekerjaans as $status_pekerjaan)
+                    <div class="flex p-5 border-b dark:border-gray-600">
+                        <div class="flex-grow">
+                            <h4 class="text-2xl mt-0 mb-1 dark:text-gray-300">{{ $status_pekerjaan->pekerjaans->count() }}</h4>
+                            <span class="text-gray-500 dark:text-gray-400">Pekerjaan {{ $status_pekerjaan->nama }}</span>
+                        </div>
+                        <i data-lucide="{{ $status_pekerjaan->icon_lucide }}" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                    </div>
+                    @endforeach
+
+                    <div class="flex justify-end">
+                        <a href="{{ route('pekerjaan.index') }}" class="p-4 text-primary">Lihat semua <i class="uil-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- overview -->
-        <div class="card">
-            <div>
-                <div class="flex items-center justify-between p-5 border-b">
-                    <h5 class="uppercase mb-0 dark:text-gray-300">Overview Status</h5>
-                </div>
-
-                @foreach ($status_pekerjaans as $status_pekerjaan)
-                <div class="flex p-5 border-b dark:border-gray-600">
-                    <div class="flex-grow">
-                        <h4 class="text-2xl mt-0 mb-1 dark:text-gray-300">{{ $status_pekerjaan->pekerjaans->count() }}</h4>
-                        <span class="text-gray-500 dark:text-gray-400">Pekerjaan {{ $status_pekerjaan->nama }}</span>
+        <div class="xl:col-span-2">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex justify-between items-center">
+                        <h4 class="card-title">Status Pekerjaan Perusahaan</h4>
                     </div>
-                    <i data-lucide="{{ $status_pekerjaan->icon_lucide }}" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                 </div>
-                @endforeach
 
-                <div class="flex justify-end">
-                    <a href="{{ route('pekerjaan.index') }}" class="p-4 text-primary">Lihat semua <i class="uil-arrow-right"></i></a>
+                <div class="p-6">
+                    <div id="table-gridjs"></div>
                 </div>
             </div>
         </div>
