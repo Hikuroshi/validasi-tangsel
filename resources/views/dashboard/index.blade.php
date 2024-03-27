@@ -74,6 +74,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card mt-5">
+                <div class="card-header">
+                    <div class="flex justify-between items-center">
+                        <h4 class="card-title">Status Pekerjaan Perusahaan</h4>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div id="table-gridjs"></div>
+                </div>
+            </div>
         </div>
 
         <!-- overview -->
@@ -97,20 +109,6 @@
                     <div class="flex justify-end">
                         <a href="{{ route('pekerjaan.index') }}" class="p-4 text-primary">Lihat semua <i class="uil-arrow-right"></i></a>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="xl:col-span-2">
-            <div class="card">
-                <div class="card-header">
-                    <div class="flex justify-between items-center">
-                        <h4 class="card-title">Status Pekerjaan Perusahaan</h4>
-                    </div>
-                </div>
-
-                <div class="p-6">
-                    <div id="table-gridjs"></div>
                 </div>
             </div>
         </div>
