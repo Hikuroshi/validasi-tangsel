@@ -8,9 +8,19 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class LaporanController extends Controller
 {
     public function index() {
+        $query = Pekerjaan::with(['perusahaan:id,nama']);
+
+        if (auth()->user()->dinasan_id !== null) {
+            $query->whereHas('bidang', function ($query) {
+                $query->where('dinasan_id', auth()->user()->dinasan_id);
+            });
+        }
+
+        $laporans = $query->get(['slug', 'nama', 'tgl_kontrak', 'perusahaan_id'])->append(['tgl_kontrak_f']);
+
         return view('dashboard.laporan.index', [
             'title'=> 'Laporan Pekerjaan',
-            'laporans' => Pekerjaan::with(['perusahaan:id,nama'])->get(['slug', 'nama', 'tgl_kontrak', 'perusahaan_id'])->append(['tgl_kontrak_f']),
+            'laporans' => $laporans,
         ]);
     }
 
