@@ -51,7 +51,7 @@ class PageController extends Controller
 
         $perusahaans = Perusahaan::all();
         $perusahaans->map(function ($perusahaan) {
-            $perusahaan->jumlah = $perusahaan->pekerjaans()->whereYear('created_at', now()->year)->count();
+            $perusahaan->jumlah = $perusahaan->pekerjaan_this_year->count();
             $perusahaan->sisa = 5 - $perusahaan->jumlah;
             return $perusahaan;
         });

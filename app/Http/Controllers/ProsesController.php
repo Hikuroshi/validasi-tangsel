@@ -9,12 +9,7 @@ use Illuminate\Http\Request;
 class ProsesController extends Controller
 {
     public function perusahaan() {
-        $query = Perusahaan::with(['pekerjaans' => function ($query) {
-            $query->whereYear('created_at', now()->year);
-            }])
-            ->whereHas('pekerjaans', function ($query) {
-                $query->whereYear('created_at', now()->year);
-            });
+        $query = Perusahaan::has('pekerjaans');
 
         if (request()->has('search')) {
             $query->where('nama', 'like', '%' . request()->search . '%');

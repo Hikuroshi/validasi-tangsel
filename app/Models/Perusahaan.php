@@ -25,6 +25,15 @@ class Perusahaan extends Model
         );
     }
 
+    protected function pekerjaanThisYear(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return $this->pekerjaans()->whereYear('created_at', now()->year);
+            }
+        );
+    }
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');

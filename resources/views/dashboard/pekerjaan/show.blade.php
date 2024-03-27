@@ -97,14 +97,25 @@
                                             <label class="mb-2" for="status_pekerjaan_id">Status <span class="text-danger">*</span></label>
                                             <div class="mb-3">
                                                 <select id="status_pekerjaan_id" name="status_pekerjaan_id" class="form-select">
-                                                    <option value=""></option>
                                                     @foreach ($status_pekerjaans as $status_pekerjaan)
-                                                    <option value="{{ $status_pekerjaan->id }}" @selected(old('status_pekerjaan_id') == $status_pekerjaan->id)>
+                                                    <option value="{{ $status_pekerjaan->id }}" @selected(old('status_pekerjaan_id', $pekerjaan->status_pekerjaan_id) == $status_pekerjaan->id)>
                                                         {{ $status_pekerjaan->nama }}
                                                     </option>
                                                     @endforeach
                                                 </select>
                                                 @error('status_pekerjaan_id')
+                                                <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-2" for="pekerjaan_selesai">Tandai telah menyelesaikan pekerjaan <span class="text-danger">*</span></label>
+                                            <div class="mb-3">
+                                                <select id="pekerjaan_selesai" name="pekerjaan_selesai" class="form-select">
+                                                    <option value="0" @selected(old($pekerjaan->pekerjaan_selesai) == '1')>Belum Selesai</option>
+                                                    <option value="1" @selected(old($pekerjaan->pekerjaan_selesai) == '0')>Sudah Selesai</option>
+                                                </select>
+                                                @error('pekerjaan_selesai')
                                                 <p class="inline-block text-danger"><small>{{ $message }}</small></p>
                                                 @enderror
                                             </div>

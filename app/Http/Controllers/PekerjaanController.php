@@ -82,11 +82,9 @@ class PekerjaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->first();
-        $perusahaan = $perusahaan->pekerjaans()->whereYear('created_at', now()->year);
-
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
 
-        if ($perusahaan->count() >= 5) {
+        if ($perusahaan->pekerjaan_this_year->count() >= 5) {
             return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {
@@ -108,7 +106,7 @@ class PekerjaanController extends Controller
      */
     public function show(Pekerjaan $pekerjaan)
     {
-        $pekerjaan->load(['perusahaan:id,nama', 'status_pekerjaan:id,nama,author_id,created_at', 'status_pekerjaan.author:id,name'])
+        $pekerjaan->load(['perusahaan:id,nama', 'status_pekerjaan', 'status_pekerjaan.author:id,name'])
         ->append(['tgl_kontrak_f', 'tgl_mulai_f', 'tgl_selesai_f', 'progress_pekerjaan']);
 
         return view('dashboard.pekerjaan.show', [
@@ -152,7 +150,7 @@ class PekerjaanController extends Controller
      */
     public function update(Request $request, Pekerjaan $pekerjaan)
     {
-        if (str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'done') || str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'cancelled')){
+        if ($pekerjaan->pekerjaan_selesai == true){
             return redirect()->route('pekerjaan.show', $pekerjaan->slug)->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
         }
 
@@ -182,15 +180,13 @@ class PekerjaanController extends Controller
         $validatedData['author_id'] = $request->user()->id;
 
         $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->first();
-        $perusahaan = $perusahaan->pekerjaans()->whereYear('created_at', now()->year)->whereNotIn('id', [$pekerjaan->perusahaan_id]);
-
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
             ->where('status_pekerjaan', 0)
             ->whereNotIn('id', $pekerjaan->tenaga_ahlis->pluck('id')->toArray())
             ->pluck('nama')
             ->toArray();
 
-        if ($perusahaan && $perusahaan->count() >= 5) {
+        if ($perusahaan && $perusahaan->pekerjaan_this_year->whereNotIn('id', [$pekerjaan->perusahaan_id])->count() >= 5) {
             return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {
@@ -213,10 +209,12 @@ class PekerjaanController extends Controller
      */
     public function destroy(Pekerjaan $pekerjaan)
     {
-        TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+        DB::transaction(function () use ($pekerjaan) {
+            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
-        $pekerjaan->tenaga_ahlis()->detach();
-        $pekerjaan->delete();
+            $pekerjaan->tenaga_ahlis()->detach();
+            $pekerjaan->delete();
+        });
 
         return redirect()->route('pekerjaan.index')->with('success', 'Pekerjaan berhasil dihapus!');
     }
@@ -234,6 +232,10 @@ class PekerjaanController extends Controller
 
     public function addTenagaAhli(Request $request, Pekerjaan $pekerjaan)
     {
+        if ($pekerjaan->pekerjaan_selesai == true){
+            return redirect()->back()->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
+        }
+
         $validatedData =  $request->validate([
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
         ]);
@@ -247,44 +249,44 @@ class PekerjaanController extends Controller
             return redirect()->back()->with('tenaga_ahli_full', implode(', ', $tenaga_ahlis) . ' sedang melakukan pekerjaan.');
         }
 
-        TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
-        $pekerjaan->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+        DB::transaction(function () use ($validatedData, $pekerjaan) {
+            TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
+            $pekerjaan->tenaga_ahlis()->attach($validatedData['tenaga_ahli_id']);
+        });
+
         return redirect()->back()->with('success', 'Tenaga ahli berhasil ditambahkan ke pekerjaan pekerjaan!');
     }
 
     public function deleteTenagaAhli(Pekerjaan $pekerjaan, TenagaAhli $tenagaAhli)
     {
-        TenagaAhli::where('id', $tenagaAhli->id)->update(['status_pekerjaan' => 1]);
-        $pekerjaan->tenaga_ahlis()->detach($tenagaAhli->id);
+        if ($pekerjaan->pekerjaan_selesai == true){
+            return redirect()->back()->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
+        }
+
+        DB::transaction(function () use ($pekerjaan, $tenagaAhli) {
+            TenagaAhli::where('id', $tenagaAhli->id)->update(['status_pekerjaan' => 1]);
+            $pekerjaan->tenaga_ahlis()->detach($tenagaAhli->id);
+        });
         return redirect()->back()->with('success', 'Tenaga ahli berhasil dihapus dari pekerjaan pekerjaan!');
     }
 
     public function changeStatus(Request $request, Pekerjaan $pekerjaan)
     {
-        $request->validate([
-            'status_pekerjaan_id' => 'required|exists:status_pekerjaans,id',
-        ]);
-
-        $nama_status = StatusPekerjaan::where('id', $request->status_pekerjaan_id)->value('nama');
-
-        $statusSebelumnyaMirip = str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'done') || str_contains(strtolower($pekerjaan->status_pekerjaan->nama), 'cancelled');
-
-        if ($statusSebelumnyaMirip) {
+        if ($pekerjaan->pekerjaan_selesai == true){
             return redirect()->back()->with('dataSelesai', 'Data yang sudah ditandai Selesai tidak dapat diubah.');
         }
 
-        if (str_contains(strtolower($nama_status), 'done') || str_contains(strtolower($nama_status), 'cancelled')) {
-            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+        $validatedData = $request->validate([
+            'status_pekerjaan_id' => 'required|exists:status_pekerjaans,id',
+            'pekerjaan_selesai' => 'required|boolean'
+        ]);
 
-            $pekerjaan->update([
-                'status_pekerjaan_id' => $request->status_pekerjaan_id,
-                'pekerjaan_selesai' => true,
-            ]);
-        } else {
-            TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
-
-            $pekerjaan->update(['status_pekerjaan_id' => $request->status_pekerjaan_id]);
-        }
+        DB::transaction(function () use ($request, $validatedData, $pekerjaan) {
+            if ($request->pekerjaan_selesai == true) {
+                TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
+            }
+            $pekerjaan->update($validatedData);
+        });
 
         return redirect()->back()->with('success', 'Status berhasil diperbarui');
     }
