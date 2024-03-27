@@ -44,7 +44,27 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    {
+                        name: "Aksi",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/perusahaan/${cell}">
+                                    <i class="uil uil-eye"></i>
+                                </a>
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/perusahaan/${cell}/edit">
+                                    <i class="uil uil-pen"></i>
+                                </a>
+                                <form action="/perusahaan/${cell}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>`);
+                        }
+                    },
                     "Nama",
                     "Direktur",
                     { name: "Email", formatter: function (e) { return gridjs.html('<a href="mailto:' + e + '">' + e + "</a>") } },
@@ -61,38 +81,18 @@
                             return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + status + '">' + e + '</span>')
                         }
                     },
-                    {
-                        name: "Aksi",
-                        formatter: (cell, row) => {
-                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/perusahaan/${cell}">
-                                    <i class="uil uil-eye"></i>
-                                </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/perusahaan/${cell}/edit">
-                                    <i class="uil uil-pen"></i>
-                                </a>
-                                <form action="/perusahaan/${cell}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
-                                        <i class="uil uil-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>`);
-                        }
-                    }
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: perusahaans.map((perusahaan, index) => [
                     index + 1,
+                    perusahaan.slug,
                     perusahaan.nama,
                     perusahaan.direktur,
                     perusahaan.email,
                     perusahaan.telepon,
                     perusahaan.status_f,
-                    perusahaan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

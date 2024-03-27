@@ -72,9 +72,9 @@
                         </div>
                     </div>
 
-                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20 btn bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20 text-{{ $pekerjaan->status_pekerjaan->status['color'] }} hover:bg-{{ $pekerjaan->status_pekerjaan->status['color'] }} hover:text-white py-2 px-3 rounded">
-                        <i class="uil uil-{{ $pekerjaan->status_pekerjaan->status['icon'] }} me-1"></i>
-                        {{ $pekerjaan->status_pekerjaan->status['name'] }}
+                    <button type="button" data-hs-overlay="#update-status" class="w-full border border-{{ $pekerjaan->status_pekerjaan->color }}/20 btn bg-{{ $pekerjaan->status_pekerjaan->color }}/20 text-{{ $pekerjaan->status_pekerjaan->color }} hover:bg-{{ $pekerjaan->status_pekerjaan->color }} hover:text-white py-2 px-3 rounded">
+                        <i class="uil uil-{{ $pekerjaan->status_pekerjaan->icon }} me-1"></i>
+                        {{ $pekerjaan->status_pekerjaan->nama }}
                     </button>
                     <div id="update-status" class="hs-overlay hidden w-full h-full fixed top-1/3 left-0 z-[60] overflow-x-hidden overflow-y-auto">
                         <div class="hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
@@ -133,11 +133,11 @@
                         <div>
                             <div class="flex items-start gap-5 py-3">
                                 <div class="text-center">
-                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $pekerjaan->status_pekerjaan->status['color'] }} bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/20">{{ $pekerjaan->status_pekerjaan->created_at->format('d') }}</h2>
+                                    <h2 class="h-9 w-9 rounded-full text-base flex items-center justify-center text-{{ $pekerjaan->status_pekerjaan->color }} bg-{{ $pekerjaan->status_pekerjaan->color }}/20">{{ $pekerjaan->status_pekerjaan->created_at->format('d') }}</h2>
                                     <small>{{ $pekerjaan->status_pekerjaan->created_at->format('M') }}</small>
                                 </div>
                                 <div>
-                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $pekerjaan->status_pekerjaan->status['name'] }}</p>
+                                    <p class="text-gray-700 block font-semibold dark:text-gray-300 mb-1">{{ $pekerjaan->status_pekerjaan->nama }}</p>
                                     <p class="text-gray-400">{{ $pekerjaan->status_pekerjaan->author->name }} telah memperbarui status</p>
                                 </div>
                             </div>
@@ -195,9 +195,9 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Status</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pekerjaan->status_pekerjaan->status['color'] }}/10 text-{{ $pekerjaan->status_pekerjaan->status['color'] }}">
-                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan->status['icon'] }}"></i>
-                            {{ $pekerjaan->status_pekerjaan->status['name'] }}
+                        <span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-{{ $pekerjaan->status_pekerjaan->color }}/10 text-{{ $pekerjaan->status_pekerjaan->color }}">
+                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan->icon }}"></i>
+                            {{ $pekerjaan->status_pekerjaan->nama }}
                         </span>
                     </td>
                 </tr>
@@ -401,7 +401,26 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    {
+                        name: "Aksi",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
+                                    <i class="uil uil-eye"></i>
+                                </a>
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
+                                    <i class="uil uil-pen"></i>
+                                </a>
+                                <form action="/pekerjaan-tenaga-ahli/${ {{ Js::from($pekerjaan->slug) }} }/${cell}" method="post" class="d-inline">
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>`);
+                        }
+                    },
                     "Tenaga Ahli",
                     "Jabatan Projek",
                     {
@@ -416,35 +435,16 @@
                             return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + status + '">' + e + '</span>')
                         }
                     },
-                    {
-                        name: "Aksi",
-                        formatter: (cell, row) => {
-                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
-                                    <i class="uil uil-eye"></i>
-                                </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
-                                    <i class="uil uil-pen"></i>
-                                </a>
-                                <form action="/pekerjaan-tenaga-ahli/${ {{ Js::from($pekerjaan->slug) }} }/${cell}" method="post" class="d-inline">
-                                    @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
-                                        <i class="uil uil-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>`);
-                        }
-                    }
                     ],
                     pagination: { limit: 5 },
                     sort: true,
                     search: true,
                     data: tenaga_ahlis.map((tenaga_ahli, index) => [
                     index + 1,
+                    tenaga_ahli.slug,
                     tenaga_ahli.nama,
                     tenaga_ahli.jabatan,
                     tenaga_ahli.status_f,
-                    tenaga_ahli.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

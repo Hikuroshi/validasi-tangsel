@@ -23,6 +23,58 @@
                             @enderror
                         </div>
                     </div>
+                    {{-- <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="color">Warna <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input class="form-input h-12" id="color" type="color" name="color" value="{{ old('color') }}">
+                            @error('color')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div> --}}
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="color">Warna <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="color" name="color" class="form-select">
+                                <option value=""></option>
+                                @foreach ($colors as $color)
+                                <option value="{{ $color }}" class="bg-{{ $color }} text-white" @selected(old('color') == $color)>
+                                    {{ $color }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('color')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="icon">Icon <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="icon" name="icon" value="{{ old('icon') }}" class="form-input">
+                            @error('icon')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="icon_lucide">Icon Lucide <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="icon_lucide" name="icon_lucide" value="{{ old('icon_lucide') }}" class="form-input">
+                            @error('icon_lucide')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="keterangan">Keterangan <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <input type="text" id="keterangan" name="keterangan" value="{{ old('keterangan') }}" class="form-input">
+                            @error('keterangan')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-start justify-between">
                         <div></div>

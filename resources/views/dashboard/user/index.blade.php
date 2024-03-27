@@ -41,10 +41,7 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Nama",
-                    "Username",
-                    "Email",
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
@@ -55,17 +52,20 @@
                                 </a>
                             </div>`);
                         }
-                    }
+                    },
+                    "Nama",
+                    "Username",
+                    "Email",
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: users.map((user, index) => [
                     index + 1,
+                    user.username,
                     user.name,
                     user.username,
                     user.email,
-                    user.username,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

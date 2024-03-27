@@ -66,10 +66,10 @@
             <div class="p-5">
                 <div>
                     <div class="flex justify-between items-center">
-                        <h5 class="text-xs text-{{ $pekerjaan->status_pekerjaan->status['color'] }}">{{ $pekerjaan->nama }}</h5>
-                        <div class="bg-{{ $pekerjaan->status_pekerjaan->status['color'] }} text-xs text-white rounded py-px px-1.5 font-medium" role="alert">
-                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan->status['icon'] }}"></i>
-                            {{ $pekerjaan->status_pekerjaan->status['name'] }}
+                        <h5 class="text-xs text-{{ $pekerjaan->status_pekerjaan->color }}">{{ $pekerjaan->nama }}</h5>
+                        <div class="bg-{{ $pekerjaan->status_pekerjaan->color }} text-xs text-white rounded py-px px-1.5 font-medium" role="alert">
+                            <i class="uil uil-{{ $pekerjaan->status_pekerjaan->icon }}"></i>
+                            {{ $pekerjaan->status_pekerjaan->nama }}
                         </div>
                     </div>
                 </div>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                     <div class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-black border text-sm text-white rounded shadow dark:border-black" role="tooltip">
-                                        {{ $pekerjaan->progress_pekerjaan['color'] == 'secondary' ? 'Gagal menyelesaika dengan tepat waktu' : $pekerjaan->progress_pekerjaan['percent'] . '%' }} | {{ $pekerjaan->status_pekerjaan->status['name'] }}
+                                        {{ $pekerjaan->progress_pekerjaan['color'] == 'secondary' ? 'Gagal menyelesaika dengan tepat waktu' : $pekerjaan->progress_pekerjaan['percent'] . '%' }} | {{ $pekerjaan->status_pekerjaan->nama }}
                                         <div class="bg-black w-2.5 h-2.5 -bottom-[5px] start-[40%] rotate-45 -z-10 rounded-[1px] absolute"></div>
                                     </div>
                                 </a>

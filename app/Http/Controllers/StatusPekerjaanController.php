@@ -12,7 +12,7 @@ class StatusPekerjaanController extends Controller
      */
     public function index()
     {
-        $status_pekerjaans = StatusPekerjaan::latest()->get(['slug', 'nama']);
+        $status_pekerjaans = StatusPekerjaan::latest()->get(['slug', 'nama', 'color', 'icon']);
 
         return view('dashboard.status-pekerjaan.index', [
             'title' => 'Daftar Status Pekerjaan',
@@ -25,8 +25,11 @@ class StatusPekerjaanController extends Controller
      */
     public function create()
     {
+        $colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
+
         return view('dashboard.status-pekerjaan.create', [
             'title' => 'Tambah Status Pekerjaan',
+            'colors' => $colors,
         ]);
     }
 
@@ -37,6 +40,10 @@ class StatusPekerjaanController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'icon' => 'required|string|max:255',
+            'icon_lucide' => 'required|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
         ]);
 
         $validatedData['author_id'] = $request->user()->id;
@@ -58,9 +65,12 @@ class StatusPekerjaanController extends Controller
      */
     public function edit(StatusPekerjaan $statusPekerjaan)
     {
+        $colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'dark'];
+
         return view('dashboard.status-pekerjaan.edit', [
             'title' => 'Perbarui Status Pekerjaan',
             'status_pekerjaan' => $statusPekerjaan,
+            'colors' => $colors,
         ]);
     }
 
@@ -71,6 +81,10 @@ class StatusPekerjaanController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'icon' => 'required|string|max:255',
+            'icon_lucide' => 'required|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
         ];
 
         $validatedData =  $request->validate($rules);

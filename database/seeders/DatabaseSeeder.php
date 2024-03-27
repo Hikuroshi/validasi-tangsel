@@ -260,36 +260,36 @@ class DatabaseSeeder extends Seeder
             'author_id' => 1,
         ]);
 
-        StatusPekerjaan::create([
-            'nama' => 'Request',
-            'slug' => Str::slug('Request'),
-            'author_id' => 1,
-        ]);
-        StatusPekerjaan::create([
-            'nama' => 'On Progress',
-            'slug' => Str::slug('On Progress'),
-            'author_id' => 1,
-        ]);
-        StatusPekerjaan::create([
-            'nama' => 'Reporting',
-            'slug' => Str::slug('Reporting'),
-            'author_id' => 1,
-        ]);
-        StatusPekerjaan::create([
-            'nama' => 'Done',
-            'slug' => Str::slug('Done'),
-            'author_id' => 1,
-        ]);
-        StatusPekerjaan::create([
-            'nama' => 'Pending',
-            'slug' => Str::slug('Pending'),
-            'author_id' => 1,
-        ]);
-        StatusPekerjaan::create([
-            'nama' => 'Cancelled',
-            'slug' => Str::slug('Cancelled'),
-            'author_id' => 1,
-        ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'Request',
+        //     'slug' => Str::slug('Request'),
+        //     'author_id' => 1,
+        // ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'On Progress',
+        //     'slug' => Str::slug('On Progress'),
+        //     'author_id' => 1,
+        // ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'Reporting',
+        //     'slug' => Str::slug('Reporting'),
+        //     'author_id' => 1,
+        // ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'Done',
+        //     'slug' => Str::slug('Done'),
+        //     'author_id' => 1,
+        // ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'Pending',
+        //     'slug' => Str::slug('Pending'),
+        //     'author_id' => 1,
+        // ]);
+        // StatusPekerjaan::create([
+        //     'nama' => 'Cancelled',
+        //     'slug' => Str::slug('Cancelled'),
+        //     'author_id' => 1,
+        // ]);
 
         Metode::create([
             'nama' => 'Tender',

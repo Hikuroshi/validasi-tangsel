@@ -41,7 +41,27 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    {
+                        name: "Aksi",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
+                                    <i class="uil uil-eye"></i>
+                                </a>
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
+                                    <i class="uil uil-pen"></i>
+                                </a>
+                                <form action="/tenaga-ahli/${cell}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>`);
+                        }
+                    },
                     "Nama",
                     {
                         name: "Perusahaan",
@@ -65,32 +85,13 @@
                             return gridjs.html('<span class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium ' + status + '">' + e + '</span>')
                         }
                     },
-                    {
-                        name: "Aksi",
-                        formatter: (cell, row) => {
-                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-primary text-white" href="/tenaga-ahli/${cell}">
-                                    <i class="uil uil-eye"></i>
-                                </a>
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/tenaga-ahli/${cell}/edit">
-                                    <i class="uil uil-pen"></i>
-                                </a>
-                                <form action="/tenaga-ahli/${cell}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
-                                        <i class="uil uil-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>`);
-                        }
-                    }
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: tenaga_ahlis.map((tenaga_ahli, index) => [
                     index + 1,
+                    tenaga_ahli.slug,
                     tenaga_ahli.nama,
                     tenaga_ahli.perusahaan,
                     tenaga_ahli.jabatan,
@@ -98,7 +99,6 @@
                     tenaga_ahli.telepon,
                     tenaga_ahli.kelamin_f,
                     tenaga_ahli.status_f,
-                    tenaga_ahli.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

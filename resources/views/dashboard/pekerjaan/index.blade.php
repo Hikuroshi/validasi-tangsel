@@ -41,12 +41,7 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Perusahaan",
-                    "Pekerjaan",
-                    "No Kontrak",
-                    "Tanggal Kontrak",
-                    "Status",
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
@@ -60,25 +55,30 @@
                                 <form action="/pekerjaan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
                                         <i class="uil uil-trash-alt"></i>
                                     </button>
                                 </form>
                             </div>`);
                         }
-                    }
+                    },
+                    "Perusahaan",
+                    "Pekerjaan",
+                    "No Kontrak",
+                    "Tanggal Kontrak",
+                    "Status",
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: pekerjaans.map((pekerjaan, index) => [
                     index + 1,
+                    pekerjaan.slug,
                     pekerjaan.perusahaan.nama,
                     pekerjaan.nama,
                     pekerjaan.no_kontrak,
                     pekerjaan.tgl_kontrak,
                     pekerjaan.status_pekerjaan.nama,
-                    pekerjaan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

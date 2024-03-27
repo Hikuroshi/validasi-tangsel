@@ -44,10 +44,7 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Nama Pekerjaan",
-                    "Nama Perusahaan",
-                    "Tanggal Kontrak",
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     {
                         name: "Laporan",
                         formatter: function (e) {
@@ -57,16 +54,19 @@
                             </a>`);
                         }
                     },
+                    "Nama Pekerjaan",
+                    "Nama Perusahaan",
+                    "Tanggal Kontrak",
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: laporans.map((laporan, index) => [
                     index + 1,
+                    laporan.slug,
                     laporan.nama,
                     laporan.perusahaan.nama,
                     laporan.tgl_kontrak_f,
-                    laporan.slug,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

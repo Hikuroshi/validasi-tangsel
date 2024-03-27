@@ -49,6 +49,11 @@ class PageController extends Controller
             $realisasi_bulan[$nama_bulan] = $realisasi->jumlah;
         }
 
+        $perusahaans = Perusahaan::get(['nama', 'jumlah_pekerjaan']);
+        $perusahaans->map(function ($perusahaan) {
+            return $perusahaan->sisa_pekerjaan = 5 - $perusahaan->jumlah_pekerjaan;
+        });
+
         return view('dashboard.index', [
             'title' => 'Dashboard',
             'perusahaan' => Perusahaan::count(),
@@ -58,6 +63,7 @@ class PageController extends Controller
             'status_pekerjaans' => StatusPekerjaan::with(['pekerjaans:id,status_pekerjaan_id'])->get(['id', 'nama'])->append('status'),
             'pekerjaan_bulan' => array_values($pekerjaan_bulan),
             'realisasi_bulan' => array_values($realisasi_bulan),
+            'perusahaans' => $perusahaans,
         ]);
     }
 }

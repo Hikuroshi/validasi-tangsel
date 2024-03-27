@@ -92,11 +92,10 @@ class Pekerjaan extends Model
                 $percent = '';
                 $desc = '';
 
-                $status = $this->status_pekerjaan->status['slug'];
                 $start_date = $this->tgl_kontrak;
                 $end_date = $this->tgl_selesai;
 
-                if ($status === 'done') {
+                if ($this->pekerjaan_selesai == true) {
                     $color = 'success';
                     $percent = '100';
                     $desc = 'Pekerjaan telah selesai dengan baik. Terima kasih atas dedikasi dan kerja keras Anda dalam menyelesaikan tugas ini.';

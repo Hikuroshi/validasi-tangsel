@@ -1,5 +1,12 @@
 @extends('layouts.main')
 
+@section('css')
+
+<!-- Gridjs Plugin css -->
+<link href="/assets/libs/gridjs/theme/mermaid.min.css" rel="stylesheet" type="text/css" >
+
+@endsection
+
 @section('container')
 
 <div class="space-y-5">
@@ -69,6 +76,18 @@
             </div>
         </div>
 
+        <div class="card mt-5">
+            <div class="card-header">
+                <div class="flex justify-between items-center">
+                    <h4 class="card-title">Status Pekerjaan Perusahaan</h4>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <div id="table-gridjs"></div>
+            </div>
+        </div>
+
         <!-- overview -->
         <div class="card">
             <div>
@@ -80,9 +99,9 @@
                 <div class="flex p-5 border-b dark:border-gray-600">
                     <div class="flex-grow">
                         <h4 class="text-2xl mt-0 mb-1 dark:text-gray-300">{{ $status_pekerjaan->pekerjaans->count() }}</h4>
-                        <span class="text-gray-500 dark:text-gray-400">Pekerjaan {{ $status_pekerjaan->status['name'] }}</span>
+                        <span class="text-gray-500 dark:text-gray-400">Pekerjaan {{ $status_pekerjaan->nama }}</span>
                     </div>
-                    <i data-lucide="{{ $status_pekerjaan->status['icon-lucide'] }}" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
+                    <i data-lucide="{{ $status_pekerjaan->icon_lucide }}" class="w-10 h-10 fill-secondary/20 stroke-secondary"></i>
                 </div>
                 @endforeach
 
@@ -154,6 +173,44 @@
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
+</script>
+
+<!-- Gridjs Plugin js -->
+<script src="/assets/libs/gridjs/gridjs.umd.js"></script>
+
+<script>
+    class GridDatatable {
+        init(perusahaans) {
+            this.basicTableInit(perusahaans);
+        }
+
+        basicTableInit(perusahaans) {
+            if (document.getElementById("table-gridjs")) {
+                new gridjs.Grid({
+                    columns: [
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    "Nama Perusahaan",
+                    "Jumlah Pekerjaan",
+                    "Sisa Pekerjaan",
+                    ],
+                    pagination: { limit: 10 },
+                    sort: true,
+                    search: true,
+                    data: perusahaans.map((perusahaan, index) => [
+                    index + 1,
+                    perusahaan.nama,
+                    perusahaan.jumlah_pekerjaan,
+                    perusahaan.sisa_pekerjaan,
+                    ]),
+                }).render(document.getElementById("table-gridjs"));
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function (e) {
+        const perusahaans = {{ Js::from($perusahaans) }};
+        new GridDatatable().init(perusahaans);
+    });
 </script>
 
 @endsection

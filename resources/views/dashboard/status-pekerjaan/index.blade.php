@@ -44,8 +44,7 @@
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Jenis Pekerjaan",
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
@@ -62,15 +61,28 @@
                                 </form>
                             </div>`);
                         }
-                    }
+                    },
+                    "Status Pekerjaan",
+                    {
+                        name: "Preview",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<button type="button" class="w-full border border-${cell}/20 btn bg-${cell}/20 text-${cell} hover:bg-${cell} hover:text-white py-2 px-3 rounded">
+                                <i class="uil uil-${row.cells[4].data} me-1"></i>
+                                ${row.cells[1].data}
+                            </button>`);
+                        }
+                    },
+                    { name: "Icon", hidden: true }
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
                     data: status_pekerjaans.map((status_pekerjaan, index) => [
                     index + 1,
-                    status_pekerjaan.nama,
                     status_pekerjaan.slug,
+                    status_pekerjaan.nama,
+                    status_pekerjaan.color,
+                    status_pekerjaan.icon,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

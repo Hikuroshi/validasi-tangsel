@@ -140,13 +140,7 @@
             if (document.getElementById("table-riwayat-pendidikan")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
-                    "Nama Lembaga",
-                    "Jurusan",
-                    "Gelar",
-                    "Tahun Masuk",
-                    "Tahun Lulus",
-                    "Ijazah",
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
@@ -157,40 +151,63 @@
                                 <form action="/riwayat-pendidikan/${cell}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[1].data}">
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
                                         <i class="uil uil-trash-alt"></i>
                                     </button>
                                 </form>
                             </div>`);
                         }
-                    }
+                    },
+                    "Nama Lembaga",
+                    "Jurusan",
+                    "Gelar",
+                    "Tahun Masuk",
+                    "Tahun Lulus",
+                    "Ijazah",
                     ],
                     pagination: { limit: 5 },
                     sort: true,
                     search: true,
                     data: riwayat_pendidikans.map((riwayat_pendidikan, index) => [
                     index + 1,
+                    riwayat_pendidikan.slug,
                     riwayat_pendidikan.nama,
                     riwayat_pendidikan.jurusan,
                     riwayat_pendidikan.gelar,
                     riwayat_pendidikan.thn_masuk,
                     riwayat_pendidikan.thn_lulus,
                     riwayat_pendidikan.ijazah,
-                    riwayat_pendidikan.slug,
                     ]),
                 }).render(document.getElementById("table-riwayat-pendidikan"));
             }
             if (document.getElementById("table-keahlian")) {
                 new gridjs.Grid({
                     columns: [
-                    { name: "ID", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    { name: "No", formatter: function (e) { return gridjs.html('<span class="font-semibold">' + e + "</span>") } },
+                    {
+                        name: "Aksi",
+                        formatter: (cell, row) => {
+                            return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/keahlian/${cell}/edit">
+                                    <i class="uil uil-pen"></i>
+                                </a>
+                                <form action="/keahlian/${cell}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>`);
+                        }
+                    },
                     "Keahlian",
                     "No Sertifikat",
                     "Tahun Sertifikat",
                     {
                         name: "Sertifikat",
                         formatter: function (e) {
-                            return gridjs.html(`<a href="/laporan/view-sertifikat/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
+                            return gridjs.html(`<a href="/keahlian/view-sertifikat/${e}" target="_blank" class="btn bg-transparent text-primary py-0.5 px-1.5 rounded">
                                 <i class="uil uil-search px-1"></i>
                                 Lihat Sertifikat
                             </a>`);
@@ -203,9 +220,9 @@
                     data: keahlians.map((keahlian, index) => [
                     index + 1,
                     keahlian.nama,
+                    keahlian.slug,
                     keahlian.no_sertifikat,
                     keahlian.thn_sertifikat,
-                    keahlian.slug,
                     keahlian.slug,
                     ]),
                 }).render(document.getElementById("table-keahlian"));

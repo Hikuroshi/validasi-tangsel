@@ -82,7 +82,7 @@ class KeahlianController extends Controller
         $rules = [
             'nama' => 'required|string|max:255',
             'no_sertifikat' => 'required|string|max:255',
-            'thn_sertifikat' => 'required|date',
+            'thn_sertifikat' => 'required|integer|between:1901,' . date('Y'),
             'file_sertifikat' => 'nullable|mimes:pdf|file|max:5000',
         ];
 
