@@ -15,6 +15,23 @@
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="dinasan_id">Dinas </label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="dinasan_id" name="dinasan_id" class="form-select">
+                                <option></option>
+                                @foreach ($dinasans as $dinasan)
+                                <option value="{{ $dinasan->id }}" @selected(old('dinasan_id') == $dinasan->id)>
+                                    {{ $dinasan->nama }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('dinasan_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="name">Nama <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-input">

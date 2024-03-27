@@ -49,6 +49,19 @@ return new class extends Migration
         Schema::table('status_pekerjaans', function (Blueprint $table) {
             $table->foreign('author_id')->references('id')->on('users');
         });
+
+        Schema::table('dinasans', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('users');
+        });
+
+        Schema::table('bidangs', function (Blueprint $table) {
+            $table->foreign('dinasan_id')->references('id')->on('dinasans')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('dinasan_id')->references('id')->on('dinasans')->cascadeOnDelete();
+        });
     }
 
     /**
@@ -64,5 +77,6 @@ return new class extends Migration
         Schema::dropIfExists('jenis_pekerjaans');
         Schema::dropIfExists('metodes');
         Schema::dropIfExists('status_pekerjaans');
+        Schema::dropIfExists('dinasans');
     }
 };

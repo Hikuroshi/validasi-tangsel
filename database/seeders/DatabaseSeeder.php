@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Dinasan;
 use App\Models\Metode;
 use App\Models\Perusahaan;
 use App\Models\JenisJasa;
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        User::create([
             'name' => 'test',
             'username' => 'test',
             'email' => 'test@example.com',
@@ -265,31 +266,6 @@ class DatabaseSeeder extends Seeder
         //     'slug' => Str::slug('Request'),
         //     'author_id' => 1,
         // ]);
-        // StatusPekerjaan::create([
-        //     'nama' => 'On Progress',
-        //     'slug' => Str::slug('On Progress'),
-        //     'author_id' => 1,
-        // ]);
-        // StatusPekerjaan::create([
-        //     'nama' => 'Reporting',
-        //     'slug' => Str::slug('Reporting'),
-        //     'author_id' => 1,
-        // ]);
-        // StatusPekerjaan::create([
-        //     'nama' => 'Done',
-        //     'slug' => Str::slug('Done'),
-        //     'author_id' => 1,
-        // ]);
-        // StatusPekerjaan::create([
-        //     'nama' => 'Pending',
-        //     'slug' => Str::slug('Pending'),
-        //     'author_id' => 1,
-        // ]);
-        // StatusPekerjaan::create([
-        //     'nama' => 'Cancelled',
-        //     'slug' => Str::slug('Cancelled'),
-        //     'author_id' => 1,
-        // ]);
 
         Metode::create([
             'nama' => 'Tender',
@@ -301,5 +277,33 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Penunjukan Langsung'),
             'author_id' => 1,
         ]);
+
+        Dinasan::create([
+            'nama' => 'Cipta Karya',
+            'slug' => Str::slug('Cipta Karya'),
+            'author_id' => 1,
+        ]);
+        Dinasan::create([
+            'nama' => 'Perumahan dan Kawasan Permukiman',
+            'slug' => Str::slug('Perumahan dan Kawasan Permukiman'),
+            'author_id' => 1,
+        ]);
+        Dinasan::create([
+            'nama' => 'Pendidikan',
+            'slug' => Str::slug('Pendidikan'),
+            'author_id' => 1,
+        ]);
+        Dinasan::create([
+            'nama' => 'Pekerjaan Umum dan Penataan Ruang',
+            'slug' => Str::slug('Pekerjaan Umum dan Penataan Ruang'),
+            'author_id' => 1,
+        ]);
+        Dinasan::create([
+            'nama' => 'Badan Pengelolaan Keuangan dan Aset Daerah',
+            'slug' => Str::slug('Badan Pengelolaan Keuangan dan Aset Daerah'),
+            'author_id' => 1,
+        ]);
+
+        User::where('id', 1)->update(['dinasan_id' => 1]);
     }
 }

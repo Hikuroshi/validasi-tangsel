@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,6 +13,21 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public function dinasan(): BelongsTo
+    {
+        return $this->belongsTo(Dinasan::class, 'dinasan_id');
+    }
+
+    public function dinasans(): HasMany
+    {
+        return $this->hasMany(Dinasan::class, 'author_id');
+    }
+
+    public function bidangs(): HasMany
+    {
+        return $this->hasMany(Dinasan::class, 'author_id');
+    }
 
     public function perusahaans(): HasMany
     {
@@ -63,6 +79,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'dinasan_id',
     ];
 
     /**

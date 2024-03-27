@@ -96,6 +96,16 @@
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="{{ route('dinasan.index') }}" class="menu-link">
+                                    <span class="menu-text"> Dinas </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ route('bidang.index') }}" class="menu-link">
+                                    <span class="menu-text"> Bidang </span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="{{ route('user.index') }}" class="menu-link">
                                     <span class="menu-text"> User </span>
                                 </a>

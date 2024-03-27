@@ -13,6 +13,23 @@
                 @method('put')
 
                 <div class="mb-3">
+                    <label class="block mb-2 font-semibold" for="dinasan_id">Dinas </label>
+                    <div>
+                        <select id="dinasan_id" name="dinasan_id" class="form-select">
+                            <option></option>
+                            @foreach ($dinasans as $dinasan)
+                            <option value="{{ $dinasan->id }}" @selected(old('dinasan_id', $user->dinasan_id) == $dinasan->id)>
+                                {{ $dinasan->nama }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('dinasan_id')
+                    <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
                     <label class="block mb-2 font-semibold" for="name">Nama</label>
                     <div>
                         <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" class="form-input w-full placeholder:text-gray-400">

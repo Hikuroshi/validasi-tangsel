@@ -13,7 +13,7 @@
     <div class="card-header">
         <div class="flex justify-between items-center">
             <h4 class="card-title">{{ $title }}</h4>
-            <a href="{{ route('user.create') }}" class="btn bg-primary text-white rounded-full">
+            <a href="{{ route('dinasan.create') }}" class="btn bg-primary text-white rounded-full">
                 <i class="uil uil-plus"></i>
             </a>
         </div>
@@ -24,20 +24,23 @@
     </div>
 </div>
 
+
 @endsection
 
 @section('js')
+
+<script src="/assets/js/jquery-3.7.1.min.js"></script>
 
 <!-- Gridjs Plugin js -->
 <script src="/assets/libs/gridjs/gridjs.umd.js"></script>
 
 <script>
     class GridDatatable {
-        init(users) {
-            this.basicTableInit(users);
+        init(dinasans) {
+            this.basicTableInit(dinasans);
         }
 
-        basicTableInit(users) {
+        basicTableInit(dinasans) {
             if (document.getElementById("table-gridjs")) {
                 new gridjs.Grid({
                     columns: [
@@ -45,29 +48,29 @@
                     {
                         name: "Aksi",
                         formatter: (cell, row) => {
-                            const editUrl = {{ Js::from(auth()->user()->username) }} === cell ? '/profile' : '/user/' + cell + '/edit';
                             return gridjs.html(`<div class="flex flex-wrap items-center gap-1">
-                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="${editUrl}">
+                                <a class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-info text-white" href="/dinasan/${cell}/edit">
                                     <i class="uil uil-pen"></i>
                                 </a>
+                                <form action="/dinasan/${cell}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="button" class="inline-flex items-center gap-1.5 py-0.5 px-1.5 rounded text-xs font-medium bg-danger text-white" id="deleteData" data-title="${row.cells[2].data}">
+                                        <i class="uil uil-trash-alt"></i>
+                                    </button>
+                                </form>
                             </div>`);
                         }
                     },
-                    "Dinas",
-                    "Nama",
-                    "Username",
-                    "Email",
+                    "Bidang",
                     ],
                     pagination: { limit: 10 },
                     sort: true,
                     search: true,
-                    data: users.map((user, index) => [
+                    data: dinasans.map((dinasan, index) => [
                     index + 1,
-                    user.username,
-                    user.dinasan.nama,
-                    user.name,
-                    user.username,
-                    user.email,
+                    dinasan.slug,
+                    dinasan.nama,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }
@@ -75,8 +78,8 @@
     }
 
     document.addEventListener("DOMContentLoaded", function (e) {
-        const users = {{ Js::from($users) }};
-        new GridDatatable().init(users);
+        const dinasans = {{ Js::from($dinasans) }};
+        new GridDatatable().init(dinasans);
     });
 </script>
 

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\JenisJasaController;
+use App\Http\Controllers\BidangController;
+use App\Http\Controllers\DinasanController;
 use App\Http\Controllers\JenisPekerjaanController;
 use App\Http\Controllers\KeahlianController;
 use App\Http\Controllers\LaporanController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProsesController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\StatusPekerjaanController;
-use App\Http\Controllers\SubPekerjaanController;
 use App\Http\Controllers\TenagaAhliController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/status-pekerjaan', StatusPekerjaanController::class)->except('show');
     Route::resource('/metode', MetodeController::class)->except('show');
     Route::resource('/user', UserController::class)->except('show');
+    Route::resource('/dinasan', DinasanController::class)->except('show');
+    Route::resource('/bidang', BidangController::class)->except('show');
 
     Route::resource('/pekerjaan', PekerjaanController::class);
     Route::controller(PekerjaanController::class)->group(function () {

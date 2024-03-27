@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dinasan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->get(['username', 'name', 'email']);
+        $users = User::latest()->with(['dinasan:id,nama'])->get(['username', 'name', 'email', 'dinasan_id']);
 
         return view('dashboard.user.index', [
             'title' => 'Daftar User',
@@ -29,6 +30,7 @@ class UserController extends Controller
     {
         return view('dashboard.user.create', [
             'title' => 'Tambah User',
+            'dinasans' => Dinasan::get(['id', 'nama']),
         ]);
     }
 
@@ -42,6 +44,7 @@ class UserController extends Controller
             'username' => ['required', 'string', 'alpha_dash', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'dinasan_id' => ['required', 'exists:dinasans,id'],
         ]);
 
         $validatedData['password'] = Hash::make($request->password);
@@ -66,6 +69,7 @@ class UserController extends Controller
         return view('dashboard.user.edit', [
             'title' => 'Perbarui User',
             'user' => $user,
+            'dinasans' => Dinasan::get(['id', 'nama']),
         ]);
     }
 
@@ -76,6 +80,7 @@ class UserController extends Controller
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
+            'dinasan_id' => ['required', 'exists:dinasans,id'],
         ];
 
         if ($request->username != $user->username) {
