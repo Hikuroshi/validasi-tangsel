@@ -167,6 +167,16 @@
         <div class="grid md:grid-cols-2 gap-6">
             <table class="min-w-full">
                 <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Dinas</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->bidang->dinasan->nama }}</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Bidang</td>
+                    <td>:</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->bidang->nama }}</td>
+                </tr>
+                <tr>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nama Pekerjaan</td>
                     <td>:</td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $pekerjaan->nama }}</td>

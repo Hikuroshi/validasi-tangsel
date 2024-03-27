@@ -143,6 +143,11 @@ class Pekerjaan extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function bidang(): BelongsTo
+    {
+        return $this->belongsTo(Bidang::class, 'bidang_id');
+    }
+
     public function perusahaan(): BelongsTo
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');

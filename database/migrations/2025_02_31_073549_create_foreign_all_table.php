@@ -12,46 +12,47 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('perusahaans', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('tenaga_ahlis', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
+            $table->foreign('perusahaan_id')->references('id')->on('perusahaans')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('riwayat_pendidikans', function (Blueprint $table) {
-            $table->foreign('tenaga_ahli_id')->references('id')->on('tenaga_ahlis');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('tenaga_ahli_id')->references('id')->on('tenaga_ahlis')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('keahlians', function (Blueprint $table) {
-            $table->foreign('tenaga_ahli_id')->references('id')->on('tenaga_ahlis');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('tenaga_ahli_id')->references('id')->on('tenaga_ahlis')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('jenis_pekerjaans', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('metodes', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('pekerjaans', function (Blueprint $table) {
-            $table->foreign('perusahaan_id')->references('id')->on('perusahaans');
-            $table->foreign('jenis_pekerjaan_id')->references('id')->on('jenis_pekerjaans');
-            $table->foreign('status_pekerjaan_id')->references('id')->on('status_pekerjaans');
-            $table->foreign('metode_id')->references('id')->on('metodes');
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('bidang_id')->references('id')->on('bidangs')->cascadeOnDelete();
+            $table->foreign('perusahaan_id')->references('id')->on('perusahaans')->cascadeOnDelete();
+            $table->foreign('jenis_pekerjaan_id')->references('id')->on('jenis_pekerjaans')->cascadeOnDelete();
+            $table->foreign('status_pekerjaan_id')->references('id')->on('status_pekerjaans')->cascadeOnDelete();
+            $table->foreign('metode_id')->references('id')->on('metodes')->cascadeOnDelete();
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('status_pekerjaans', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('dinasans', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::table('bidangs', function (Blueprint $table) {

@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Bidang extends Model
 {
@@ -21,6 +22,11 @@ class Bidang extends Model
     public function dinasan(): BelongsTo
     {
         return $this->belongsTo(Dinasan::class, 'dinasan_id');
+    }
+
+    public function pekerjaans(): HasMany
+    {
+        return $this->hasMany(Pekerjaan::class, 'bidang_id');
     }
 
     public function getRouteKeyName()

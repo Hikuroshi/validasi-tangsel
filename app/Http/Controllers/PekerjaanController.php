@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bidang;
 use App\Models\Metode;
 use App\Models\Perusahaan;
 use App\Models\JenisPekerjaan;
@@ -18,8 +19,8 @@ class PekerjaanController extends Controller
      */
     public function index()
     {
-        $pekerjaans = Pekerjaan::latest()->with(['perusahaan:id,nama', 'status_pekerjaan:id,nama'])
-                                    ->get(['id', 'slug', 'nama', 'no_kontrak', 'tgl_kontrak', 'perusahaan_id', 'status_pekerjaan_id']);
+        $pekerjaans = Pekerjaan::latest()->with(['perusahaan:id,nama', 'status_pekerjaan:id,nama', 'bidang:id,nama'])
+                                    ->get(['id', 'slug', 'nama', 'no_kontrak', 'tgl_kontrak', 'perusahaan_id', 'status_pekerjaan_id', 'bidang_id']);
 
         return view('dashboard.pekerjaan.index', [
             'title' => 'Daftar Pekerjaan',
@@ -34,6 +35,10 @@ class PekerjaanController extends Controller
     {
         $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
 
+        $bidangs = auth()->user()->dinasan_id
+        ? Bidang::where('dinasan_id', auth()->user()->dinasan_id)->get(['id', 'nama'])
+        : Bidang::get(['id', 'nama']);
+
         return view('dashboard.pekerjaan.create', [
             'title' => 'Tambah Pekerjaan',
             'perusahaans' => Perusahaan::get(['id', 'nama']),
@@ -41,6 +46,7 @@ class PekerjaanController extends Controller
             'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
             'status_pekerjaans' => StatusPekerjaan::get(['id', 'nama']),
             'metodes' => Metode::get(['id', 'nama']),
+            'bidangs' => $bidangs,
             'sumber_danas' => $sumber_dana,
         ]);
     }
@@ -52,6 +58,7 @@ class PekerjaanController extends Controller
     {
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
+            'bidang_id' => 'required|exists:bidangs,id',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
             'no_kontrak' => 'required|max:255',
@@ -119,6 +126,10 @@ class PekerjaanController extends Controller
     {
         $sumber_dana = ['APBD', 'APBD-P', 'APBN'];
 
+        $bidangs = auth()->user()->dinasan_id
+        ? Bidang::where('dinasan_id', auth()->user()->dinasan_id)->get(['id', 'nama'])
+        : Bidang::get(['id', 'nama']);
+
         $selected_tenaga_ahlis = $pekerjaan->tenaga_ahlis->pluck('id');
 
         return view('dashboard.pekerjaan.edit', [
@@ -129,6 +140,7 @@ class PekerjaanController extends Controller
             'jenis_pekerjaans' => JenisPekerjaan::get(['id', 'nama']),
             'status_pekerjaans' => StatusPekerjaan::get(['id', 'nama']),
             'metodes' => Metode::get(['id', 'nama']),
+            'bidangs' => $bidangs,
             'selected_tenaga_ahlis' => $selected_tenaga_ahlis,
             'sumber_danas' => $sumber_dana,
         ]);
@@ -145,6 +157,7 @@ class PekerjaanController extends Controller
 
         $validatedData =  $request->validate([
             'nama' => 'required|string|max:255',
+            'bidang_id' => 'required|exists:bidangs,id',
             'perusahaan_id' => 'required|exists:perusahaans,id',
             'tenaga_ahli_id' => 'required|array|exists:tenaga_ahlis,id',
             'no_kontrak' => 'required|max:255',

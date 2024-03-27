@@ -3,14 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Bidang;
 use App\Models\Dinasan;
 use App\Models\Metode;
 use App\Models\Perusahaan;
-use App\Models\JenisJasa;
 use App\Models\JenisPekerjaan;
 use App\Models\RiwayatPendidikan;
 use App\Models\StatusPekerjaan;
-use App\Models\SubPekerjaan;
 use App\Models\TenagaAhli;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -25,10 +24,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'test',
-            'username' => 'test',
-            'email' => 'test@example.com',
-            'password' => Hash::make('test'),
+            'name' => 'Admin',
+            'username' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin'),
         ]);
 
         Perusahaan::create([
@@ -304,6 +303,76 @@ class DatabaseSeeder extends Seeder
             'author_id' => 1,
         ]);
 
-        User::where('id', 1)->update(['dinasan_id' => 1]);
+        foreach (Dinasan::all() as $dinasan) {
+            Bidang::create([
+                'nama' => 'Bina Marga',
+                'slug' => Str::slug('Bina Marga' . $dinasan->id),
+                'dinasan_id' => $dinasan->id,
+                'author_id' => 1,
+            ]);
+            Bidang::create([
+                'nama' => 'Anggaran',
+                'slug' => Str::slug('Anggaran' . $dinasan->id),
+                'dinasan_id' => $dinasan->id,
+                'author_id' => 1,
+            ]);
+            Bidang::create([
+                'nama' => 'Evaluasi',
+                'slug' => Str::slug('Evaluasi' . $dinasan->id),
+                'dinasan_id' => $dinasan->id,
+                'author_id' => 1,
+            ]);
+        }
+
+        StatusPekerjaan::create([
+            'nama' => 'Tahap Persiapan',
+            'slug' => Str::slug('Tahap Persiapan'),
+            'color' => 'primary',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Tahap Pelaksanaan',
+            'slug' => Str::slug('Tahap Pelaksanaan'),
+            'color' => 'secondary',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Penyusunan Laporan',
+            'slug' => Str::slug('Penyusunan Laporan'),
+            'color' => 'warning',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Selesai',
+            'slug' => Str::slug('Selesai'),
+            'color' => 'success',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Masa Adendum',
+            'slug' => Str::slug('Masa Adendum'),
+            'color' => 'info',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+        StatusPekerjaan::create([
+            'nama' => 'Putus Kontrak',
+            'slug' => Str::slug('Putus Kontrak'),
+            'color' => 'danger',
+            'icon' => 'check',
+            'icon_lucide' => 'check',
+            'author_id' => 1,
+        ]);
+
+        // User::where('id', 1)->update(['dinasan_id' => 1]);
     }
 }

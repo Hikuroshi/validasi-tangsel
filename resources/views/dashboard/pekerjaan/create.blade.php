@@ -46,6 +46,23 @@
                     @csrf
 
                     <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
+                        <label class="mb-2" for="bidang_id">Bidang <span class="text-danger">*</span></label>
+                        <div class=" w-full sm:w-5/6">
+                            <select id="bidang_id" name="bidang_id" class="form-select">
+                                <option></option>
+                                @foreach ($bidangs as $bidang)
+                                <option value="{{ $bidang->id }}" @selected(old('bidang_id') == $bidang->id)>
+                                    {{ $bidang->nama }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('bidang_id')
+                            <p class="inline-block text-danger"><small>{{ $message }}</small></p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3 flex flex-wrap sm:flex-nowrap items-center justify-between">
                         <label class="mb-2" for="nama">Nama Pekerjaan <span class="text-danger">*</span></label>
                         <div class=" w-full sm:w-5/6">
                             <input type="text" id="nama" name="nama" value="{{ old('nama') }}" class="form-input">

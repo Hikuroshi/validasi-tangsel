@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama');
             $table->string('slug')->unique()->nullable();
+            $table->unsignedBigInteger('bidang_id');
             $table->unsignedBigInteger('perusahaan_id');
             $table->string('no_kontrak');
             $table->date('tgl_kontrak');

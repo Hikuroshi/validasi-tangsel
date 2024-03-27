@@ -62,6 +62,7 @@
                             </div>`);
                         }
                     },
+                    "Bidang",
                     "Perusahaan",
                     "Pekerjaan",
                     "No Kontrak",
@@ -74,6 +75,7 @@
                     data: pekerjaans.map((pekerjaan, index) => [
                     index + 1,
                     pekerjaan.slug,
+                    pekerjaan.bidang.nama,
                     pekerjaan.perusahaan.nama,
                     pekerjaan.nama,
                     pekerjaan.no_kontrak,
