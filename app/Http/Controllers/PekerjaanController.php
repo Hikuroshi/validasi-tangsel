@@ -94,7 +94,6 @@ class PekerjaanController extends Controller
         }
 
         DB::transaction(function () use ($validatedData) {
-            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
 
             $pekerjaan = Pekerjaan::create($validatedData);
@@ -199,9 +198,6 @@ class PekerjaanController extends Controller
         }
 
         DB::transaction(function () use ($validatedData, $pekerjaan) {
-            $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
-            Perusahaan::find($validatedData['perusahaan_id'])->increment('jumlah_pekerjaan');
-
             TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
             TenagaAhli::whereIn('id', $validatedData['tenaga_ahli_id'])->update(['status_pekerjaan' => 0]);
 
@@ -217,7 +213,6 @@ class PekerjaanController extends Controller
      */
     public function destroy(Pekerjaan $pekerjaan)
     {
-        $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
         TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
         $pekerjaan->tenaga_ahlis()->detach();
@@ -279,9 +274,6 @@ class PekerjaanController extends Controller
         }
 
         if (str_contains(strtolower($nama_status), 'done') || str_contains(strtolower($nama_status), 'cancelled')) {
-            if (!$statusSebelumnyaMirip) {
-                $pekerjaan->perusahaan->decrement('jumlah_pekerjaan');
-            }
             TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 1]);
 
             $pekerjaan->update([
@@ -289,9 +281,6 @@ class PekerjaanController extends Controller
                 'pekerjaan_selesai' => true,
             ]);
         } else {
-            if ($statusSebelumnyaMirip) {
-                $pekerjaan->perusahaan->increment('jumlah_pekerjaan');
-            }
             TenagaAhli::whereIn('id', $pekerjaan->tenaga_ahlis->pluck('id'))->update(['status_pekerjaan' => 0]);
 
             $pekerjaan->update(['status_pekerjaan_id' => $request->status_pekerjaan_id]);
