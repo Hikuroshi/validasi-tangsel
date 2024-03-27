@@ -49,9 +49,11 @@ class PageController extends Controller
             $realisasi_bulan[$nama_bulan] = $realisasi->jumlah;
         }
 
-        $perusahaans = Perusahaan::get(['nama', 'jumlah_pekerjaan']);
+        $perusahaans = Perusahaan::all();
         $perusahaans->map(function ($perusahaan) {
-            return $perusahaan->sisa_pekerjaan = 5 - $perusahaan->jumlah_pekerjaan;
+            $perusahaan->jumlah = $perusahaan->pekerjaans()->whereYear('created_at', now()->year)->count();
+            $perusahaan->sisa = 5 - $perusahaan->jumlah;
+            return $perusahaan;
         });
 
         return view('dashboard.index', [

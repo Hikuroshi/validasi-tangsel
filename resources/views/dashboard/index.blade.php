@@ -201,8 +201,8 @@
                     data: perusahaans.map((perusahaan, index) => [
                     index + 1,
                     perusahaan.nama,
-                    perusahaan.jumlah_pekerjaan,
-                    perusahaan.sisa_pekerjaan,
+                    perusahaan.jumlah,
+                    perusahaan.sisa,
                     ]),
                 }).render(document.getElementById("table-gridjs"));
             }

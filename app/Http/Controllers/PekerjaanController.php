@@ -81,10 +81,12 @@ class PekerjaanController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->where('jumlah_pekerjaan', '>=', '5')->first(['nama']);
+        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->first();
+        $perusahaan = $perusahaan->pekerjaans()->whereYear('created_at', now()->year);
+
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)->where('status_pekerjaan', 0)->pluck('nama')->toArray();
 
-        if ($perusahaan) {
+        if ($perusahaan->count() >= 5) {
             return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {
@@ -180,10 +182,8 @@ class PekerjaanController extends Controller
 
         $validatedData['author_id'] = $request->user()->id;
 
-        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)
-            ->where('jumlah_pekerjaan', '>=', 5)
-            ->whereNotIn('id', [$pekerjaan->perusahaan_id])
-            ->first(['nama']);
+        $perusahaan = Perusahaan::where('id', $request->perusahaan_id)->first();
+        $perusahaan = $perusahaan->pekerjaans()->whereYear('created_at', now()->year)->whereNotIn('id', [$pekerjaan->perusahaan_id]);
 
         $tenaga_ahlis = TenagaAhli::whereIn('id', $request->tenaga_ahli_id)
             ->where('status_pekerjaan', 0)
@@ -191,7 +191,7 @@ class PekerjaanController extends Controller
             ->pluck('nama')
             ->toArray();
 
-        if ($perusahaan) {
+        if ($perusahaan && $perusahaan->count() >= 5) {
             return redirect()->back()->withInput()->with('perusahaan_full', $perusahaan->nama . ' sudah mencapai batas maksimal 5 pekerjaan.');
         }
         if ($tenaga_ahlis) {

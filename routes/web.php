@@ -43,13 +43,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/user-password', [UserController::class, 'passwordUpdate'])->name('user-password.update');
 
     Route::resource('/tenaga-ahli', TenagaAhliController::class);
-    Route::resource('/perusahaan', PerusahaanController::class);
     Route::resource('/jenis-pekerjaan', JenisPekerjaanController::class)->except('show');
     Route::resource('/status-pekerjaan', StatusPekerjaanController::class)->except('show');
     Route::resource('/metode', MetodeController::class)->except('show');
     Route::resource('/user', UserController::class)->except('show');
     Route::resource('/dinasan', DinasanController::class)->except('show');
     Route::resource('/bidang', BidangController::class)->except('show');
+
+    Route::resource('/perusahaan', PerusahaanController::class);
+    Route::post('/perusahaan/import', [PerusahaanController::class, 'import'])->name('perusahaan.import');
 
     Route::resource('/pekerjaan', PekerjaanController::class);
     Route::controller(PekerjaanController::class)->group(function () {

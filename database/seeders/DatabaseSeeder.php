@@ -37,9 +37,8 @@ class DatabaseSeeder extends Seeder
             'direktur' => 'Jane Doe',
             'alamat' => 'Jl. Harmoni No. 456',
             'email' => 'ptcahayaabadi@example.com',
-            'telepon' => '081234567890',
+            'telepon' => '081233467890',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 
@@ -71,7 +70,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ptmajusejahtera@example.com',
             'telepon' => '089876543210',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 
@@ -103,7 +101,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ptbersamamakmur@example.com',
             'telepon' => '0987675432109',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 
@@ -135,7 +132,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ptberkahsentosa@example.com',
             'telepon' => '076543210987',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 
@@ -167,7 +163,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ptcahayacemerlang@example.com',
             'telepon' => '087654321098',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 
@@ -199,7 +194,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ptmandirisejahtera@example.com',
             'telepon' => '02398765432109',
             'status' => true,
-            'jumlah_pekerjaan' => 0,
             'author_id' => 1,
         ]);
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PerusahaansImport;
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class PerusahaanController extends Controller
 {
@@ -121,5 +124,23 @@ class PerusahaanController extends Controller
         });
 
         return redirect()->route('perusahaan.index')->with('success', 'Perusahaan berhasil dihapus!');
+    }
+
+    public function import()
+    {
+        try {
+            Excel::import(new PerusahaansImport, request()->file('perusahaan_import_file'));
+            return redirect()->route('perusahaan.index')->with('success', 'Data Perusahaan berhasil diimpor!');
+
+        } catch (ValidationException $error) {
+            $failures = $error->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $errorMessages[] = "Baris {$failure->row()}: {$failure->errors()[0]}";
+            }
+
+            return back()->with('failedSave', implode('<br>', $errorMessages));
+        }
     }
 }

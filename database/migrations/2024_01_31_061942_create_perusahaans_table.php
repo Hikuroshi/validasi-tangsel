@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('telepon')->unique()->nullable();
             $table->boolean('status');
-            $table->integer('jumlah_pekerjaan')->default('0');
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
